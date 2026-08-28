@@ -555,7 +555,7 @@ export function getDress(id: string) {
   return dresses.find((d) => d.id === id) ?? [...dresses, ...myDrafts].find((d) => d.id === id);
 }
 export function getProfile(id: string) {
-  return profiles.find((p) => p.id === id) ?? profiles[0];
+  return profiles.find((p) => p.id === id) ?? fallbackProfile;
 }
 export function getReviewsForDress(_dressId: string) {
   return reviews;
