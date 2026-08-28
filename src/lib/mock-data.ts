@@ -254,15 +254,16 @@ export const dresses: Dress[] = [
   },
 ];
 
-export const myDrafts: Dress[] = [
-  {
-    ...dresses[5],
+export const myDrafts: Dress[] = dresses
+  .filter((d) => d.id === "d6")
+  .map((d) => ({
+    ...d,
     id: "draft1",
     ownerId: "me",
-    status: "draft",
+    status: "draft" as const,
     title: "Zomerjurk (concept)",
-  },
-];
+  }));
+
 
 export const rentals: Rental[] = [
   {
