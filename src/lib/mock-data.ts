@@ -67,6 +67,16 @@ export const profiles: Profile[] = [
   },
 ];
 
+const fallbackProfile: Profile = {
+  id: "unknown",
+  firstName: "DressLoop",
+  city: "Nederland",
+  avatar: "",
+  rating: 5,
+  completedRentals: 0,
+  memberSince: "2026",
+};
+
 export const dresses: Dress[] = [
   {
     id: "d1",

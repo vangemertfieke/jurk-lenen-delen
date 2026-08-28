@@ -41,11 +41,11 @@ export function rentalPriceForDays(basePrice: number, days: number): number {
 
 export interface PriceBreakdownInput {
   basePrice: number;
-  days?: number;
+  days?: number | undefined;
   delivery: DeliveryMethod;
-  deposit?: number;
+  deposit?: number | undefined;
   /** Geaccepteerd bod vervangt de huurprijs. */
-  agreedPrice?: number;
+  agreedPrice?: number | undefined;
 }
 
 export interface PriceBreakdownResult {
