@@ -18,7 +18,12 @@ import { Route as OverOnsRouteImport } from './routes/over-ons'
 import { Route as VerhurenRouteImport } from './routes/verhuren'
 import { Route as WachtwoordVergetenRouteImport } from './routes/wachtwoord-vergeten'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
+import { Route as AccountBerichtenRouteImport } from './routes/account.berichten'
+import { Route as AccountFavorietenRouteImport } from './routes/account.favorieten'
 import { Route as AccountHuuritemsRouteImport } from './routes/account.huuritems'
+import { Route as AccountInstellingenRouteImport } from './routes/account.instellingen'
+import { Route as AccountMeldingenRouteImport } from './routes/account.meldingen'
+import { Route as AccountProfielRouteImport } from './routes/account.profiel'
 import { Route as AccountVerhuurRouteImport } from './routes/account.verhuur'
 import { Route as AfrekenenIdRouteImport } from './routes/afrekenen.$id'
 import { Route as JurkenIndexRouteImport } from './routes/jurken.index'
@@ -69,9 +74,34 @@ const AccountIndexRoute = AccountIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AccountRoute,
 } as any)
+const AccountBerichtenRoute = AccountBerichtenRouteImport.update({
+  id: '/berichten',
+  path: '/berichten',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountFavorietenRoute = AccountFavorietenRouteImport.update({
+  id: '/favorieten',
+  path: '/favorieten',
+  getParentRoute: () => AccountRoute,
+} as any)
 const AccountHuuritemsRoute = AccountHuuritemsRouteImport.update({
   id: '/huuritems',
   path: '/huuritems',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountInstellingenRoute = AccountInstellingenRouteImport.update({
+  id: '/instellingen',
+  path: '/instellingen',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountMeldingenRoute = AccountMeldingenRouteImport.update({
+  id: '/meldingen',
+  path: '/meldingen',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountProfielRoute = AccountProfielRouteImport.update({
+  id: '/profiel',
+  path: '/profiel',
   getParentRoute: () => AccountRoute,
 } as any)
 const AccountVerhuurRoute = AccountVerhuurRouteImport.update({
@@ -104,7 +134,12 @@ export interface FileRoutesByFullPath {
   '/over-ons': typeof OverOnsRoute
   '/verhuren': typeof VerhurenRoute
   '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
+  '/account/berichten': typeof AccountBerichtenRoute
+  '/account/favorieten': typeof AccountFavorietenRoute
   '/account/huuritems': typeof AccountHuuritemsRoute
+  '/account/instellingen': typeof AccountInstellingenRoute
+  '/account/meldingen': typeof AccountMeldingenRoute
+  '/account/profiel': typeof AccountProfielRoute
   '/account/verhuur': typeof AccountVerhuurRoute
   '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
@@ -119,7 +154,12 @@ export interface FileRoutesByTo {
   '/over-ons': typeof OverOnsRoute
   '/verhuren': typeof VerhurenRoute
   '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
+  '/account/berichten': typeof AccountBerichtenRoute
+  '/account/favorieten': typeof AccountFavorietenRoute
   '/account/huuritems': typeof AccountHuuritemsRoute
+  '/account/instellingen': typeof AccountInstellingenRoute
+  '/account/meldingen': typeof AccountMeldingenRoute
+  '/account/profiel': typeof AccountProfielRoute
   '/account/verhuur': typeof AccountVerhuurRoute
   '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
@@ -136,7 +176,12 @@ export interface FileRoutesById {
   '/over-ons': typeof OverOnsRoute
   '/verhuren': typeof VerhurenRoute
   '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
+  '/account/berichten': typeof AccountBerichtenRoute
+  '/account/favorieten': typeof AccountFavorietenRoute
   '/account/huuritems': typeof AccountHuuritemsRoute
+  '/account/instellingen': typeof AccountInstellingenRoute
+  '/account/meldingen': typeof AccountMeldingenRoute
+  '/account/profiel': typeof AccountProfielRoute
   '/account/verhuur': typeof AccountVerhuurRoute
   '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
@@ -154,7 +199,12 @@ export interface FileRouteTypes {
     | '/over-ons'
     | '/verhuren'
     | '/wachtwoord-vergeten'
+    | '/account/berichten'
+    | '/account/favorieten'
     | '/account/huuritems'
+    | '/account/instellingen'
+    | '/account/meldingen'
+    | '/account/profiel'
     | '/account/verhuur'
     | '/afrekenen/$id'
     | '/jurken/$id'
@@ -169,7 +219,12 @@ export interface FileRouteTypes {
     | '/over-ons'
     | '/verhuren'
     | '/wachtwoord-vergeten'
+    | '/account/berichten'
+    | '/account/favorieten'
     | '/account/huuritems'
+    | '/account/instellingen'
+    | '/account/meldingen'
+    | '/account/profiel'
     | '/account/verhuur'
     | '/afrekenen/$id'
     | '/jurken/$id'
@@ -185,7 +240,12 @@ export interface FileRouteTypes {
     | '/over-ons'
     | '/verhuren'
     | '/wachtwoord-vergeten'
+    | '/account/berichten'
+    | '/account/favorieten'
     | '/account/huuritems'
+    | '/account/instellingen'
+    | '/account/meldingen'
+    | '/account/profiel'
     | '/account/verhuur'
     | '/afrekenen/$id'
     | '/jurken/$id'
@@ -272,11 +332,46 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccountIndexRouteImport
       parentRoute: typeof AccountRoute
     }
+    '/account/berichten': {
+      id: '/account/berichten'
+      path: '/berichten'
+      fullPath: '/account/berichten'
+      preLoaderRoute: typeof AccountBerichtenRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/favorieten': {
+      id: '/account/favorieten'
+      path: '/favorieten'
+      fullPath: '/account/favorieten'
+      preLoaderRoute: typeof AccountFavorietenRouteImport
+      parentRoute: typeof AccountRoute
+    }
     '/account/huuritems': {
       id: '/account/huuritems'
       path: '/huuritems'
       fullPath: '/account/huuritems'
       preLoaderRoute: typeof AccountHuuritemsRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/instellingen': {
+      id: '/account/instellingen'
+      path: '/instellingen'
+      fullPath: '/account/instellingen'
+      preLoaderRoute: typeof AccountInstellingenRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/meldingen': {
+      id: '/account/meldingen'
+      path: '/meldingen'
+      fullPath: '/account/meldingen'
+      preLoaderRoute: typeof AccountMeldingenRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/profiel': {
+      id: '/account/profiel'
+      path: '/profiel'
+      fullPath: '/account/profiel'
+      preLoaderRoute: typeof AccountProfielRouteImport
       parentRoute: typeof AccountRoute
     }
     '/account/verhuur': {
@@ -311,13 +406,23 @@ declare module '@tanstack/react-router' {
 }
 
 interface AccountRouteChildren {
+  AccountBerichtenRoute: typeof AccountBerichtenRoute
+  AccountFavorietenRoute: typeof AccountFavorietenRoute
   AccountHuuritemsRoute: typeof AccountHuuritemsRoute
+  AccountInstellingenRoute: typeof AccountInstellingenRoute
+  AccountMeldingenRoute: typeof AccountMeldingenRoute
+  AccountProfielRoute: typeof AccountProfielRoute
   AccountVerhuurRoute: typeof AccountVerhuurRoute
   AccountIndexRoute: typeof AccountIndexRoute
 }
 
 const AccountRouteChildren: AccountRouteChildren = {
+  AccountBerichtenRoute: AccountBerichtenRoute,
+  AccountFavorietenRoute: AccountFavorietenRoute,
   AccountHuuritemsRoute: AccountHuuritemsRoute,
+  AccountInstellingenRoute: AccountInstellingenRoute,
+  AccountMeldingenRoute: AccountMeldingenRoute,
+  AccountProfielRoute: AccountProfielRoute,
   AccountVerhuurRoute: AccountVerhuurRoute,
   AccountIndexRoute: AccountIndexRoute,
 }
