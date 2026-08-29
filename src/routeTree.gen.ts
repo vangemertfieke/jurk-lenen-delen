@@ -10,12 +10,30 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BedrijvenRouteImport } from './routes/bedrijven'
+import { Route as OverOnsRouteImport } from './routes/over-ons'
+import { Route as AfrekenenIdRouteImport } from './routes/afrekenen.$id'
 import { Route as JurkenIndexRouteImport } from './routes/jurken.index'
 import { Route as JurkenIdRouteImport } from './routes/jurken.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BedrijvenRoute = BedrijvenRouteImport.update({
+  id: '/bedrijven',
+  path: '/bedrijven',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OverOnsRoute = OverOnsRouteImport.update({
+  id: '/over-ons',
+  path: '/over-ons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AfrekenenIdRoute = AfrekenenIdRouteImport.update({
+  id: '/afrekenen/$id',
+  path: '/afrekenen/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JurkenIndexRoute = JurkenIndexRouteImport.update({
@@ -31,30 +49,61 @@ const JurkenIdRoute = JurkenIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bedrijven': typeof BedrijvenRoute
+  '/over-ons': typeof OverOnsRoute
+  '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
   '/jurken/': typeof JurkenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bedrijven': typeof BedrijvenRoute
+  '/over-ons': typeof OverOnsRoute
+  '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
   '/jurken': typeof JurkenIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bedrijven': typeof BedrijvenRoute
+  '/over-ons': typeof OverOnsRoute
+  '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
   '/jurken/': typeof JurkenIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/jurken/$id' | '/jurken/'
+  fullPaths:
+    | '/'
+    | '/bedrijven'
+    | '/over-ons'
+    | '/afrekenen/$id'
+    | '/jurken/$id'
+    | '/jurken/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/jurken/$id' | '/jurken'
-  id: '__root__' | '/' | '/jurken/$id' | '/jurken/'
+  to:
+    | '/'
+    | '/bedrijven'
+    | '/over-ons'
+    | '/afrekenen/$id'
+    | '/jurken/$id'
+    | '/jurken'
+  id:
+    | '__root__'
+    | '/'
+    | '/bedrijven'
+    | '/over-ons'
+    | '/afrekenen/$id'
+    | '/jurken/$id'
+    | '/jurken/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BedrijvenRoute: typeof BedrijvenRoute
+  OverOnsRoute: typeof OverOnsRoute
+  AfrekenenIdRoute: typeof AfrekenenIdRoute
   JurkenIdRoute: typeof JurkenIdRoute
   JurkenIndexRoute: typeof JurkenIndexRoute
 }
@@ -66,6 +115,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bedrijven': {
+      id: '/bedrijven'
+      path: '/bedrijven'
+      fullPath: '/bedrijven'
+      preLoaderRoute: typeof BedrijvenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/over-ons': {
+      id: '/over-ons'
+      path: '/over-ons'
+      fullPath: '/over-ons'
+      preLoaderRoute: typeof OverOnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/afrekenen/$id': {
+      id: '/afrekenen/$id'
+      path: '/afrekenen/$id'
+      fullPath: '/afrekenen/$id'
+      preLoaderRoute: typeof AfrekenenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/jurken/': {
@@ -87,6 +157,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BedrijvenRoute: BedrijvenRoute,
+  OverOnsRoute: OverOnsRoute,
+  AfrekenenIdRoute: AfrekenenIdRoute,
   JurkenIdRoute: JurkenIdRoute,
   JurkenIndexRoute: JurkenIndexRoute,
 }
