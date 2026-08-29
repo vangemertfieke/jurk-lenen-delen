@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { AppProvider } from "@/lib/store";
+import { RentalProvider } from "@/lib/rental/store";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { MobileNav } from "@/components/layout/MobileNav";
@@ -131,6 +132,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <AppProvider>
+        <RentalProvider>
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1 pb-20 lg:pb-0">
@@ -140,6 +142,7 @@ function RootComponent() {
           <MobileNav />
         </div>
         <Toaster position="top-center" />
+        </RentalProvider>
       </AppProvider>
     </QueryClientProvider>
   );
