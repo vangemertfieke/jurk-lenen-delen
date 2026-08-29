@@ -10,12 +10,78 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AanmeldenRouteImport } from './routes/aanmelden'
+import { Route as AccountRouteImport } from './routes/account'
+import { Route as BedrijvenRouteImport } from './routes/bedrijven'
+import { Route as InloggenRouteImport } from './routes/inloggen'
+import { Route as OverOnsRouteImport } from './routes/over-ons'
+import { Route as VerhurenRouteImport } from './routes/verhuren'
+import { Route as WachtwoordVergetenRouteImport } from './routes/wachtwoord-vergeten'
+import { Route as AccountIndexRouteImport } from './routes/account.index'
+import { Route as AccountHuuritemsRouteImport } from './routes/account.huuritems'
+import { Route as AccountVerhuurRouteImport } from './routes/account.verhuur'
+import { Route as AfrekenenIdRouteImport } from './routes/afrekenen.$id'
 import { Route as JurkenIndexRouteImport } from './routes/jurken.index'
 import { Route as JurkenIdRouteImport } from './routes/jurken.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AanmeldenRoute = AanmeldenRouteImport.update({
+  id: '/aanmelden',
+  path: '/aanmelden',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BedrijvenRoute = BedrijvenRouteImport.update({
+  id: '/bedrijven',
+  path: '/bedrijven',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InloggenRoute = InloggenRouteImport.update({
+  id: '/inloggen',
+  path: '/inloggen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OverOnsRoute = OverOnsRouteImport.update({
+  id: '/over-ons',
+  path: '/over-ons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VerhurenRoute = VerhurenRouteImport.update({
+  id: '/verhuren',
+  path: '/verhuren',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WachtwoordVergetenRoute = WachtwoordVergetenRouteImport.update({
+  id: '/wachtwoord-vergeten',
+  path: '/wachtwoord-vergeten',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AccountIndexRoute = AccountIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountHuuritemsRoute = AccountHuuritemsRouteImport.update({
+  id: '/huuritems',
+  path: '/huuritems',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AccountVerhuurRoute = AccountVerhuurRouteImport.update({
+  id: '/verhuur',
+  path: '/verhuur',
+  getParentRoute: () => AccountRoute,
+} as any)
+const AfrekenenIdRoute = AfrekenenIdRouteImport.update({
+  id: '/afrekenen/$id',
+  path: '/afrekenen/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JurkenIndexRoute = JurkenIndexRouteImport.update({
@@ -31,30 +97,112 @@ const JurkenIdRoute = JurkenIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/aanmelden': typeof AanmeldenRoute
+  '/account': typeof AccountRouteWithChildren
+  '/bedrijven': typeof BedrijvenRoute
+  '/inloggen': typeof InloggenRoute
+  '/over-ons': typeof OverOnsRoute
+  '/verhuren': typeof VerhurenRoute
+  '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
+  '/account/huuritems': typeof AccountHuuritemsRoute
+  '/account/verhuur': typeof AccountVerhuurRoute
+  '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
+  '/account/': typeof AccountIndexRoute
   '/jurken/': typeof JurkenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/aanmelden': typeof AanmeldenRoute
+  '/bedrijven': typeof BedrijvenRoute
+  '/inloggen': typeof InloggenRoute
+  '/over-ons': typeof OverOnsRoute
+  '/verhuren': typeof VerhurenRoute
+  '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
+  '/account/huuritems': typeof AccountHuuritemsRoute
+  '/account/verhuur': typeof AccountVerhuurRoute
+  '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
+  '/account': typeof AccountIndexRoute
   '/jurken': typeof JurkenIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/aanmelden': typeof AanmeldenRoute
+  '/account': typeof AccountRouteWithChildren
+  '/bedrijven': typeof BedrijvenRoute
+  '/inloggen': typeof InloggenRoute
+  '/over-ons': typeof OverOnsRoute
+  '/verhuren': typeof VerhurenRoute
+  '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
+  '/account/huuritems': typeof AccountHuuritemsRoute
+  '/account/verhuur': typeof AccountVerhuurRoute
+  '/afrekenen/$id': typeof AfrekenenIdRoute
   '/jurken/$id': typeof JurkenIdRoute
+  '/account/': typeof AccountIndexRoute
   '/jurken/': typeof JurkenIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/jurken/$id' | '/jurken/'
+  fullPaths:
+    | '/'
+    | '/aanmelden'
+    | '/account'
+    | '/bedrijven'
+    | '/inloggen'
+    | '/over-ons'
+    | '/verhuren'
+    | '/wachtwoord-vergeten'
+    | '/account/huuritems'
+    | '/account/verhuur'
+    | '/afrekenen/$id'
+    | '/jurken/$id'
+    | '/account/'
+    | '/jurken/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/jurken/$id' | '/jurken'
-  id: '__root__' | '/' | '/jurken/$id' | '/jurken/'
+  to:
+    | '/'
+    | '/aanmelden'
+    | '/bedrijven'
+    | '/inloggen'
+    | '/over-ons'
+    | '/verhuren'
+    | '/wachtwoord-vergeten'
+    | '/account/huuritems'
+    | '/account/verhuur'
+    | '/afrekenen/$id'
+    | '/jurken/$id'
+    | '/account'
+    | '/jurken'
+  id:
+    | '__root__'
+    | '/'
+    | '/aanmelden'
+    | '/account'
+    | '/bedrijven'
+    | '/inloggen'
+    | '/over-ons'
+    | '/verhuren'
+    | '/wachtwoord-vergeten'
+    | '/account/huuritems'
+    | '/account/verhuur'
+    | '/afrekenen/$id'
+    | '/jurken/$id'
+    | '/account/'
+    | '/jurken/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AanmeldenRoute: typeof AanmeldenRoute
+  AccountRoute: typeof AccountRouteWithChildren
+  BedrijvenRoute: typeof BedrijvenRoute
+  InloggenRoute: typeof InloggenRoute
+  OverOnsRoute: typeof OverOnsRoute
+  VerhurenRoute: typeof VerhurenRoute
+  WachtwoordVergetenRoute: typeof WachtwoordVergetenRoute
+  AfrekenenIdRoute: typeof AfrekenenIdRoute
   JurkenIdRoute: typeof JurkenIdRoute
   JurkenIndexRoute: typeof JurkenIndexRoute
 }
@@ -66,6 +214,83 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aanmelden': {
+      id: '/aanmelden'
+      path: '/aanmelden'
+      fullPath: '/aanmelden'
+      preLoaderRoute: typeof AanmeldenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bedrijven': {
+      id: '/bedrijven'
+      path: '/bedrijven'
+      fullPath: '/bedrijven'
+      preLoaderRoute: typeof BedrijvenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inloggen': {
+      id: '/inloggen'
+      path: '/inloggen'
+      fullPath: '/inloggen'
+      preLoaderRoute: typeof InloggenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/over-ons': {
+      id: '/over-ons'
+      path: '/over-ons'
+      fullPath: '/over-ons'
+      preLoaderRoute: typeof OverOnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/verhuren': {
+      id: '/verhuren'
+      path: '/verhuren'
+      fullPath: '/verhuren'
+      preLoaderRoute: typeof VerhurenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/wachtwoord-vergeten': {
+      id: '/wachtwoord-vergeten'
+      path: '/wachtwoord-vergeten'
+      fullPath: '/wachtwoord-vergeten'
+      preLoaderRoute: typeof WachtwoordVergetenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/account/': {
+      id: '/account/'
+      path: '/'
+      fullPath: '/account/'
+      preLoaderRoute: typeof AccountIndexRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/huuritems': {
+      id: '/account/huuritems'
+      path: '/huuritems'
+      fullPath: '/account/huuritems'
+      preLoaderRoute: typeof AccountHuuritemsRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/account/verhuur': {
+      id: '/account/verhuur'
+      path: '/verhuur'
+      fullPath: '/account/verhuur'
+      preLoaderRoute: typeof AccountVerhuurRouteImport
+      parentRoute: typeof AccountRoute
+    }
+    '/afrekenen/$id': {
+      id: '/afrekenen/$id'
+      path: '/afrekenen/$id'
+      fullPath: '/afrekenen/$id'
+      preLoaderRoute: typeof AfrekenenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/jurken/': {
@@ -85,8 +310,31 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AccountRouteChildren {
+  AccountHuuritemsRoute: typeof AccountHuuritemsRoute
+  AccountVerhuurRoute: typeof AccountVerhuurRoute
+  AccountIndexRoute: typeof AccountIndexRoute
+}
+
+const AccountRouteChildren: AccountRouteChildren = {
+  AccountHuuritemsRoute: AccountHuuritemsRoute,
+  AccountVerhuurRoute: AccountVerhuurRoute,
+  AccountIndexRoute: AccountIndexRoute,
+}
+
+const AccountRouteWithChildren =
+  AccountRoute._addFileChildren(AccountRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AanmeldenRoute: AanmeldenRoute,
+  AccountRoute: AccountRouteWithChildren,
+  BedrijvenRoute: BedrijvenRoute,
+  InloggenRoute: InloggenRoute,
+  OverOnsRoute: OverOnsRoute,
+  VerhurenRoute: VerhurenRoute,
+  WachtwoordVergetenRoute: WachtwoordVergetenRoute,
+  AfrekenenIdRoute: AfrekenenIdRoute,
   JurkenIdRoute: JurkenIdRoute,
   JurkenIndexRoute: JurkenIndexRoute,
 }
