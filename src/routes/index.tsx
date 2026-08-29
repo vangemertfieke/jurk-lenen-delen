@@ -49,7 +49,7 @@ function Home() {
       <section className="border-b border-border">
         <div className="container-page grid items-center gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-24">
           <div className="max-w-xl">
-            <p className="eyebrow">Peer-to-peer jurkenverhuur</p>
+            <p className="eyebrow">VOOR GALA'S • BRUILOFTEN • DINERS • EVENTS</p>
             <h1 className="display mt-6 text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-7xl">
               De kledingkast van Nederland.
             </h1>
