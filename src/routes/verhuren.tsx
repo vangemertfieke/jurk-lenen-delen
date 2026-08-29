@@ -447,40 +447,90 @@ function Verhuren() {
   );
 }
 
+const gateSteps: { title: string; text: string }[] = [
+  {
+    title: "Foto's",
+    text: "Fotografeer je jurk bij daglicht, het liefst gedragen, plus een detailfoto van de stof.",
+  },
+  {
+    title: "Details",
+    text: "Merk, titel, maat, kleur, staat en hoe de jurk valt. Plus een korte beschrijving.",
+  },
+  {
+    title: "Prijs",
+    text: "Bepaal je huurprijs voor vier dagen en eventueel een borg. Je ziet direct wat je overhoudt.",
+  },
+  {
+    title: "Beschikbaarheid",
+    text: "Blokkeer de dagen waarop je jurk niet weg kan. Alles daarbuiten kan geboekt worden.",
+  },
+  {
+    title: "Levering",
+    text: "Kies ophalen, verzenden of allebei. Je exacte adres deel je pas na een bevestigde boeking.",
+  },
+  {
+    title: "Controleren",
+    text: "Bekijk hoe je jurk eruitziet voor huurders en publiceer — of bewaar als concept.",
+  },
+];
+
 function VerhuurGate() {
   return (
-    <div className="container-page py-16 lg:py-28">
-      <div className="max-w-xl">
+    <div className="container-page py-12 lg:py-20">
+      <header className="max-w-2xl">
         <p className="eyebrow">Verhuren</p>
-        <h1 className="display mt-5 text-4xl sm:text-5xl">
-          Maak eerst een account aan.
-        </h1>
-        <p className="mt-6 text-[0.9375rem] text-muted-foreground">
-          Je plaatst een jurk alleen met een DressLoop-account. Zo weten huurders met wie ze te
-          maken hebben, houd jij je boekingen bij en kunnen we je uitbetalen na een goede retour.
-          Aanmelden is gratis en duurt een minuut.
+        <h1 className="display mt-5 text-4xl sm:text-5xl">Verhuur je jurk</h1>
+        <p className="mt-4 text-muted-foreground">
+          Die jurk die één keer per jaar uit de kast komt, kan rustig vaker op pad. Zo ziet het
+          eruit om hem op DressLoop te zetten — in zes rustige stappen.
         </p>
-        <ul className="mt-10 space-y-4">
-          {[
-            "Eén account om te huren én te verhuren",
-            "Beheer je jurken, aanvragen en agenda",
-            "Veilig betaald krijgen via DressLoop",
-          ].map((t) => (
-            <li key={t} className="hairline pt-4 text-sm">
-              {t}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-10 flex flex-wrap gap-4">
+      </header>
+
+      <ol className="mt-14 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        {gateSteps.map((s, i) => (
+          <li key={s.title} className="border-t border-border pt-4">
+            <span className="price block text-xs text-primary">0{i + 1}</span>
+            <h2 className="mt-2 text-[0.9375rem] font-medium">{s.title}</h2>
+            <p className="mt-2 text-sm text-muted-foreground">{s.text}</p>
+          </li>
+        ))}
+      </ol>
+
+      <div className="mt-16 bg-blush px-6 py-8 sm:px-10">
+        <div className="grid gap-8 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
+          <div>
+            <h2 className="display text-2xl sm:text-3xl">Wat levert het op?</h2>
+            <p className="mt-3 max-w-xl text-sm text-blush-foreground/80">
+              Bij een huurprijs van {formatEuro(55)} houdt DressLoop{" "}
+              {Math.round(FEES.ownerCommissionRate * 100)}% commissie in en ontvang jij{" "}
+              {formatEuro(calculateOwnerPayout(55).payout)} per verhuur. Uitbetaling volgt nadat de
+              jurk goed retour is.
+            </p>
+          </div>
+          <ul className="space-y-2 text-sm text-blush-foreground/80">
+            <li>Eén account om te huren én te verhuren</li>
+            <li>Beheer je jurken, aanvragen en agenda</li>
+            <li>Veilig betaald krijgen via DressLoop</li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="mt-16 max-w-xl border-t border-border pt-10">
+        <h2 className="display text-2xl sm:text-3xl">Klaar om te beginnen?</h2>
+        <p className="mt-4 text-[0.9375rem] text-muted-foreground">
+          Om een jurk te plaatsen heb je een DressLoop-account nodig. Zo weten huurders met wie ze
+          te maken hebben en kunnen we je uitbetalen. Aanmelden is gratis en duurt een minuut.
+        </p>
+        <div className="mt-8 flex flex-wrap gap-4">
           <Button size="lg" asChild>
-            <Link to="/aanmelden">Account aanmaken</Link>
+            <Link to="/aanmelden">Account aanmaken en verhuren</Link>
           </Button>
           <Button size="lg" variant="outline" asChild>
             <Link to="/inloggen">Ik heb al een account</Link>
           </Button>
         </div>
         <p className="mt-8 text-sm text-muted-foreground">
-          Vragen over verhuren?{" "}
+          Nog vragen?{" "}
           <Link to="/veelgestelde-vragen" className="text-primary hover:underline">
             Lees de veelgestelde vragen
           </Link>
