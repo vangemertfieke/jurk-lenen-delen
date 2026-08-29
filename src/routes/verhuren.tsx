@@ -23,6 +23,11 @@ import { Field, StatusBadge } from "@/components/dressloop/primitives";
 import { cities, colors, conditions, occasions, sizes } from "@/lib/mock-data";
 import { FEES, calculateOwnerPayout, formatEuro } from "@/lib/config";
 import { useApp } from "@/lib/store";
+import {
+  PROTECTION_CONFIG,
+  calculateDeposit,
+  isValueSuspicious,
+} from "@/lib/rental/config";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/verhuren")({
@@ -68,7 +73,8 @@ function Verhuren() {
   const [description, setDescription] = useState("");
 
   const [price, setPrice] = useState("55");
-  const [deposit, setDeposit] = useState("50");
+  const [originalPrice, setOriginalPrice] = useState("250");
+  const [estimatedValue, setEstimatedValue] = useState("150");
   const [allowOffers, setAllowOffers] = useState(true);
 
   const [blocked, setBlocked] = useState<Date[]>([]);
@@ -77,6 +83,10 @@ function Verhuren() {
   const [area, setArea] = useState("Amsterdam Zuid");
 
   const numericPrice = Number(price.replace(",", ".")) || 0;
+  const numericOriginal = Number(originalPrice.replace(",", ".")) || 0;
+  const numericValue = Number(estimatedValue.replace(",", ".")) || numericOriginal;
+  const autoDeposit = calculateDeposit(numericValue);
+  const valueFlagged = isValueSuspicious(numericOriginal, numericValue);
   const payout = calculateOwnerPayout(numericPrice);
 
   const next = () => setStep((s) => Math.min(s + 1, steps.length - 1));
@@ -250,20 +260,64 @@ function Verhuren() {
                   />
                 </div>
               </Field>
-              <Field label="Borg (optioneel)" htmlFor="borg" hint="De huurder krijgt dit terug na een goede retour.">
-                <div className="relative">
-                  <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
-                    €
-                  </span>
-                  <Input
-                    id="borg"
-                    inputMode="decimal"
-                    value={deposit}
-                    onChange={(e) => setDeposit(e.target.value)}
-                    className="h-12 pl-9"
-                  />
+              <div className="space-y-6 border border-border p-6">
+                <div>
+                  <h3 className="text-sm font-medium">Waarde van je jurk</h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    We gebruiken dit om een passende borg en bescherming voor de huur te bepalen.
+                  </p>
                 </div>
-              </Field>
+                <Field label="Wat was de oorspronkelijke aankoopprijs?" htmlFor="aankoop">
+                  <div className="relative">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+                      €
+                    </span>
+                    <Input
+                      id="aankoop"
+                      inputMode="decimal"
+                      value={originalPrice}
+                      onChange={(e) => setOriginalPrice(e.target.value)}
+                      className="h-12 pl-9"
+                    />
+                  </div>
+                </Field>
+                <Field
+                  label="Wat is de geschatte huidige waarde? (optioneel)"
+                  htmlFor="waarde"
+                  hint={`DressLoop ondersteunt nu jurken tot ongeveer ${formatEuro(PROTECTION_CONFIG.dressValue.supportedMax)}.`}
+                >
+                  <div className="relative">
+                    <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
+                      €
+                    </span>
+                    <Input
+                      id="waarde"
+                      inputMode="decimal"
+                      value={estimatedValue}
+                      onChange={(e) => setEstimatedValue(e.target.value)}
+                      className="h-12 pl-9"
+                    />
+                  </div>
+                </Field>
+                <div className="hairline pt-4 text-sm">
+                  <div className="flex items-baseline justify-between">
+                    <span>Borg voor de huurder</span>
+                    <span className="price">{formatEuro(autoDeposit)}</span>
+                  </div>
+                  <p className="mt-2 text-xs text-muted-foreground">
+                    De borg wordt automatisch berekend (minimaal{" "}
+                    {formatEuro(PROTECTION_CONFIG.deposit.min)}, maximaal{" "}
+                    {formatEuro(PROTECTION_CONFIG.deposit.max)}). De huurder krijgt dit terug wanneer
+                    de jurk volgens afspraak en in goede staat is geretourneerd.
+                  </p>
+                  {valueFlagged ? (
+                    <p className="mt-3 bg-blush px-4 py-3 text-xs text-blush-foreground">
+                      We controleren deze waarde even handmatig voordat je jurk live gaat.
+                    </p>
+                  ) : null}
+                </div>
+              </div>
+
               <div className="flex items-center justify-between border-y border-border py-5">
                 <div className="min-w-0 pr-6">
                   <p className="text-sm font-medium">Biedingen toestaan</p>
