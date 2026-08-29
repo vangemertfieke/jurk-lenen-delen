@@ -241,13 +241,8 @@ export function isReturnOverdue(rental: ProtectedRental): boolean {
   return openStates.includes(rental.status) && Date.now() > due;
 }
 
+/** Reviews mogen pas na afronding of na afhandeling van een melding. */
 export function canReview(rental: ProtectedRental): boolean {
-  return (
-    (rental.status === "completed" ||
-      rental.status === "paid_out" ||
-      rental.status === "claim_resolved") &&
-    rental.claimId === null
-      ? true
-      : rental.status === "claim_resolved"
-  );
+  if (rental.status === "claim_open" || rental.status === "problem_reported") return false;
+  return ["completed", "payout_pending", "paid_out", "claim_resolved"].includes(rental.status);
 }
