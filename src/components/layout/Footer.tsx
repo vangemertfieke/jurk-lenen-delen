@@ -35,7 +35,7 @@ const columns = [
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-border bg-offwhite lg:mt-32">
+    <footer className="border-t border-border bg-offwhite">
       <div className="container-page py-16 lg:py-24">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,2fr)]">
           <div className="max-w-sm">
