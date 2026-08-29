@@ -91,33 +91,38 @@ export function Header() {
       </div>
 
       {open ? (
-        <div className="border-t border-border bg-background lg:hidden">
-          <nav className="container-page flex flex-col py-4">
-            <SearchBar variant="compact" className="mb-4 md:hidden" />
-            {nav.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="border-b border-border py-4 text-[0.9375rem]"
-                activeProps={{ className: "text-primary" }}
-              >
-                {item.label}
-              </Link>
-            ))}
-            {user ? (
-              <Link to="/account" className="py-4 text-[0.9375rem]">
-                Mijn account
-              </Link>
-            ) : (
-              <div className="flex flex-col gap-3 pt-6">
-                <Button asChild>
-                  <Link to="/aanmelden">Aanmelden</Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <Link to="/inloggen">Inloggen</Link>
-                </Button>
-              </div>
-            )}
+        <div className="fixed inset-x-0 top-16 bottom-0 z-50 flex flex-col bg-background/98 backdrop-blur-md lg:hidden">
+          <nav className="container-page flex flex-1 flex-col overflow-y-auto py-6">
+            <SearchBar variant="compact" className="mb-6 md:hidden" />
+            <div className="flex flex-col divide-y divide-border">
+              {nav.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="flex min-h-[48px] items-center py-4 text-base font-medium text-foreground transition-colors hover:text-primary active:bg-muted/50"
+                  activeProps={{ className: "text-primary font-semibold" }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              {user ? (
+                <Link
+                  to="/account"
+                  className="flex min-h-[48px] items-center py-4 text-base font-medium text-foreground transition-colors hover:text-primary"
+                >
+                  Mijn account ({user.name})
+                </Link>
+              ) : (
+                <div className="flex flex-col gap-3 pt-6">
+                  <Button size="lg" className="w-full" asChild>
+                    <Link to="/aanmelden">Aanmelden</Link>
+                  </Button>
+                  <Button size="lg" variant="outline" className="w-full" asChild>
+                    <Link to="/inloggen">Inloggen</Link>
+                  </Button>
+                </div>
+              )}
+            </div>
           </nav>
         </div>
       ) : null}

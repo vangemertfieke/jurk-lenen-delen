@@ -335,7 +335,7 @@ function DressDetail() {
       </div>
 
       {/* Sticky mobile CTA */}
-      <div className="fixed inset-x-0 bottom-16 z-30 border-t border-border bg-background/98 px-6 py-3 backdrop-blur-sm lg:hidden">
+      <div className="fixed inset-x-0 bottom-[calc(3.5rem+env(safe-area-inset-bottom,0px))] z-30 border-t border-border bg-background/98 px-6 py-3 backdrop-blur-sm lg:hidden">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
           <div className="min-w-0">
             <p className="price text-sm">{formatEuro(rental)}</p>

@@ -47,24 +47,26 @@ function Home() {
     <>
       {/* Hero */}
       <section className="border-b border-border">
-        <div className="container-page grid items-center gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-24">
+        <div className="container-page grid items-center gap-10 py-12 lg:grid-cols-2 lg:gap-20 lg:py-24">
           <div className="max-w-xl">
-            <p className="eyebrow">VOOR GALA'S • BRUILOFTEN • DINERS • EVENTS</p>
-            <h1 className="display mt-6 text-[2.75rem] leading-[1.02] sm:text-6xl lg:text-7xl">
+            <p className="eyebrow text-[0.6875rem] font-semibold tracking-[0.16em]">
+              VOOR GALA'S • BRUILOFTEN • DINERS • EVENTS
+            </p>
+            <h1 className="display mt-4 text-3xl xs:text-4xl sm:text-6xl lg:text-7xl leading-[1.05]">
               De kledingkast van Nederland.
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground">
+            <p className="mt-4 text-base sm:text-lg text-muted-foreground">
               Rent your look. Earn from your closet.
             </p>
-            <p className="mt-6 max-w-md text-[0.9375rem] text-muted-foreground">
+            <p className="mt-4 max-w-md text-sm sm:text-[0.9375rem] text-muted-foreground">
               Huur een unieke jurk van een andere vrouw in jouw buurt, of verdien geld met de
               jurken die nu ongedragen in jouw kast hangen.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Button size="lg" asChild>
+            <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <Button size="lg" className="w-full sm:w-auto" asChild>
                 <Link to="/jurken">Huur een jurk</Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button size="lg" variant="outline" className="w-full sm:w-auto" asChild>
                 <Link to="/verhuren">Verhuur mijn jurk</Link>
               </Button>
             </div>
@@ -82,7 +84,7 @@ function Home() {
       </section>
 
       {/* Discover */}
-      <section className="container-page py-20 lg:py-28">
+      <section className="container-page py-14 lg:py-28">
         <SectionHeading
           eyebrow="Ontdek"
           title="Populaire jurken"
@@ -90,27 +92,27 @@ function Home() {
           action={
             <Link
               to="/jurken"
-              className="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+              className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline"
             >
               Bekijk alle jurken <ArrowRight className="size-4" />
             </Link>
           }
         />
 
-        <div className="mt-10 flex flex-wrap gap-x-2 gap-y-2">
+        <div className="-mx-6 px-6 mt-8 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 sm:mx-0 sm:px-0 sm:flex-wrap">
           {categories.map((c) => (
             <Link
               key={c.name}
               to="/jurken"
               search={{ gelegenheid: c.name }}
-              className="border border-border px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+              className="shrink-0 border border-border px-4 py-2 text-xs sm:text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary active:bg-muted"
             >
               {c.name}
             </Link>
           ))}
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-4">
           {featured.map((d) => (
             <DressCard key={d.id} dress={d} />
           ))}

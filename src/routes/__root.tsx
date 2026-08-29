@@ -80,7 +80,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" },
       { title: "DressLoop — De kledingkast van Nederland" },
       {
         name: "description",
@@ -135,7 +135,7 @@ function RootComponent() {
         <RentalProvider>
         <div className="flex min-h-screen flex-col">
           <Header />
-          <main className="flex-1 pb-20 lg:pb-0">
+          <main className="flex-1 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] lg:pb-0">
             <Outlet />
           </main>
           <Footer />

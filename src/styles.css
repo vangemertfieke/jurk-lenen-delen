@@ -180,3 +180,11 @@
 @utility hairline {
   border-top: 1px solid var(--color-border);
 }
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
