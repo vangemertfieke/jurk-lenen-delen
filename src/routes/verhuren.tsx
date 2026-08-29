@@ -22,6 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Field, StatusBadge } from "@/components/dressloop/primitives";
 import { cities, colors, conditions, occasions, sizes } from "@/lib/mock-data";
 import { FEES, calculateOwnerPayout, formatEuro } from "@/lib/config";
+import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/verhuren")({
@@ -52,6 +53,7 @@ const steps = [
 const starterPhotos = [dress1, dress3, dress4];
 
 function Verhuren() {
+  const { user, hydrated } = useApp();
   const [step, setStep] = useState(0);
   const [photos, setPhotos] = useState<string[]>([]);
   const [cover, setCover] = useState(0);
@@ -85,6 +87,14 @@ function Verhuren() {
       description: "In deze demo wordt je jurk lokaal getoond en nog niet echt geplaatst.",
     });
   };
+
+  if (!hydrated) {
+    return <div className="container-page py-24" aria-hidden />;
+  }
+
+  if (!user) {
+    return <VerhuurGate />;
+  }
 
   return (
     <div className="container-page py-12 lg:py-20">
@@ -432,6 +442,50 @@ function Verhuren() {
             </p>
           </div>
         </aside>
+      </div>
+    </div>
+  );
+}
+
+function VerhuurGate() {
+  return (
+    <div className="container-page py-16 lg:py-28">
+      <div className="max-w-xl">
+        <p className="eyebrow">Verhuren</p>
+        <h1 className="display mt-5 text-4xl sm:text-5xl">
+          Maak eerst een account aan.
+        </h1>
+        <p className="mt-6 text-[0.9375rem] text-muted-foreground">
+          Je plaatst een jurk alleen met een DressLoop-account. Zo weten huurders met wie ze te
+          maken hebben, houd jij je boekingen bij en kunnen we je uitbetalen na een goede retour.
+          Aanmelden is gratis en duurt een minuut.
+        </p>
+        <ul className="mt-10 space-y-4">
+          {[
+            "Eén account om te huren én te verhuren",
+            "Beheer je jurken, aanvragen en agenda",
+            "Veilig betaald krijgen via DressLoop",
+          ].map((t) => (
+            <li key={t} className="hairline pt-4 text-sm">
+              {t}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-10 flex flex-wrap gap-4">
+          <Button size="lg" asChild>
+            <Link to="/aanmelden">Account aanmaken</Link>
+          </Button>
+          <Button size="lg" variant="outline" asChild>
+            <Link to="/inloggen">Ik heb al een account</Link>
+          </Button>
+        </div>
+        <p className="mt-8 text-sm text-muted-foreground">
+          Vragen over verhuren?{" "}
+          <Link to="/veelgestelde-vragen" className="text-primary hover:underline">
+            Lees de veelgestelde vragen
+          </Link>
+          .
+        </p>
       </div>
     </div>
   );

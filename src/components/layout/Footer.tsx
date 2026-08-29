@@ -13,7 +13,7 @@ const columns = [
     title: "Verhuren",
     links: [
       { to: "/verhuren", label: "Verhuur je jurk" },
-      { to: "/over-ons", label: "Zo werkt het" },
+      { to: "/veelgestelde-vragen", label: "Zo werkt het" },
     ],
   },
   {
@@ -21,7 +21,7 @@ const columns = [
     links: [
       { to: "/over-ons", label: "Over ons" },
       { to: "/bedrijven", label: "Voor bedrijven" },
-      { to: "/over-ons", label: "Help" },
+      { to: "/veelgestelde-vragen", label: "Veelgestelde vragen" },
     ],
   },
   {

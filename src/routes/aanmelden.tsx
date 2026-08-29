@@ -49,7 +49,7 @@ function Aanmelden() {
   return (
     <AuthLayout
       title="Word lid van DressLoop"
-      intro="Met één account huur je jurken én verhuur je je eigen kast. De rest van je profiel vul je later aan."
+      intro="Eén account voor allebei: je huurt er jurken mee én je verhuurt er je eigen kast mee. Je hoeft dus niets extra's aan te maken om te gaan verhuren."
       footer={
         <>
           Heb je al een account?{" "}

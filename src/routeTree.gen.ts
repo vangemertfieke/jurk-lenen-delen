@@ -15,6 +15,7 @@ import { Route as AccountRouteImport } from './routes/account'
 import { Route as BedrijvenRouteImport } from './routes/bedrijven'
 import { Route as InloggenRouteImport } from './routes/inloggen'
 import { Route as OverOnsRouteImport } from './routes/over-ons'
+import { Route as VeelgesteldeVragenRouteImport } from './routes/veelgestelde-vragen'
 import { Route as VerhurenRouteImport } from './routes/verhuren'
 import { Route as WachtwoordVergetenRouteImport } from './routes/wachtwoord-vergeten'
 import { Route as AccountIndexRouteImport } from './routes/account.index'
@@ -57,6 +58,11 @@ const InloggenRoute = InloggenRouteImport.update({
 const OverOnsRoute = OverOnsRouteImport.update({
   id: '/over-ons',
   path: '/over-ons',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VeelgesteldeVragenRoute = VeelgesteldeVragenRouteImport.update({
+  id: '/veelgestelde-vragen',
+  path: '/veelgestelde-vragen',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VerhurenRoute = VerhurenRouteImport.update({
@@ -132,6 +138,7 @@ export interface FileRoutesByFullPath {
   '/bedrijven': typeof BedrijvenRoute
   '/inloggen': typeof InloggenRoute
   '/over-ons': typeof OverOnsRoute
+  '/veelgestelde-vragen': typeof VeelgesteldeVragenRoute
   '/verhuren': typeof VerhurenRoute
   '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
   '/account/berichten': typeof AccountBerichtenRoute
@@ -152,6 +159,7 @@ export interface FileRoutesByTo {
   '/bedrijven': typeof BedrijvenRoute
   '/inloggen': typeof InloggenRoute
   '/over-ons': typeof OverOnsRoute
+  '/veelgestelde-vragen': typeof VeelgesteldeVragenRoute
   '/verhuren': typeof VerhurenRoute
   '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
   '/account/berichten': typeof AccountBerichtenRoute
@@ -174,6 +182,7 @@ export interface FileRoutesById {
   '/bedrijven': typeof BedrijvenRoute
   '/inloggen': typeof InloggenRoute
   '/over-ons': typeof OverOnsRoute
+  '/veelgestelde-vragen': typeof VeelgesteldeVragenRoute
   '/verhuren': typeof VerhurenRoute
   '/wachtwoord-vergeten': typeof WachtwoordVergetenRoute
   '/account/berichten': typeof AccountBerichtenRoute
@@ -197,6 +206,7 @@ export interface FileRouteTypes {
     | '/bedrijven'
     | '/inloggen'
     | '/over-ons'
+    | '/veelgestelde-vragen'
     | '/verhuren'
     | '/wachtwoord-vergeten'
     | '/account/berichten'
@@ -217,6 +227,7 @@ export interface FileRouteTypes {
     | '/bedrijven'
     | '/inloggen'
     | '/over-ons'
+    | '/veelgestelde-vragen'
     | '/verhuren'
     | '/wachtwoord-vergeten'
     | '/account/berichten'
@@ -238,6 +249,7 @@ export interface FileRouteTypes {
     | '/bedrijven'
     | '/inloggen'
     | '/over-ons'
+    | '/veelgestelde-vragen'
     | '/verhuren'
     | '/wachtwoord-vergeten'
     | '/account/berichten'
@@ -260,6 +272,7 @@ export interface RootRouteChildren {
   BedrijvenRoute: typeof BedrijvenRoute
   InloggenRoute: typeof InloggenRoute
   OverOnsRoute: typeof OverOnsRoute
+  VeelgesteldeVragenRoute: typeof VeelgesteldeVragenRoute
   VerhurenRoute: typeof VerhurenRoute
   WachtwoordVergetenRoute: typeof WachtwoordVergetenRoute
   AfrekenenIdRoute: typeof AfrekenenIdRoute
@@ -309,6 +322,13 @@ declare module '@tanstack/react-router' {
       path: '/over-ons'
       fullPath: '/over-ons'
       preLoaderRoute: typeof OverOnsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/veelgestelde-vragen': {
+      id: '/veelgestelde-vragen'
+      path: '/veelgestelde-vragen'
+      fullPath: '/veelgestelde-vragen'
+      preLoaderRoute: typeof VeelgesteldeVragenRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/verhuren': {
@@ -437,6 +457,7 @@ const rootRouteChildren: RootRouteChildren = {
   BedrijvenRoute: BedrijvenRoute,
   InloggenRoute: InloggenRoute,
   OverOnsRoute: OverOnsRoute,
+  VeelgesteldeVragenRoute: VeelgesteldeVragenRoute,
   VerhurenRoute: VerhurenRoute,
   WachtwoordVergetenRoute: WachtwoordVergetenRoute,
   AfrekenenIdRoute: AfrekenenIdRoute,

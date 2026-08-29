@@ -66,38 +66,17 @@ function OverOns() {
       </section>
 
       <section className="container-page py-20 lg:py-28">
-        <SectionHeading eyebrow="Veelgestelde vragen" title="Goed om te weten" />
-        <dl className="mt-12 max-w-3xl">
-          {[
-            {
-              q: "Hoe werkt betalen?",
-              a: "Je betaalt de volledige huur in één keer via DressLoop. De verhuurder wordt uitbetaald nadat de jurk goed is geretourneerd.",
-            },
-            {
-              q: "Wat als de jurk beschadigd raakt?",
-              a: "Meld het direct via je huurdetails. De borg is bedoeld om kleine schade te dekken; jullie kunnen het samen oplossen via de berichten.",
-            },
-            {
-              q: "Kan ik onderhandelen over de prijs?",
-              a: "Ja. Als de verhuurder biedingen toestaat kun je een bod doen op de huurprijs voor jouw datums.",
-            },
-            {
-              q: "Ophalen of verzenden?",
-              a: "De verhuurder kiest wat mogelijk is. Bij ophalen zie je vooraf alleen de buurt, nooit het exacte adres.",
-            },
-          ].map((f) => (
-            <div key={f.q} className="border-b border-border py-6">
-              <dt className="font-medium">{f.q}</dt>
-              <dd className="mt-2 text-sm text-muted-foreground">{f.a}</dd>
-            </div>
-          ))}
-        </dl>
+        <SectionHeading
+          eyebrow="Hulp nodig"
+          title="Goed om te weten"
+          intro="Vragen over betalen, borg, ophalen of verhuren? Die beantwoorden we op één plek."
+        />
         <div className="mt-12 flex flex-wrap gap-4">
           <Button asChild>
-            <Link to="/jurken">Huur een jurk</Link>
+            <Link to="/veelgestelde-vragen">Naar de veelgestelde vragen</Link>
           </Button>
           <Button variant="outline" asChild>
-            <Link to="/verhuren">Verhuur mijn jurk</Link>
+            <Link to="/jurken">Huur een jurk</Link>
           </Button>
         </div>
       </section>
