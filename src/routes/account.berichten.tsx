@@ -133,14 +133,6 @@ export function Berichten() {
               </div>
             </header>
 
-            {/* Safety Banner */}
-            <div className="flex items-center gap-2.5 border-b border-border bg-amber-500/10 px-5 py-2.5 text-xs text-amber-900 dark:text-amber-200">
-              <ShieldAlert className="size-4 shrink-0 text-amber-600" />
-              <span>
-                <strong>Veilig communiceren:</strong> Het delen van telefoonnummers, Instagram, e-mail of contact buiten het platform is niet toegestaan.
-              </span>
-            </div>
-
             <ul className="flex-1 space-y-5 p-5 max-h-[26rem] overflow-y-auto">
               {active.messages.map((m) =>
                 m.authorId === "system" ? (
@@ -185,27 +177,17 @@ export function Berichten() {
               )}
             </ul>
 
-            {/* Form with live validation */}
+            {/* Form */}
             <div className="border-t border-border p-4">
-              {!validation.allowed && draft.trim().length > 0 ? (
-                <div className="mb-3 flex items-start gap-2 border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">
-                  <ShieldAlert className="size-4 shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-semibold">Contactgegeven of extern verzoek gedetecteerd</p>
-                    <p className="mt-0.5">{validation.reason}</p>
-                  </div>
-                </div>
-              ) : null}
-
               <form className="flex items-center gap-3" onSubmit={handleSend}>
                 <Input
                   value={draft}
                   onChange={(e) => setDraft(e.target.value)}
-                  placeholder="Schrijf een bericht (telefoonnummers of insta niet toegestaan)..."
+                  placeholder="Schrijf een bericht..."
                   aria-label="Bericht"
-                  className={cn("h-11", !validation.allowed && draft.trim().length > 0 && "border-destructive focus-visible:ring-destructive")}
+                  className="h-11"
                 />
-                <Button type="submit" size="icon" aria-label="Versturen" disabled={!draft.trim() || (!validation.allowed && draft.trim().length > 0)}>
+                <Button type="submit" size="icon" aria-label="Versturen" disabled={!draft.trim()}>
                   <Send />
                 </Button>
               </form>
