@@ -16,7 +16,7 @@ export const Route = createFileRoute("/account")({
   component: AccountLayout,
 });
 
-const nav = [
+const nav: { to: string; label: string; exact?: boolean }[] = [
   { to: "/account", label: "Overzicht", exact: true },
   { to: "/account/huuritems", label: "Mijn huuritems" },
   { to: "/account/verhuur", label: "Mijn verhuur" },
@@ -25,7 +25,7 @@ const nav = [
   { to: "/account/meldingen", label: "Meldingen" },
   { to: "/account/profiel", label: "Profiel" },
   { to: "/account/instellingen", label: "Instellingen" },
-] as const;
+];
 
 function AccountLayout() {
   const { user, hydrated } = useApp();
