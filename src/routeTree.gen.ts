@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JurkenIndexRouteImport } from './routes/jurken.index'
+import { Route as JurkenIdRouteImport } from './routes/jurken.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JurkenIndexRoute = JurkenIndexRouteImport.update({
+  id: '/jurken/',
+  path: '/jurken/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JurkenIdRoute = JurkenIdRouteImport.update({
+  id: '/jurken/$id',
+  path: '/jurken/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/jurken/$id': typeof JurkenIdRoute
+  '/jurken/': typeof JurkenIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/jurken/$id': typeof JurkenIdRoute
+  '/jurken': typeof JurkenIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/jurken/$id': typeof JurkenIdRoute
+  '/jurken/': typeof JurkenIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/jurken/$id' | '/jurken/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/jurken/$id' | '/jurken'
+  id: '__root__' | '/' | '/jurken/$id' | '/jurken/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  JurkenIdRoute: typeof JurkenIdRoute
+  JurkenIndexRoute: typeof JurkenIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/jurken/': {
+      id: '/jurken/'
+      path: '/jurken'
+      fullPath: '/jurken/'
+      preLoaderRoute: typeof JurkenIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jurken/$id': {
+      id: '/jurken/$id'
+      path: '/jurken/$id'
+      fullPath: '/jurken/$id'
+      preLoaderRoute: typeof JurkenIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  JurkenIdRoute: JurkenIdRoute,
+  JurkenIndexRoute: JurkenIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
