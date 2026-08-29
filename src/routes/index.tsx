@@ -92,7 +92,8 @@ function Home() {
       <section className="container-page py-20 lg:py-28">
         <SectionHeading
           eyebrow="Ontdek"
-          title="Vind jouw volgende jurk"
+          title="Populaire jurken"
+          intro="De jurken die deze week het vaakst worden bekeken en geboekt."
           action={
             <Link
               to="/jurken"
@@ -103,28 +104,22 @@ function Home() {
           }
         />
 
-        <div className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
+        <SearchBar className="mt-10" />
+
+        <div className="mt-6 flex flex-wrap gap-x-2 gap-y-2">
           {categories.map((c) => (
             <Link
               key={c.name}
               to="/jurken"
               search={{ gelegenheid: c.name }}
-              className="group block"
+              className="border border-border px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
             >
-              <img
-                src={c.image}
-                alt={c.name}
-                loading="lazy"
-                width={900}
-                height={1200}
-                className="aspect-[3/4] w-full object-cover transition-opacity duration-500 group-hover:opacity-90"
-              />
-              <p className="mt-3 text-sm">{c.name}</p>
+              {c.name}
             </Link>
           ))}
         </div>
 
-        <div className="mt-20 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
+        <div className="mt-14 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
           {featured.map((d) => (
             <DressCard key={d.id} dress={d} />
           ))}
