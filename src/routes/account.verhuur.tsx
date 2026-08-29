@@ -1,37 +1,73 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { EmptyState, StatusBadge } from "@/components/dressloop/primitives";
-import { calculateOwnerPayout, formatDateNL, formatEuro } from "@/lib/config";
-import { getDress, getMyListings, getProfile, myDrafts, myRentalsOut } from "@/lib/mock-data";
+import { RentalListItem } from "@/components/dressloop/RentalListItem";
+import { calculateOwnerPayout, formatEuro } from "@/lib/config";
+import { getMyListings, myDrafts } from "@/lib/mock-data";
+import { CURRENT_USER_ID, useRentals } from "@/lib/rental/store";
+import type { RentalFlowStatus } from "@/lib/rental/types";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/account/verhuur")({
   component: Verhuur,
 });
 
-const tabs = [
-  { key: "aanvraag", label: "Nieuwe aanvragen" },
-  { key: "aankomend", label: "Aankomend" },
-  { key: "actief", label: "Actief" },
-  { key: "retourneren", label: "Wachten op retour" },
-  { key: "afgerond", label: "Afgerond" },
-  { key: "jurken", label: "Mijn jurken" },
-  { key: "concepten", label: "Concepten" },
-] as const;
+const tabs: { key: string; label: string; statuses: RentalFlowStatus[] | null }[] = [
+  {
+    key: "actie",
+    label: "Actie nodig",
+    statuses: [
+      "paid",
+      "confirmed",
+      "preparing",
+      "shipped_to_owner",
+      "returned_to_owner",
+      "inspection_period",
+      "return_overdue",
+      "problem_reported",
+      "claim_open",
+    ],
+  },
+  {
+    key: "lopend",
+    label: "Lopend",
+    statuses: [
+      "ready_for_pickup",
+      "shipped_to_renter",
+      "received_by_renter",
+      "rental_active",
+      "return_due",
+      "return_started",
+    ],
+  },
+  {
+    key: "afgerond",
+    label: "Afgerond",
+    statuses: ["completed", "claim_resolved", "payout_pending", "paid_out"],
+  },
+  { key: "alle", label: "Alle verhuur", statuses: null },
+  { key: "jurken", label: "Mijn jurken", statuses: [] },
+  { key: "concepten", label: "Concepten", statuses: [] },
+];
 
 function Verhuur() {
-  const [tab, setTab] = useState<(typeof tabs)[number]["key"]>("aanvraag");
+  const [tab, setTab] = useState("actie");
   const listings = getMyListings();
-  const bookings = myRentalsOut.filter((r) => r.status === tab);
+  const { rentals } = useRentals();
+  const mine = rentals.filter((r) => r.ownerId === CURRENT_USER_ID);
+  const active = tabs.find((t) => t.key === tab);
+  const bookings =
+    active?.statuses === null ? mine : mine.filter((r) => active?.statuses?.includes(r.status));
 
   return (
     <div className="space-y-10">
       <header className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
         <div className="min-w-0">
           <h1 className="display text-3xl sm:text-4xl">Mijn verhuur</h1>
-          <p className="mt-3 text-muted-foreground">De jurken die jij verhuurt aan anderen.</p>
+          <p className="mt-3 text-muted-foreground">
+            Volg elke verhuur van overdracht tot retour, controle en uitbetaling.
+          </p>
         </div>
         <Button asChild className="justify-self-start">
           <Link to="/verhuren">Nieuwe jurk plaatsen</Link>
@@ -106,7 +142,7 @@ function Verhuur() {
       ) : bookings.length === 0 ? (
         <EmptyState
           title="Niets in deze status"
-          description="Nieuwe aanvragen en lopende verhuur verschijnen hier zodra iemand jouw jurk boekt."
+          description="Nieuwe boekingen en lopende verhuur verschijnen hier zodra iemand jouw jurk boekt."
           action={
             <Button asChild>
               <Link to="/verhuren">Plaats een jurk</Link>
@@ -115,65 +151,9 @@ function Verhuur() {
         />
       ) : (
         <ul className="space-y-8">
-          {bookings.map((r) => {
-            const dress = getDress(r.dressId);
-            const renter = getProfile(r.renterId);
-            const payout = calculateOwnerPayout(r.price);
-            if (!dress) return null;
-            return (
-              <li key={r.id} className="grid gap-5 border-t border-border pt-6 sm:grid-cols-[6rem_minmax(0,1fr)]">
-                <img
-                  src={dress.images[0]}
-                  alt={dress.title}
-                  loading="lazy"
-                  className="aspect-[3/4] w-24 object-cover"
-                />
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <p className="font-medium">{dress.title}</p>
-                    <StatusBadge tone={r.status === "aanvraag" ? "warning" : "brand"}>
-                      {r.status}
-                    </StatusBadge>
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Voor {renter.firstName} · {formatDateNL(new Date(r.from))} —{" "}
-                    {formatDateNL(new Date(r.to))}
-                  </p>
-                  <p className="mt-2 text-sm">
-                    <span className="price">{formatEuro(r.price)}</span>
-                    <span className="text-muted-foreground">
-                      {" "}
-                      · jij ontvangt {formatEuro(payout.payout)}
-                    </span>
-                  </p>
-                  <p className="mt-3 text-sm">
-                    <span className="text-muted-foreground">Volgende stap: </span>
-                    {r.nextAction}
-                  </p>
-                  <div className="mt-4 flex flex-wrap items-center gap-4">
-                    {r.status === "aanvraag" ? (
-                      <>
-                        <Button size="sm" onClick={() => toast.success("Aanvraag geaccepteerd")}>
-                          Accepteren
-                        </Button>
-                        <Button
-                          variant="quiet"
-                          size="sm"
-                          onClick={() => toast("Aanvraag geweigerd")}
-                        >
-                          Weigeren
-                        </Button>
-                      </>
-                    ) : (
-                      <Button variant="quiet" size="sm" asChild>
-                        <Link to="/account/berichten">Stuur een bericht</Link>
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              </li>
-            );
-          })}
+          {bookings.map((r) => (
+            <RentalListItem key={r.id} rental={r} role="owner" />
+          ))}
         </ul>
       )}
     </div>

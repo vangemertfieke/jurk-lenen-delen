@@ -1,39 +1,52 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { EmptyState, StatusBadge } from "@/components/dressloop/primitives";
-import { formatDateNL, formatEuro } from "@/lib/config";
-import { getDress, getProfile, rentals } from "@/lib/mock-data";
-import type { RentalStatus } from "@/lib/types";
+import { EmptyState } from "@/components/dressloop/primitives";
+import { RentalListItem } from "@/components/dressloop/RentalListItem";
+import { CURRENT_USER_ID, useRentals } from "@/lib/rental/store";
+import type { RentalFlowStatus } from "@/lib/rental/types";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/account/huuritems")({
   component: Huuritems,
 });
 
-const tabs: { key: RentalStatus | "alle"; label: string }[] = [
-  { key: "alle", label: "Alles" },
-  { key: "aanvraag", label: "Aanvragen" },
-  { key: "aankomend", label: "Aankomend" },
-  { key: "actief", label: "Actief" },
-  { key: "retourneren", label: "Retourneren" },
-  { key: "afgerond", label: "Afgerond" },
-  { key: "geannuleerd", label: "Geannuleerd" },
+const groups: { key: string; label: string; statuses: RentalFlowStatus[] | null }[] = [
+  { key: "alle", label: "Alles", statuses: null },
+  {
+    key: "aankomend",
+    label: "Aankomend",
+    statuses: ["pending_payment", "paid", "confirmed", "preparing", "ready_for_pickup", "shipped_to_renter"],
+  },
+  { key: "actief", label: "Actief", statuses: ["received_by_renter", "rental_active"] },
+  {
+    key: "retour",
+    label: "Retourneren",
+    statuses: ["return_due", "return_overdue", "return_started", "shipped_to_owner", "returned_to_owner", "inspection_period"],
+  },
+  { key: "afgerond", label: "Afgerond", statuses: ["completed", "payout_pending", "paid_out", "claim_resolved"] },
+  { key: "problemen", label: "Meldingen", statuses: ["problem_reported", "claim_open"] },
+  { key: "geannuleerd", label: "Geannuleerd", statuses: ["cancelled"] },
 ];
 
 function Huuritems() {
-  const [tab, setTab] = useState<RentalStatus | "alle">("alle");
-  const list = rentals.filter((r) => tab === "alle" || r.status === tab);
+  const [tab, setTab] = useState("alle");
+  const { rentals } = useRentals();
+  const mine = rentals.filter((r) => r.renterId === CURRENT_USER_ID);
+  const group = groups.find((g) => g.key === tab);
+  const list = group?.statuses ? mine.filter((r) => group.statuses!.includes(r.status)) : mine;
 
   return (
     <div className="space-y-10">
       <header>
         <h1 className="display text-3xl sm:text-4xl">Mijn huuritems</h1>
-        <p className="mt-3 text-muted-foreground">De jurken die je huurt van anderen.</p>
+        <p className="mt-3 text-muted-foreground">
+          De jurken die je huurt van anderen — met status, overdracht, retour en borg.
+        </p>
       </header>
 
       <div className="-mx-1 flex gap-1 overflow-x-auto border-b border-border pb-px">
-        {tabs.map((t) => (
+        {groups.map((t) => (
           <button
             key={t.key}
             type="button"
@@ -53,68 +66,18 @@ function Huuritems() {
       {list.length === 0 ? (
         <EmptyState
           title="Nog geen huuritems in deze status"
-          description="Zodra je een jurk boekt verschijnt die hier, met de datums en de volgende stap."
+          description="Zodra je een jurk boekt, volg je hier de hele huur van boeking tot retour."
           action={
             <Button asChild>
-              <Link to="/jurken">Ontdek jurken</Link>
+              <Link to="/jurken">Bekijk jurken</Link>
             </Button>
           }
         />
       ) : (
         <ul className="space-y-8">
-          {list.map((r) => {
-            const dress = getDress(r.dressId);
-            const owner = getProfile(r.ownerId);
-            if (!dress) return null;
-            return (
-              <li key={r.id} className="grid gap-5 border-t border-border pt-6 sm:grid-cols-[6rem_minmax(0,1fr)]">
-                <Link to="/jurken/$id" params={{ id: dress.id }} className="block w-24">
-                  <img
-                    src={dress.images[0]}
-                    alt={dress.title}
-                    loading="lazy"
-                    className="aspect-[3/4] w-full object-cover"
-                  />
-                </Link>
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <p className="font-medium">{dress.title}</p>
-                    <StatusBadge
-                      tone={
-                        r.status === "actief"
-                          ? "success"
-                          : r.status === "geannuleerd"
-                            ? "neutral"
-                            : "brand"
-                      }
-                    >
-                      {r.status}
-                    </StatusBadge>
-                  </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Van {owner.firstName} · {formatDateNL(new Date(r.from))} —{" "}
-                    {formatDateNL(new Date(r.to))}
-                  </p>
-                  <p className="price mt-2 text-sm">{formatEuro(r.price)}</p>
-                  <p className="mt-3 text-sm">
-                    <span className="text-muted-foreground">Volgende stap: </span>
-                    {r.nextAction}
-                  </p>
-                  <p className="mt-2 text-xs text-muted-foreground">Borg {r.depositStatus}</p>
-                  <div className="mt-4 flex flex-wrap gap-6">
-                    <Button variant="quiet" size="sm" asChild>
-                      <Link to="/account/berichten">Stuur een bericht</Link>
-                    </Button>
-                    <Button variant="quiet" size="sm" asChild>
-                      <Link to="/jurken/$id" params={{ id: dress.id }}>
-                        Bekijk jurk
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-              </li>
-            );
-          })}
+          {list.map((r) => (
+            <RentalListItem key={r.id} rental={r} role="renter" />
+          ))}
         </ul>
       )}
     </div>
