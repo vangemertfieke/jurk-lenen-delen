@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Send } from "lucide-react";
+import { Send, ShieldAlert } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -8,20 +8,60 @@ import { Input } from "@/components/ui/input";
 import { EmptyState } from "@/components/dressloop/primitives";
 import { formatDateNL, formatEuro } from "@/lib/config";
 import { conversations, getDress, getProfile } from "@/lib/mock-data";
+import { validateChatMessage } from "@/lib/chat-moderation";
 import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/account/berichten")({
   component: Berichten,
 });
 
-function Berichten() {
+export function Berichten() {
   const [activeId, setActiveId] = useState(conversations[0]?.id ?? "");
   const [draft, setDraft] = useState("");
-  const active = conversations.find((c) => c.id === activeId);
+  const [convs, setConvs] = useState(conversations);
+
+  const active = convs.find((c) => c.id === activeId);
   const dress = active ? getDress(active.dressId) : undefined;
   const other = active ? getProfile(active.withProfileId) : undefined;
 
-  if (conversations.length === 0) {
+  const validation = validateChatMessage(draft);
+
+  const handleSend = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!draft.trim()) return;
+
+    const check = validateChatMessage(draft);
+    if (!check.allowed) {
+      toast.error("Bericht geblokkeerd", {
+        description: check.reason,
+        duration: 5000,
+      });
+      return;
+    }
+
+    const newMessage = {
+      id: `m_${Date.now()}`,
+      authorId: "me",
+      text: check.sanitizedText,
+      at: "Zojuist",
+    };
+
+    setConvs((prev) =>
+      prev.map((c) =>
+        c.id === activeId
+          ? {
+              ...c,
+              messages: [...c.messages, newMessage],
+            }
+          : c,
+      ),
+    );
+
+    setDraft("");
+    toast.success("Bericht verstuurd");
+  };
+
+  if (convs.length === 0) {
     return (
       <EmptyState
         title="Nog geen berichten"
@@ -39,7 +79,7 @@ function Berichten() {
       <div className="grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-12">
         <aside className="min-w-0">
           <ul className="border-t border-border">
-            {conversations.map((c) => {
+            {convs.map((c) => {
               const d = getDress(c.dressId);
               const p = getProfile(c.withProfileId);
               return (
@@ -48,8 +88,8 @@ function Berichten() {
                     type="button"
                     onClick={() => setActiveId(c.id)}
                     className={cn(
-                      "flex w-full items-center gap-3 border-b border-border px-1 py-4 text-left",
-                      c.id === activeId && "bg-blush/60",
+                      "flex w-full items-center gap-3 border-b border-border px-1 py-4 text-left transition-colors hover:bg-muted/50",
+                      c.id === activeId && "bg-blush/60 font-medium",
                     )}
                   >
                     <img
@@ -70,7 +110,7 @@ function Berichten() {
         </aside>
 
         {active && dress && other ? (
-          <section className="min-w-0 border border-border bg-card">
+          <section className="flex min-w-0 flex-col border border-border bg-card">
             <header className="flex items-center gap-4 border-b border-border p-5">
               <img
                 src={dress.images[0]}
@@ -93,12 +133,20 @@ function Berichten() {
               </div>
             </header>
 
-            <ul className="space-y-5 p-5">
+            {/* Safety Banner */}
+            <div className="flex items-center gap-2.5 border-b border-border bg-amber-500/10 px-5 py-2.5 text-xs text-amber-900 dark:text-amber-200">
+              <ShieldAlert className="size-4 shrink-0 text-amber-600" />
+              <span>
+                <strong>Veilig communiceren:</strong> Het delen van telefoonnummers, Instagram, e-mail of contact buiten het platform is niet toegestaan.
+              </span>
+            </div>
+
+            <ul className="flex-1 space-y-5 p-5 max-h-[26rem] overflow-y-auto">
               {active.messages.map((m) =>
                 m.authorId === "system" ? (
                   <li key={m.id} className="mx-auto max-w-sm bg-blush px-4 py-3 text-center">
                     <p className="text-sm text-blush-foreground">{m.text}</p>
-                    <Button size="sm" className="mt-3" onClick={() => toast("Boeking afronden")}>
+                    <Button size="sm" className="mt-3" onClick={() => toast.info("Boeking afronden")}>
                       Boeking afronden
                     </Button>
                   </li>
@@ -120,7 +168,7 @@ function Berichten() {
                           : "bg-muted text-foreground",
                       )}
                     >
-                      <p>{m.text}</p>
+                      <p className="whitespace-pre-wrap break-words">{m.text}</p>
                       <p
                         className={cn(
                           "mt-1 text-[0.6875rem]",
@@ -137,26 +185,31 @@ function Berichten() {
               )}
             </ul>
 
-            <form
-              className="flex items-center gap-3 border-t border-border p-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!draft.trim()) return;
-                setDraft("");
-                toast.success("Bericht verstuurd");
-              }}
-            >
-              <Input
-                value={draft}
-                onChange={(e) => setDraft(e.target.value)}
-                placeholder="Schrijf een bericht"
-                aria-label="Bericht"
-                className="h-11"
-              />
-              <Button type="submit" size="icon" aria-label="Versturen">
-                <Send />
-              </Button>
-            </form>
+            {/* Form with live validation */}
+            <div className="border-t border-border p-4">
+              {!validation.allowed && draft.trim().length > 0 ? (
+                <div className="mb-3 flex items-start gap-2 border border-destructive/30 bg-destructive/10 p-3 text-xs text-destructive">
+                  <ShieldAlert className="size-4 shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold">Contactgegeven of extern verzoek gedetecteerd</p>
+                    <p className="mt-0.5">{validation.reason}</p>
+                  </div>
+                </div>
+              ) : null}
+
+              <form className="flex items-center gap-3" onSubmit={handleSend}>
+                <Input
+                  value={draft}
+                  onChange={(e) => setDraft(e.target.value)}
+                  placeholder="Schrijf een bericht (telefoonnummers of insta niet toegestaan)..."
+                  aria-label="Bericht"
+                  className={cn("h-11", !validation.allowed && draft.trim().length > 0 && "border-destructive focus-visible:ring-destructive")}
+                />
+                <Button type="submit" size="icon" aria-label="Versturen" disabled={!draft.trim() || (!validation.allowed && draft.trim().length > 0)}>
+                  <Send />
+                </Button>
+              </form>
+            </div>
           </section>
         ) : null}
       </div>
