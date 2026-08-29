@@ -18,8 +18,9 @@ import { brands, cities, colors, getDresses, occasions, sizes } from "@/lib/mock
 import { formatEuro } from "@/lib/config";
 
 interface JurkenSearch {
-  gelegenheid?: string;
+  gelegenheid?: string | undefined;
 }
+
 
 export const Route = createFileRoute("/jurken/")({
   validateSearch: (search: Record<string, unknown>): JurkenSearch => ({
