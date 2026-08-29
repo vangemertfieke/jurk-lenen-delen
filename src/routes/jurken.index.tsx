@@ -19,12 +19,14 @@ import { formatEuro } from "@/lib/config";
 
 interface JurkenSearch {
   gelegenheid?: string | undefined;
+  q?: string | undefined;
 }
 
 
 export const Route = createFileRoute("/jurken/")({
   validateSearch: (search: Record<string, unknown>): JurkenSearch => ({
     gelegenheid: typeof search["gelegenheid"] === "string" ? search["gelegenheid"] : undefined,
+    q: typeof search["q"] === "string" ? search["q"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -47,8 +49,8 @@ export const Route = createFileRoute("/jurken/")({
 const ALLE = "alle";
 
 function Jurken() {
-  const { gelegenheid } = Route.useSearch();
-  const [query, setQuery] = useState("");
+  const { gelegenheid, q: initialQuery } = Route.useSearch();
+  const [query, setQuery] = useState(initialQuery ?? "");
   const [size, setSize] = useState(ALLE);
   const [brand, setBrand] = useState(ALLE);
   const [color, setColor] = useState(ALLE);
