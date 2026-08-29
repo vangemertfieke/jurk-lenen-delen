@@ -2,13 +2,9 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import heroImg from "@/assets/hero.jpg";
 import closetImg from "@/assets/closet.jpg";
-import dress2 from "@/assets/dress-2.jpg";
-import dress3 from "@/assets/dress-3.jpg";
-import dress4 from "@/assets/dress-4.jpg";
-import dress5 from "@/assets/dress-5.jpg";
-import dress1 from "@/assets/dress-1.jpg";
 import { Button } from "@/components/ui/button";
 import { DressCard } from "@/components/dressloop/DressCard";
+import { SearchBar } from "@/components/dressloop/SearchBar";
 import { SectionHeading } from "@/components/dressloop/primitives";
 import { getDresses } from "@/lib/mock-data";
 
@@ -31,14 +27,9 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const categories = [
-  { name: "Bruiloft", image: dress4 },
-  { name: "Gala", image: dress2 },
-  { name: "Festival", image: dress3 },
-  { name: "Diner", image: dress1 },
-  { name: "Feest", image: dress5 },
-  { name: "Vakantie", image: dress3 },
-];
+const categories = ["Bruiloft", "Gala", "Festival", "Diner", "Feest", "Vakantie"].map((name) => ({
+  name,
+}));
 
 const steps = [
   { n: "01", title: "Vind jouw jurk", text: "Zoek op maat, merk, gelegenheid of locatie." },
@@ -48,7 +39,9 @@ const steps = [
 ];
 
 function Home() {
-  const featured = getDresses().slice(0, 4);
+  const featured = [...getDresses()]
+    .sort((a, b) => b.rating * b.reviewCount - a.rating * a.reviewCount)
+    .slice(0, 8);
 
   return (
     <>
