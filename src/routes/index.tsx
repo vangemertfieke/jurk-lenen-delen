@@ -4,7 +4,7 @@ import heroImg from "@/assets/hero.jpg";
 import closetImg from "@/assets/closet.jpg";
 import { Button } from "@/components/ui/button";
 import { DressCard } from "@/components/dressloop/DressCard";
-import { SearchBar } from "@/components/dressloop/SearchBar";
+
 import { SectionHeading } from "@/components/dressloop/primitives";
 import { getDresses } from "@/lib/mock-data";
 
@@ -97,9 +97,7 @@ function Home() {
           }
         />
 
-        <SearchBar className="mt-10" />
-
-        <div className="mt-6 flex flex-wrap gap-x-2 gap-y-2">
+        <div className="mt-10 flex flex-wrap gap-x-2 gap-y-2">
           {categories.map((c) => (
             <Link
               key={c.name}
