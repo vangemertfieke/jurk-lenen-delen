@@ -357,14 +357,19 @@ function RentalDetail() {
           ) : null}
 
           {/* bewijs */}
-          <section className="space-y-5">
-            <h2 className="display text-2xl">Conditiefoto's bij deze huur</h2>
-            <p className="text-sm text-muted-foreground">
+          <details className="border border-border bg-card p-6">
+            <summary className="cursor-pointer text-sm font-medium">
+              Alle conditiefoto's van deze huur ({rental.evidence.length})
+            </summary>
+            <p className="mt-3 text-sm text-muted-foreground">
               Deze foto's horen alleen bij deze huur en zijn zichtbaar voor jou, de andere partij en
               DressLoop.
             </p>
-            <EvidenceGrid evidence={rental.evidence} />
-          </section>
+            <div className="mt-5">
+              <EvidenceGrid evidence={rental.evidence} />
+            </div>
+          </details>
+
 
           {/* audit */}
           <section className="space-y-4">
