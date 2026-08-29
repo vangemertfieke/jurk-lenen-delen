@@ -1,13 +1,13 @@
 /**
  * DressLoop Chat Safety & Moderation System
  * Strict safety rules preventing sharing or asking for phone numbers, Instagram/social media handles,
- * emails, URLs, full names, cash/Tikkie payments, and off-platform contact.
+ * emails, URLs, full names (first + last name), cash/Tikkie payments, and off-platform contact.
  */
 
 export interface ModerationResult {
   allowed: boolean;
   reason?: string;
-  detectedType?: "phone" | "social" | "email" | "url" | "offplatform" | "payment";
+  detectedType?: "phone" | "social" | "email" | "url" | "offplatform" | "payment" | "fullname";
   sanitizedText: string;
 }
 
@@ -46,13 +46,29 @@ const URL_PATTERNS = [
   /\b[a-zA-Z0-9.-]+\.(?:nl|com|be|eu|org|net|de|co|app)\b/i,
 ];
 
-// 5. Off-platform phrases & requests
-const OFF_PLATFORM_PATTERNS = [
-  /\b(?:app\s*me|stuur\s+(?:een\s+)?appje|stuur\s+(?:een\s+)?wa|bel\s*me|bel\s*mij|mijn\s*nummer|mijn\s*mobiel|zoek\s*me\s*op|dm\s*me|stuur\s*(?:een\s*)?dm|stuur\s*(?:een\s*)?pb|buiten\s+(?:het\s+)?platform|buiten\s+dressloop|buiten\s+de\s+app|onderling\s+regelen)\b/i,
-  /\b(?:wat\s+is\s+je\s+(?:hele\s+|volledige\s+)?naam|hoe\s+heet\s+je\s+van\s+achternaam|wat\s+is\s+je\s+achternaam)\b/i,
+// 5. Full name detection (First name + Last name, Dutch tussenvoegsels, questions asking for full name)
+const FULL_NAME_PATTERNS = [
+  // Dutch names with tussenvoegsels: e.g. "Fieke van Gemert", "Sophie de Jong", "Emma van der Wal"
+  /\b[a-zäöüéèáàï'-]{2,20}\s+(?:van\s+der|van\s+den|van\s+de|van|de|den|der|te|ten|ter|v\.?d\.?)\s+[a-zäöüéèáàï'-]{2,20}\b/i,
+  // Explicit full name statements: "mijn naam is Fieke Gemert", "mijn volle naam is...", "ik heet Fieke Gemert"
+  /\b(?:mijn\s+(?:volle\s+|volledige\s+)?naam\s+is|ik\s+heet|zoek\s+me\s+op\s+(?:als|onder)|mijn\s+achternaam\s+is|mijn\s+voor\s*en\s*achternaam\s+is)\s+[a-zäöüéèáàï'-]{2,}(?:\s+[a-zäöüéèáàï'-]{2,})+/i,
+  // Direct questions asking for full name or last name
+  /\b(?:wat\s+is\s+je\s+(?:voor\s*en\s*)?(?:hele\s+|volledige\s+)?naam|wat\s+is\s+je\s+achternaam|hoe\s+heet\s+je\s+van\s+achternaam|geef\s+je\s+(?:voor\s*en\s*)?achternaam)\b/i,
 ];
 
-// 6. Off-platform payments (Tikkie, cash, direct bank transfers outside platform)
+// Common phrases that should NOT be flagged as two capitalized words
+const ALLOWED_CAPITALIZED_PHRASES = new Set([
+  "Hallo Daar", "Goedemorgen", "Goedemiddag", "Goedenavond", "Hartelijk Dank", "Tot Snel",
+  "Met Vriendelijke", "Veel Plezier", "Fijne Dag", "Geen Probleem", "Zeker Weten", "Dat Is",
+  "Ik Wil", "Kan Ik", "Wanneer Is", "Hoe Laat", "Tot Morgen", "Geen Zorgen"
+]);
+
+// 6. Off-platform phrases & requests
+const OFF_PLATFORM_PATTERNS = [
+  /\b(?:app\s*me|stuur\s+(?:een\s+)?appje|stuur\s+(?:een\s+)?wa|bel\s*me|bel\s*mij|mijn\s*nummer|mijn\s*mobiel|zoek\s*me\s*op|dm\s*me|stuur\s*(?:een\s*)?dm|stuur\s*(?:een\s*)?pb|buiten\s+(?:het\s+)?platform|buiten\s+dressloop|buiten\s+de\s+app|onderling\s+regelen)\b/i,
+];
+
+// 7. Off-platform payments (Tikkie, cash, direct bank transfers outside platform)
 const PAYMENT_BYPASS_PATTERNS = [
   /\b(?:tikkie|tikkie\s+sturen|contant|cash|overmaken\s+op\s+rekening|bankoverschrijving|betaalverzoek\s+sturen)\b/i,
 ];
@@ -95,6 +111,32 @@ export function validateChatMessage(text: string): ModerationResult {
         reason: "Het delen van of vragen om e-mailadressen is niet toegestaan.",
         detectedType: "email",
         sanitizedText: trimmed.replace(pattern, "[e-mailadres afgeschermd]"),
+      };
+    }
+  }
+
+  // Check Full Name (First + Last Name)
+  for (const pattern of FULL_NAME_PATTERNS) {
+    if (pattern.test(trimmed)) {
+      return {
+        allowed: false,
+        reason: "Het delen van of vragen om voor- en achternamen is niet toegestaan om communicatie buiten het platform te voorkomen.",
+        detectedType: "fullname",
+        sanitizedText: trimmed.replace(pattern, "[naam afgeschermd]"),
+      };
+    }
+  }
+
+  // Check two consecutive capitalized words (potential First Name + Last Name)
+  const twoCapWordsMatch = trimmed.match(/\b([A-Z][a-zäöüéèáàï'-]{2,15})\s+([A-Z][a-zäöüéèáàï'-]{2,15})\b/);
+  if (twoCapWordsMatch) {
+    const phrase = twoCapWordsMatch[0];
+    if (!ALLOWED_CAPITALIZED_PHRASES.has(phrase)) {
+      return {
+        allowed: false,
+        reason: "Het delen van voor- en achternamen is niet toegestaan in de chat.",
+        detectedType: "fullname",
+        sanitizedText: trimmed.replace(phrase, "[naam afgeschermd]"),
       };
     }
   }
