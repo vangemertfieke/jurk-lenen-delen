@@ -1,12 +1,8 @@
 /**
  * DressLoop Chat Safety & Moderation System
- * Comprehensive, strict safety rules preventing sharing or asking for:
- * - Phone numbers & WhatsApp
- * - Social media (Instagram, Facebook, Snapchat, LinkedIn, TikTok, Pinterest, X/Twitter, BeReal)
- * - Email addresses
- * - Full names & last names (separated OR concatenated together, e.g. "fiekevangemert")
- * - Website URLs & links
- * - Off-platform contact requests & external payment methods (Tikkie, cash, bank transfer)
+ * Advanced anti-circumvention filter that neutralizes leetspeak, numbers, symbols, spaces, and punctuation
+ * to prevent sharing phone numbers, social media handles, email, full names (including obfuscated like "fieke-van0gemert"),
+ * URLs, and off-platform payments.
  */
 
 export interface ModerationResult {
@@ -14,6 +10,25 @@ export interface ModerationResult {
   reason?: string;
   detectedType?: "phone" | "social" | "email" | "url" | "offplatform" | "payment" | "fullname";
   sanitizedText: string;
+}
+
+/**
+ * Normalizes obfuscated text by replacing leetspeak / numbers-for-letters,
+ * stripping special characters, dots, hyphens, underscrores and spaces.
+ */
+function normalizeText(text: string): string {
+  return text
+    .toLowerCase()
+    // Replace leetspeak numbers with letters (0 -> o, 1 -> i/l, 3 -> e, 4 -> a, 5 -> s, 7 -> t, 8 -> b)
+    .replace(/0/g, "o")
+    .replace(/1/g, "i")
+    .replace(/3/g, "e")
+    .replace(/4/g, "a")
+    .replace(/5/g, "s")
+    .replace(/7/g, "t")
+    .replace(/8/g, "b")
+    // Remove punctuation, hyphens, dots, underscores, special characters
+    .replace(/[^a-z0-9]/g, "");
 }
 
 // 1. Phone numbers (06, +31, spaced digits, spelled-out digits, requests for phone numbers/WhatsApp)
@@ -26,7 +41,7 @@ const PHONE_PATTERNS = [
   /\b(?:06-?nummer|telefoonnummer|mobiel\s+nummer)\b/i,
 ];
 
-// 2. All Social Media platforms (Instagram, Facebook, Snapchat, LinkedIn, TikTok, X, Twitter, Pinterest, BeReal, etc.)
+// 2. Social Media platforms (Instagram, Facebook, Snapchat, LinkedIn, TikTok, Pinterest, X/Twitter, BeReal, etc.)
 const SOCIAL_PATTERNS = [
   /@[\w._]{3,30}\b/i,
   /\b(?:instagram|insta|ig|facebook|fb|snapchat|snap|linkedin|tiktok|pinterest|twitter|bereal|whatsapp|wa)\b[\s.:]*@?[\w._]*/i,
@@ -34,6 +49,17 @@ const SOCIAL_PATTERNS = [
   /wa\.me\/\d+/i,
   /\b(?:wat\s+is\s+je\s+(?:insta|instagram|ig|facebook|fb|snap|snapchat|linkedin|tiktok|socials?)|heb\s+je\s+(?:insta|instagram|ig|facebook|fb|snap|snapchat|linkedin|tiktok)|geef\s+je\s+(?:insta|instagram|ig|facebook|fb|snap|snapchat|linkedin|tiktok)|stuur\s+je\s+(?:insta|instagram|ig|facebook|fb|snap|snapchat|linkedin|tiktok)|hoe\s+heet\s+je\s+op\s+(?:insta|instagram|ig|facebook|fb|snap|snapchat|linkedin|tiktok)|welke\s+(?:insta|facebook|snap|linkedin))\b/i,
   /\b(?:volg\s+me\s+op|zoek\s+me\s+op\s+op)\s+(?:insta|instagram|ig|facebook|fb|snap|snapchat|linkedin|tiktok)\b/i,
+];
+
+// Normalized social media patterns (matched against stripped text)
+const NORMALIZED_SOCIAL_PATTERNS = [
+  /instagram/i,
+  /insta/i,
+  /facebook/i,
+  /snapchat/i,
+  /linkedin/i,
+  /tiktok/i,
+  /whatsapp/i,
 ];
 
 // 3. Email addresses & email requests (including disguised emails like name at gmail dot com)
@@ -52,22 +78,17 @@ const URL_PATTERNS = [
   /\b[a-zA-Z0-9.-]+\.(?:nl|com|be|eu|org|net|de|co|app)\b/i,
 ];
 
-// 5. Full name detection (First name + Last name, separated OR concatenated together like "fiekevangemert")
+// 5. Full name detection (First name + Last name, Dutch tussenvoegsels)
 const FULL_NAME_PATTERNS = [
-  // Dutch names with tussenvoegsels separated by spaces: e.g. "Fieke van Gemert", "Sophie de Jong", "Emma van der Wal"
   /\b[a-zäöüéèáàï'-]{2,20}\s+(?:van\s+der|van\s+den|van\s+de|van|de|den|der|te|ten|ter|v\.?d\.?)\s+[a-zäöüéèáàï'-]{2,20}\b/i,
-
-  // Concatenated names with tussenvoegsels without spaces: e.g. "fiekevangemert", "sophiedejong", "emmavanderwal", "lauravandenberg"
-  /\b[a-zäöüéèáàï'-]{2,20}(?:vangemert|vander|vanden|vande|van|dejong|dejonge|de|den|der|te|ten|ter)[a-zäöüéèáàï'-]{2,20}\b/i,
-
-  // Concatenated common Dutch first names + last names without spaces: e.g. "fiekegemert", "laurajansen", "sophiebint"
-  /\b(?:fieke|laura|sophie|emma|julia|milla|anna|lotte|sanne|eva|lisa|fleur|noa|tess|lieke|yara|milou|anouk|sarah|charlotte|nora|saar|fenna|elena|iris|roos|isabel|daisy|benthe|jasmijn|amber|bo|chloë|daan|sem|lucas|milan|levi|finn|liam|luuk|bram|mees|dilan)[a-z]{3,20}\b/i,
-
-  // Explicit full name statements: "mijn naam is Fieke Gemert", "mijn volle naam is...", "ik heet Fieke Gemert"
   /\b(?:mijn\s+(?:volle\s+|volledige\s+)?naam\s+is|ik\s+heet|zoek\s+me\s+op\s+(?:als|onder)|mijn\s+achternaam\s+is|mijn\s+voor\s*en\s*achternaam\s+is)\s+[a-zäöüéèáàï'-]{2,}(?:\s+[a-zäöüéèáàï'-]{2,})+/i,
-
-  // Direct questions asking for full name or last name
   /\b(?:wat\s+is\s+je\s+(?:voor\s*en\s*)?(?:hele\s+|volledige\s+)?naam|wat\s+is\s+je\s+achternaam|hoe\s+heet\s+je\s+van\s+achternaam|geef\s+je\s+(?:voor\s*en\s*)?achternaam)\b/i,
+];
+
+// Normalized Dutch names & concatenated patterns (matched against stripped/leetspeak-normalized text)
+const NORMALIZED_NAME_PATTERNS = [
+  /[a-z]{2,15}(?:vangemert|vander|vanden|vande|van|dejong|dejonge|de|den|der|te|ten|ter)[a-z]{2,15}/i,
+  /(?:fieke|laura|sophie|emma|julia|milla|anna|lotte|sanne|eva|lisa|fleur|noa|tess|lieke|yara|milou|anouk|sarah|charlotte|nora|saar|fenna|elena|iris|roos|isabel|daisy|benthe|jasmijn|amber|bo|chloë|daan|sem|lucas|milan|levi|finn|liam|luuk|bram|mees|dilan)(?:vangemert|gemert|vander|vanden|vande|van|dejong|dejonge|de|den|der|jansen|bakker|visser|smit|meijer|boer|mulder|bos|vos|peters|hendriks|dekker|brouwer|smits|de wit|dijkstra|smid|hoekstra|maas|stout)/i,
 ];
 
 // Common Dutch phrases that should NOT be flagged as two capitalized words
@@ -93,7 +114,9 @@ export function validateChatMessage(text: string): ModerationResult {
     return { allowed: true, sanitizedText: text };
   }
 
-  // Check phone numbers
+  const normalized = normalizeText(trimmed);
+
+  // Check phone numbers (raw and normalized)
   for (const pattern of PHONE_PATTERNS) {
     if (pattern.test(trimmed)) {
       return {
@@ -117,7 +140,7 @@ export function validateChatMessage(text: string): ModerationResult {
     }
   }
 
-  // Check Social media (Instagram, Facebook, Snapchat, LinkedIn, TikTok, etc.)
+  // Check Social media (raw)
   for (const pattern of SOCIAL_PATTERNS) {
     if (pattern.test(trimmed)) {
       return {
@@ -129,14 +152,26 @@ export function validateChatMessage(text: string): ModerationResult {
     }
   }
 
-  // Check Full Name (First + Last Name, including concatenated words like 'fiekevangemert')
+  // Check Full Name (raw)
   for (const pattern of FULL_NAME_PATTERNS) {
     if (pattern.test(trimmed)) {
       return {
         allowed: false,
-        reason: "Het delen van voor- en achternamen (ook aan elkaar geschreven) is niet toegestaan in de chat.",
+        reason: "Het delen van voor- en achternamen is niet toegestaan in de chat.",
         detectedType: "fullname",
         sanitizedText: trimmed.replace(pattern, "[naam afgeschermd]"),
+      };
+    }
+  }
+
+  // Check normalized full names (catches obfuscated variations like 'fieke-van0gemert', 'laura_van1berg', etc.)
+  for (const pattern of NORMALIZED_NAME_PATTERNS) {
+    if (pattern.test(normalized)) {
+      return {
+        allowed: false,
+        reason: "Het delen van voor- en achternamen (ook creatief of omzeild geschreven) is niet toegestaan in de chat.",
+        detectedType: "fullname",
+        sanitizedText: "[naam afgeschermd]",
       };
     }
   }
