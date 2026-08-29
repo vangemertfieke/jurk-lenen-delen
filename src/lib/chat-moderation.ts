@@ -4,7 +4,7 @@
  * - Phone numbers & WhatsApp
  * - Social media (Instagram, Facebook, Snapchat, LinkedIn, TikTok, Pinterest, X/Twitter, BeReal)
  * - Email addresses
- * - Full names & last names
+ * - Full names & last names (separated OR concatenated together, e.g. "fiekevangemert")
  * - Website URLs & links
  * - Off-platform contact requests & external payment methods (Tikkie, cash, bank transfer)
  */
@@ -52,10 +52,21 @@ const URL_PATTERNS = [
   /\b[a-zA-Z0-9.-]+\.(?:nl|com|be|eu|org|net|de|co|app)\b/i,
 ];
 
-// 5. Full name detection (First name + Last name, Dutch tussenvoegsels, questions asking for full name)
+// 5. Full name detection (First name + Last name, separated OR concatenated together like "fiekevangemert")
 const FULL_NAME_PATTERNS = [
+  // Dutch names with tussenvoegsels separated by spaces: e.g. "Fieke van Gemert", "Sophie de Jong", "Emma van der Wal"
   /\b[a-zäöüéèáàï'-]{2,20}\s+(?:van\s+der|van\s+den|van\s+de|van|de|den|der|te|ten|ter|v\.?d\.?)\s+[a-zäöüéèáàï'-]{2,20}\b/i,
+
+  // Concatenated names with tussenvoegsels without spaces: e.g. "fiekevangemert", "sophiedejong", "emmavanderwal", "lauravandenberg"
+  /\b[a-zäöüéèáàï'-]{2,20}(?:vangemert|vander|vanden|vande|van|dejong|dejonge|de|den|der|te|ten|ter)[a-zäöüéèáàï'-]{2,20}\b/i,
+
+  // Concatenated common Dutch first names + last names without spaces: e.g. "fiekegemert", "laurajansen", "sophiebint"
+  /\b(?:fieke|laura|sophie|emma|julia|milla|anna|lotte|sanne|eva|lisa|fleur|noa|tess|lieke|yara|milou|anouk|sarah|charlotte|nora|saar|fenna|elena|iris|roos|isabel|daisy|benthe|jasmijn|amber|bo|chloë|daan|sem|lucas|milan|levi|finn|liam|luuk|bram|mees|dilan)[a-z]{3,20}\b/i,
+
+  // Explicit full name statements: "mijn naam is Fieke Gemert", "mijn volle naam is...", "ik heet Fieke Gemert"
   /\b(?:mijn\s+(?:volle\s+|volledige\s+)?naam\s+is|ik\s+heet|zoek\s+me\s+op\s+(?:als|onder)|mijn\s+achternaam\s+is|mijn\s+voor\s*en\s*achternaam\s+is)\s+[a-zäöüéèáàï'-]{2,}(?:\s+[a-zäöüéèáàï'-]{2,})+/i,
+
+  // Direct questions asking for full name or last name
   /\b(?:wat\s+is\s+je\s+(?:voor\s*en\s*)?(?:hele\s+|volledige\s+)?naam|wat\s+is\s+je\s+achternaam|hoe\s+heet\s+je\s+van\s+achternaam|geef\s+je\s+(?:voor\s*en\s*)?achternaam)\b/i,
 ];
 
@@ -118,12 +129,12 @@ export function validateChatMessage(text: string): ModerationResult {
     }
   }
 
-  // Check Full Name (First + Last Name)
+  // Check Full Name (First + Last Name, including concatenated words like 'fiekevangemert')
   for (const pattern of FULL_NAME_PATTERNS) {
     if (pattern.test(trimmed)) {
       return {
         allowed: false,
-        reason: "Het delen van of vragen om voor- en achternamen is niet toegestaan om communicatie buiten het platform te voorkomen.",
+        reason: "Het delen van voor- en achternamen (ook aan elkaar geschreven) is niet toegestaan in de chat.",
         detectedType: "fullname",
         sanitizedText: trimmed.replace(pattern, "[naam afgeschermd]"),
       };
