@@ -97,9 +97,7 @@ function Home() {
           }
         />
 
-        <SearchBar className="mt-10" />
-
-        <div className="mt-6 flex flex-wrap gap-x-2 gap-y-2">
+        <div className="mt-10 flex flex-wrap gap-x-2 gap-y-2">
           {categories.map((c) => (
             <Link
               key={c.name}

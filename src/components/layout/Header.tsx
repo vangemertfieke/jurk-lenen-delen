@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Bell, Heart, Menu, MessageSquare, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { SearchBar } from "@/components/dressloop/SearchBar";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -24,13 +25,14 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container-page grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:h-20 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <div className="min-w-0">
+        <div className="flex min-w-0 items-center gap-6">
           <Link
             to="/"
-            className="text-[1.0625rem] font-medium tracking-[0.02em] text-primary"
+            className="shrink-0 text-[1.0625rem] font-medium tracking-[0.02em] text-primary"
           >
             DressLoop
           </Link>
+          <SearchBar variant="compact" className="hidden w-72 md:flex lg:w-80" />
         </div>
 
         <nav className="hidden justify-center gap-10 lg:flex">
@@ -91,6 +93,7 @@ export function Header() {
       {open ? (
         <div className="border-t border-border bg-background lg:hidden">
           <nav className="container-page flex flex-col py-4">
+            <SearchBar variant="compact" className="mb-4 md:hidden" />
             {nav.map((item) => (
               <Link
                 key={item.to}
