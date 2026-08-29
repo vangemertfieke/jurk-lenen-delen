@@ -1,5 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
-import { ChevronDown, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import {
   Select,
@@ -48,10 +48,9 @@ export function SearchBar({
         <Select value={category} onValueChange={setCategory}>
           <SelectTrigger
             aria-label="Categorie"
-            className="h-full w-auto shrink-0 gap-1.5 rounded-full border-0 bg-transparent px-4 text-xs shadow-none focus-visible:ring-0 [&_svg]:hidden"
+            className="h-full w-auto shrink-0 gap-1.5 rounded-full border-0 bg-transparent px-4 text-xs shadow-none focus-visible:ring-0 [&_svg]:size-3.5"
           >
             <SelectValue placeholder="Categorieën" />
-            <ChevronDown className="size-3.5 shrink-0 text-muted-foreground" />
           </SelectTrigger>
           <SelectContent className="rounded-none border-border">
             <SelectItem value={ALLE}>Categorieën</SelectItem>
