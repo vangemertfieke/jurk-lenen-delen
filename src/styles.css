@@ -69,7 +69,7 @@
 
   --cream: oklch(0.965 0.018 91);
   --offwhite: oklch(0.982 0.012 91);
-  --blush: oklch(0.88 0.035 210);
+  --blush: oklch(0.9 0.045 8);
   --blush-foreground: oklch(0.25 0.07 18);
   --rose: oklch(0.68 0.17 18);
 
@@ -84,7 +84,7 @@
   --primary: oklch(0.43 0.18 22);
   --primary-foreground: oklch(0.985 0.012 91);
 
-  --secondary: oklch(0.88 0.035 210);
+  --secondary: oklch(0.9 0.045 8);
   --secondary-foreground: oklch(0.25 0.07 18);
 
   --muted: oklch(0.93 0.02 91);
