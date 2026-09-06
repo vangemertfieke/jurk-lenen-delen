@@ -1,5 +1,5 @@
 /**
- * Domeinmodel voor de DressLoop huurbescherming.
+ * Domeinmodel voor de Borro huurbescherming.
  *
  * Deze types zijn bewust 1-op-1 te mappen op toekomstige Supabase-tabellen
  * (rentals, rental_events, rental_evidence, claims, claim_decisions, audit_log).
@@ -72,7 +72,7 @@ export interface RentalPayment {
   depositAmount: number;
   /** Totaal dat de huurder betaalt, inclusief borg. */
   totalCharged: number;
-  /** Commissie DressLoop over de huurprijs. */
+  /** Commissie Borro over de huurprijs. */
   commissionRate: number;
   commissionAmount: number;
   /** Bedrag dat de verhuurder na afronding krijgt. */

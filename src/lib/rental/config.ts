@@ -5,7 +5,7 @@ import { FEES } from "@/lib/config";
  * Nooit hardcoden in componenten — altijd via deze constanten en functies.
  */
 export const PROTECTION_CONFIG = {
-  /** Commissie DressLoop op de huuropbrengst (verhuurder). */
+  /** Commissie Borro op de huuropbrengst (verhuurder). */
   commissionRate: FEES.ownerCommissionRate,
   /** Servicekosten huurder. */
   renterServiceFee: FEES.renterServiceFee,
@@ -27,7 +27,7 @@ export const PROTECTION_CONFIG = {
   },
 
   dressValue: {
-    /** MVP: DressLoop ondersteunt jurken tot ongeveer dit bedrag. */
+    /** MVP: Borro ondersteunt jurken tot ongeveer dit bedrag. */
     supportedMax: 500,
     /** Boven deze waarde volgt handmatige controle. */
     reviewThreshold: 500,

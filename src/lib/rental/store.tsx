@@ -435,7 +435,7 @@ export function RentalProvider({ children }: { children: ReactNode }) {
           },
           audit: [
             ...r.audit,
-            audit(r.id, "admin", "admin", "admin_decision", "Besluit DressLoop vastgelegd", {
+            audit(r.id, "admin", "admin", "admin_decision", "Besluit Borro vastgelegd", {
               decision: decision.type,
               amount,
             }),

@@ -69,7 +69,7 @@ export const profiles: Profile[] = [
 
 const fallbackProfile: Profile = {
   id: "unknown",
-  firstName: "DressLoop",
+  firstName: "Borro",
   city: "Nederland",
   avatar: "",
   rating: 5,

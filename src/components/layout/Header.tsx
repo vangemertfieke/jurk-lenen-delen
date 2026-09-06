@@ -1,7 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { Bell, Heart, Menu, MessageSquare, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { SearchBar } from "@/components/dressloop/SearchBar";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -25,18 +24,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container-page grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:h-20 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <div className="flex min-w-0 items-center gap-6">
-          <Link
-            to="/"
-            className="shrink-0 text-[1.0625rem] font-medium tracking-[0.02em] text-primary"
-          >
-            DressLoop
-          </Link>
-          <SearchBar variant="compact" className="hidden w-72 md:flex lg:w-80" />
-        </div>
-
-        <nav className="hidden justify-center gap-10 lg:flex">
-          {nav.map((item) => (
+        <nav className="hidden items-center gap-10 lg:flex">
+          {nav.slice(0, 2).map((item) => (
             <Link
               key={item.to}
               to={item.to}
@@ -48,7 +37,24 @@ export function Header() {
           ))}
         </nav>
 
+        <Link
+          to="/"
+          className="font-serif shrink-0 text-2xl uppercase text-primary lg:text-3xl"
+        >
+          Borro
+        </Link>
+
         <div className="hidden items-center justify-end gap-1 lg:flex">
+          {nav.slice(2).map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="mr-7 text-sm text-foreground transition-colors hover:text-primary"
+              activeProps={{ className: "text-primary" }}
+            >
+              {item.label}
+            </Link>
+          ))}
           {user ? (
             <>
               <IconLink to="/account/favorieten" label="Favorieten">
@@ -93,7 +99,6 @@ export function Header() {
       {open ? (
         <div className="fixed inset-x-0 top-16 bottom-0 z-50 flex flex-col bg-background/98 backdrop-blur-md lg:hidden">
           <nav className="container-page flex flex-1 flex-col overflow-y-auto py-6">
-            <SearchBar variant="compact" className="mb-6 md:hidden" />
             <div className="flex flex-col divide-y divide-border">
               {nav.map((item) => (
                 <Link

@@ -6,13 +6,13 @@ import { SectionHeading } from "@/components/dressloop/primitives";
 export const Route = createFileRoute("/over-ons")({
   head: () => ({
     meta: [
-      { title: "Over DressLoop — delen wat al bestaat" },
+      { title: "Over Borro — delen wat al bestaat" },
       {
         name: "description",
         content:
-          "DressLoop is een Nederlandse community waar vrouwen jurken van elkaar huren. Minder kopen, meer dragen.",
+          "Borro is een Nederlandse community waar vrouwen jurken van elkaar huren. Minder kopen, meer dragen.",
       },
-      { property: "og:title", content: "Over DressLoop" },
+      { property: "og:title", content: "Over Borro" },
       { property: "og:description", content: "Minder kopen, meer dragen." },
     ],
   }),
@@ -29,7 +29,7 @@ function OverOns() {
             Delen wat er al is.
           </h1>
           <p className="mt-8 max-w-xl text-lg text-muted-foreground">
-            De meeste feestjurken worden één of twee keer gedragen. DressLoop brengt die jurken
+            De meeste feestjurken worden één of twee keer gedragen. Borro brengt die jurken
             terug in omloop: jij draagt iets unieks, iemand anders verdient aan een kast die
             anders stilstaat.
           </p>

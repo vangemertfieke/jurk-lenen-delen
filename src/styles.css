@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * DressLoop design system.
- * Calm editorial palette: cream backgrounds, off-white cards, burgundy accents.
+ * Borro design system.
+ * Sun-washed editorial palette: warm ivory, cherry red, pale sea blue.
  * All colors in oklch. Never hardcode colors in components.
  */
 
@@ -19,8 +19,8 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  --font-sans: "Schibsted Grotesk", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "Hind", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Archivo Black", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -67,31 +67,31 @@
 :root {
   --radius: 0.25rem;
 
-  --cream: oklch(0.972 0.008 85);
-  --offwhite: oklch(0.99 0.003 90);
-  --blush: oklch(0.947 0.017 15);
-  --blush-foreground: oklch(0.29 0.02 20);
-  --rose: oklch(0.79 0.055 12);
+  --cream: oklch(0.965 0.018 91);
+  --offwhite: oklch(0.982 0.012 91);
+  --blush: oklch(0.88 0.035 210);
+  --blush-foreground: oklch(0.25 0.07 18);
+  --rose: oklch(0.68 0.17 18);
 
-  --background: oklch(0.972 0.008 85);
-  --foreground: oklch(0.265 0.011 40);
+  --background: oklch(0.965 0.018 91);
+  --foreground: oklch(0.25 0.07 18);
 
-  --card: oklch(0.99 0.003 90);
-  --card-foreground: oklch(0.265 0.011 40);
-  --popover: oklch(0.99 0.003 90);
-  --popover-foreground: oklch(0.265 0.011 40);
+  --card: oklch(0.982 0.012 91);
+  --card-foreground: oklch(0.25 0.07 18);
+  --popover: oklch(0.982 0.012 91);
+  --popover-foreground: oklch(0.25 0.07 18);
 
-  --primary: oklch(0.359 0.148 17.5);
-  --primary-foreground: oklch(0.985 0.005 85);
+  --primary: oklch(0.43 0.18 22);
+  --primary-foreground: oklch(0.985 0.012 91);
 
-  --secondary: oklch(0.947 0.017 15);
-  --secondary-foreground: oklch(0.359 0.148 17.5);
+  --secondary: oklch(0.88 0.035 210);
+  --secondary-foreground: oklch(0.25 0.07 18);
 
-  --muted: oklch(0.955 0.007 85);
-  --muted-foreground: oklch(0.52 0.012 40);
+  --muted: oklch(0.93 0.02 91);
+  --muted-foreground: oklch(0.48 0.035 25);
 
-  --accent: oklch(0.947 0.017 15);
-  --accent-foreground: oklch(0.359 0.148 17.5);
+  --accent: oklch(0.88 0.035 210);
+  --accent-foreground: oklch(0.25 0.07 18);
 
   --destructive: oklch(0.55 0.19 27);
   --destructive-foreground: oklch(0.985 0.005 85);
@@ -99,10 +99,10 @@
   --success: oklch(0.52 0.08 155);
   --success-foreground: oklch(0.985 0.005 85);
 
-  --border: oklch(0.888 0.008 60);
-  --border-strong: oklch(0.79 0.01 55);
-  --input: oklch(0.86 0.009 60);
-  --ring: oklch(0.359 0.148 17.5);
+  --border: oklch(0.85 0.025 88);
+  --border-strong: oklch(0.7 0.04 45);
+  --input: oklch(0.82 0.025 88);
+  --ring: oklch(0.43 0.18 22);
 
   --chart-1: oklch(0.359 0.148 17.5);
   --chart-2: oklch(0.79 0.055 12);
@@ -133,7 +133,7 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
-    font-feature-settings: "ss01";
+    font-feature-settings: normal;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
   }
@@ -141,8 +141,8 @@
   h1,
   h2,
   h3 {
-    font-weight: 500;
-    letter-spacing: -0.02em;
+    font-weight: 400;
+    letter-spacing: 0;
   }
 
   p {
@@ -160,13 +160,14 @@
 @utility display {
   font-family: var(--font-serif);
   font-weight: 400;
-  letter-spacing: -0.015em;
-  line-height: 1.05;
+  letter-spacing: 0;
+  line-height: 0.92;
+  text-transform: uppercase;
 }
 
 @utility eyebrow {
   font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--color-muted-foreground);
   font-weight: 500;

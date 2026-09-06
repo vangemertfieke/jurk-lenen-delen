@@ -30,11 +30,11 @@ export const Route = createFileRoute("/jurken/$id")({
   head: ({ loaderData }) => {
     if (!loaderData) {
       return {
-        meta: [{ title: "Jurk niet gevonden — DressLoop" }, { name: "robots", content: "noindex" }],
+        meta: [{ title: "Jurk niet gevonden — Borro" }, { name: "robots", content: "noindex" }],
       };
     }
     const { dress } = loaderData;
-    const title = `${dress.brand} ${dress.title} huren — DressLoop`;
+    const title = `${dress.brand} ${dress.title} huren — Borro`;
     const description = `Huur ${dress.title} van ${dress.brand}, maat ${dress.size}, vanaf ${formatEuro(dress.basePrice)} voor ${FEES.baseRentalDays} dagen in ${dress.city}.`;
     return {
       meta: [
@@ -232,7 +232,7 @@ function DressDetail() {
               </Button>
             </div>
             <p className="mt-6 text-xs text-muted-foreground">
-              Veilig betalen via DressLoop. Je betaalt pas bij het afronden van je boeking.
+              Veilig betalen via Borro. Je betaalt pas bij het afronden van je boeking.
             </p>
           </div>
         </div>

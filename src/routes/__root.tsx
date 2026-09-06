@@ -81,13 +81,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover" },
-      { title: "DressLoop — De kledingkast van Nederland" },
+      { title: "Borro — De kledingkast van Nederland" },
       {
         name: "description",
         content:
           "Huur unieke jurken van andere vrouwen of verdien geld met de jurken in jouw kast.",
       },
-      { property: "og:title", content: "DressLoop — De kledingkast van Nederland" },
+      { property: "og:title", content: "Borro — De kledingkast van Nederland" },
       {
         property: "og:description",
         content: "Rent your look. Earn from your closet.",
@@ -101,7 +101,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;600&display=swap",
+        href: "https://fonts.googleapis.com/css2?family=Archivo+Black&family=Hind:wght@400;500;600&display=swap",
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],

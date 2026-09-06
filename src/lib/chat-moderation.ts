@@ -1,5 +1,5 @@
 /**
- * DressLoop Chat Safety & Moderation System
+ * Borro Chat Safety & Moderation System
  * Advanced anti-circumvention filter that neutralizes leetspeak, numbers, symbols, spaces, and punctuation
  * to prevent sharing phone numbers, social media handles, email, full names (including obfuscated like "fieke-van0gemert"),
  * URLs, and off-platform payments.
@@ -207,7 +207,7 @@ export function validateChatMessage(text: string): ModerationResult {
     if (pattern.test(trimmed)) {
       return {
         allowed: false,
-        reason: "Contact buiten DressLoop om is niet toegestaan.",
+        reason: "Contact buiten Borro om is niet toegestaan.",
         detectedType: "offplatform",
         sanitizedText: trimmed.replace(pattern, "[contactverzoek afgeschermd]"),
       };
@@ -219,7 +219,7 @@ export function validateChatMessage(text: string): ModerationResult {
     if (pattern.test(trimmed)) {
       return {
         allowed: false,
-        reason: "Betalingen buiten DressLoop om (zoals Tikkie of contant) zijn niet toegestaan om kopers- en verhuurdersbescherming te garanderen.",
+        reason: "Betalingen buiten Borro om (zoals Tikkie of contant) zijn niet toegestaan om kopers- en verhuurdersbescherming te garanderen.",
         detectedType: "payment",
         sanitizedText: trimmed.replace(pattern, "[externe betaling afgeschermd]"),
       };

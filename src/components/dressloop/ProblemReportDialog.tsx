@@ -55,7 +55,7 @@ export function ProblemReportDialog({
       images,
     });
     setOpen(false);
-    toast.success("Melding ontvangen. DressLoop bekijkt wat er is gebeurd.");
+    toast.success("Melding ontvangen. Borro bekijkt wat er is gebeurd.");
   };
 
   return (
@@ -130,7 +130,7 @@ export function ProblemReportDialog({
           {role === "owner" ? (
             <Field
               label="Gewenste vergoeding (optioneel)"
-              hint="Een verzoek, geen toekenning. DressLoop beoordeelt het samen met beide partijen."
+              hint="Een verzoek, geen toekenning. Borro beoordeelt het samen met beide partijen."
             >
               <Input
                 inputMode="decimal"

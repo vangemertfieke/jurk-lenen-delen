@@ -27,10 +27,10 @@ export const Route = createFileRoute("/afrekenen/$id")({
   },
   head: () => ({
     meta: [
-      { title: "Afrekenen — DressLoop" },
-      { name: "description", content: "Rond je huurperiode af en betaal veilig via DressLoop." },
-      { property: "og:title", content: "Afrekenen — DressLoop" },
-      { property: "og:description", content: "Veilig betalen via DressLoop." },
+      { title: "Afrekenen — Borro" },
+      { name: "description", content: "Rond je huurperiode af en betaal veilig via Borro." },
+      { property: "og:title", content: "Afrekenen — Borro" },
+      { property: "og:description", content: "Veilig betalen via Borro." },
       { name: "robots", content: "noindex" },
     ],
   }),
