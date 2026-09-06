@@ -8,9 +8,9 @@ import { Input } from "@/components/ui/input";
 export const Route = createFileRoute("/wachtwoord-vergeten")({
   head: () => ({
     meta: [
-      { title: "Wachtwoord vergeten — DressLoop" },
-      { name: "description", content: "Ontvang een link om je DressLoop-wachtwoord opnieuw in te stellen." },
-      { property: "og:title", content: "Wachtwoord vergeten — DressLoop" },
+      { title: "Wachtwoord vergeten — Borro" },
+      { name: "description", content: "Ontvang een link om je Borro-wachtwoord opnieuw in te stellen." },
+      { property: "og:title", content: "Wachtwoord vergeten — Borro" },
       { property: "og:description", content: "Stel je wachtwoord opnieuw in." },
     ],
   }),

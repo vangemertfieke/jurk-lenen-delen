@@ -6,13 +6,13 @@ import { SectionHeading } from "@/components/dressloop/primitives";
 export const Route = createFileRoute("/bedrijven")({
   head: () => ({
     meta: [
-      { title: "DressLoop voor bedrijven — professioneel jurken verhuren" },
+      { title: "Borro voor bedrijven — professioneel jurken verhuren" },
       {
         name: "description",
         content:
-          "Professionele verhuurbedrijven kunnen hun collectie op DressLoop aanbieden met een zakelijk profiel, meerdere jurken en inzicht in hun verhuur.",
+          "Professionele verhuurbedrijven kunnen hun collectie op Borro aanbieden met een zakelijk profiel, meerdere jurken en inzicht in hun verhuur.",
       },
-      { property: "og:title", content: "DressLoop voor bedrijven" },
+      { property: "og:title", content: "Borro voor bedrijven" },
       {
         property: "og:description",
         content: "Bereik duizenden vrouwen die op zoek zijn naar de juiste jurk.",
@@ -33,7 +33,7 @@ function Bedrijven() {
               Verhuur je professioneel jurken?
             </h1>
             <p className="mt-6 text-[0.9375rem] text-muted-foreground">
-              Boetieks en verhuurbedrijven kunnen hun collectie op DressLoop aanbieden naast het
+              Boetieks en verhuurbedrijven kunnen hun collectie op Borro aanbieden naast het
               aanbod van particulieren. Zo bereik je vrouwen die precies op zoek zijn naar de jurk
               die jij in huis hebt.
             </p>
@@ -60,7 +60,7 @@ function Bedrijven() {
         <SectionHeading
           eyebrow="Wat je krijgt"
           title="Een zakelijk profiel binnen een community"
-          intro="Je houdt je eigen identiteit, maar profiteert van het bereik en de betaalstructuur van DressLoop."
+          intro="Je houdt je eigen identiteit, maar profiteert van het bereik en de betaalstructuur van Borro."
         />
         <div className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
           {[
@@ -69,7 +69,7 @@ function Bedrijven() {
             { t: "Meerdere plaatsingen", d: "Plaats snel meerdere jurken tegelijk." },
             { t: "Inzichten", d: "Zie welke jurken worden bekeken en geboekt." },
             { t: "Eigen verhuurregels", d: "Stel je eigen periodes, borg en voorwaarden in." },
-            { t: "Eén betaalstroom", d: "Alle betalingen lopen via DressLoop." },
+            { t: "Eén betaalstroom", d: "Alle betalingen lopen via Borro." },
           ].map((i) => (
             <div key={i.t} className="hairline pt-6">
               <h3 className="text-[0.9375rem] font-medium">{i.t}</h3>
@@ -84,7 +84,7 @@ function Bedrijven() {
           <div className="max-w-xl">
             <h2 className="display text-2xl sm:text-3xl">Interesse in een zakelijk profiel?</h2>
             <p className="mt-4 text-sm text-blush-foreground/80">
-              We werken samen met een beperkt aantal partners aan de eerste versie van DressLoop
+              We werken samen met een beperkt aantal partners aan de eerste versie van Borro
               voor bedrijven.
             </p>
           </div>

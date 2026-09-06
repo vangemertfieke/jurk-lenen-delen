@@ -17,7 +17,7 @@ const columns = [
     ],
   },
   {
-    title: "DressLoop",
+    title: "Borro",
     links: [
       { to: "/over-ons", label: "Over Borro" },
       { to: "/bedrijven", label: "Voor bedrijven" },

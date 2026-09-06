@@ -33,13 +33,13 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/verhuren")({
   head: () => ({
     meta: [
-      { title: "Verhuur je jurk — DressLoop" },
+      { title: "Verhuur je jurk — Borro" },
       {
         name: "description",
         content:
           "Plaats in een paar stappen een jurk uit je eigen kast en verdien aan een jurk die je al hebt.",
       },
-      { property: "og:title", content: "Verhuur je jurk — DressLoop" },
+      { property: "og:title", content: "Verhuur je jurk — Borro" },
       { property: "og:description", content: "Laat je jurk niet in de kast hangen." },
     ],
   }),
@@ -284,7 +284,7 @@ function Verhuren() {
                 <Field
                   label="Wat is de geschatte huidige waarde? (optioneel)"
                   htmlFor="waarde"
-                  hint={`DressLoop ondersteunt nu jurken tot ongeveer ${formatEuro(PROTECTION_CONFIG.dressValue.supportedMax)}.`}
+                  hint={`Borro ondersteunt nu jurken tot ongeveer ${formatEuro(PROTECTION_CONFIG.dressValue.supportedMax)}.`}
                 >
                   <div className="relative">
                     <span className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -337,7 +337,7 @@ function Verhuren() {
                     <dd className="price">{formatEuro(payout.rental)}</dd>
                   </div>
                   <div className="flex justify-between">
-                    <dt>DressLoop commissie ({Math.round(FEES.ownerCommissionRate * 100)}%)</dt>
+                    <dt>Borro commissie ({Math.round(FEES.ownerCommissionRate * 100)}%)</dt>
                     <dd className="price">−{formatEuro(payout.commission)}</dd>
                   </div>
                 </dl>
@@ -471,7 +471,7 @@ function Verhuren() {
           <div className="border border-border bg-card p-6 lg:sticky lg:top-28">
             <StatusBadge tone="brand">Zo verdien je</StatusBadge>
             <p className="mt-4 text-sm text-muted-foreground">
-              DressLoop houdt {Math.round(FEES.ownerCommissionRate * 100)}% commissie in op de
+              Borro houdt {Math.round(FEES.ownerCommissionRate * 100)}% commissie in op de
               huurprijs. Je wordt uitbetaald nadat de jurk goed retour is.
             </p>
             <div className="hairline mt-6 space-y-2 pt-4 text-sm">
@@ -536,7 +536,7 @@ function VerhuurGate() {
         <h1 className="display mt-5 text-4xl sm:text-5xl">Verhuur je jurk</h1>
         <p className="mt-4 text-muted-foreground">
           Die jurk die één keer per jaar uit de kast komt, kan rustig vaker op pad. Zo ziet het
-          eruit om hem op DressLoop te zetten — in zes rustige stappen.
+          eruit om hem op Borro te zetten — in zes rustige stappen.
         </p>
       </header>
 
@@ -555,7 +555,7 @@ function VerhuurGate() {
           <div>
             <h2 className="display text-2xl sm:text-3xl">Wat levert het op?</h2>
             <p className="mt-3 max-w-xl text-sm text-blush-foreground/80">
-              Bij een huurprijs van {formatEuro(55)} houdt DressLoop{" "}
+              Bij een huurprijs van {formatEuro(55)} houdt Borro{" "}
               {Math.round(FEES.ownerCommissionRate * 100)}% commissie in en ontvang jij{" "}
               {formatEuro(calculateOwnerPayout(55).payout)} per verhuur. Uitbetaling volgt nadat de
               jurk goed retour is.
@@ -564,7 +564,7 @@ function VerhuurGate() {
           <ul className="space-y-2 text-sm text-blush-foreground/80">
             <li>Eén account om te huren én te verhuren</li>
             <li>Beheer je jurken, aanvragen en agenda</li>
-            <li>Veilig betaald krijgen via DressLoop</li>
+            <li>Veilig betaald krijgen via Borro</li>
           </ul>
         </div>
       </div>
@@ -572,7 +572,7 @@ function VerhuurGate() {
       <div className="mt-16 max-w-xl border-t border-border pt-10">
         <h2 className="display text-2xl sm:text-3xl">Klaar om te beginnen?</h2>
         <p className="mt-4 text-[0.9375rem] text-muted-foreground">
-          Om een jurk te plaatsen heb je een DressLoop-account nodig. Zo weten huurders met wie ze
+          Om een jurk te plaatsen heb je een Borro-account nodig. Zo weten huurders met wie ze
           te maken hebben en kunnen we je uitbetalen. Aanmelden is gratis en duurt een minuut.
         </p>
         <div className="mt-8 flex flex-wrap gap-4">

@@ -26,9 +26,9 @@ import { useApp } from "@/lib/store";
 export const Route = createFileRoute("/huur/$id")({
   head: () => ({
     meta: [
-      { title: "Jouw huur — DressLoop" },
+      { title: "Jouw huur — Borro" },
       { name: "description", content: "Volg je huur: status, overdracht, retour en borg." },
-      { property: "og:title", content: "Jouw huur — DressLoop" },
+      { property: "og:title", content: "Jouw huur — Borro" },
       { property: "og:description", content: "Status, overdracht, retour en borg van je huur." },
       { name: "robots", content: "noindex" },
     ],
@@ -264,7 +264,7 @@ function RentalDetail() {
               <p className="text-sm text-muted-foreground">
                 We herinneren de huurder. Na een coulancetermijn van{" "}
                 {PROTECTION_CONFIG.returnGraceHours} uur kun je melden dat de jurk niet is
-                geretourneerd. DressLoop onderzoekt dan wat er is gebeurd.
+                geretourneerd. Borro onderzoekt dan wat er is gebeurd.
               </p>
               <ProblemReportDialog
                 rentalId={rental.id}
@@ -332,7 +332,7 @@ function RentalDetail() {
                 </div>
               ) : (
                 <p className="text-sm text-muted-foreground">
-                  DressLoop onderzoekt wat er is gebeurd. Je borg en de uitbetaling staan zolang
+                  Borro onderzoekt wat er is gebeurd. Je borg en de uitbetaling staan zolang
                   stil.
                 </p>
               )}
@@ -363,7 +363,7 @@ function RentalDetail() {
             </summary>
             <p className="mt-3 text-sm text-muted-foreground">
               Deze foto's horen alleen bij deze huur en zijn zichtbaar voor jou, de andere partij en
-              DressLoop.
+              Borro.
             </p>
             <div className="mt-5">
               <EvidenceGrid evidence={rental.evidence} />
@@ -457,7 +457,7 @@ function RentalDetail() {
           <div className="border border-border bg-card p-6">
             <h2 className="text-sm font-medium">Hulp nodig?</h2>
             <p className="mt-2 text-sm text-muted-foreground">
-              Kom je er samen niet uit? Meld het probleem, dan kijkt DressLoop mee.
+              Kom je er samen niet uit? Meld het probleem, dan kijkt Borro mee.
             </p>
             <div className="mt-4 flex flex-wrap gap-3">
               <Button variant="outline" size="sm" asChild>

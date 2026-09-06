@@ -10,10 +10,10 @@ import { useApp } from "@/lib/store";
 export const Route = createFileRoute("/inloggen")({
   head: () => ({
     meta: [
-      { title: "Inloggen — DressLoop" },
-      { name: "description", content: "Log in op je DressLoop-account om te huren en verhuren." },
-      { property: "og:title", content: "Inloggen — DressLoop" },
-      { property: "og:description", content: "Welkom terug bij DressLoop." },
+      { title: "Inloggen — Borro" },
+      { name: "description", content: "Log in op je Borro-account om te huren en verhuren." },
+      { property: "og:title", content: "Inloggen — Borro" },
+      { property: "og:description", content: "Welkom terug bij Borro." },
     ],
   }),
   component: Inloggen,

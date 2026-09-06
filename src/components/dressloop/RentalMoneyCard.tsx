@@ -35,7 +35,7 @@ export function RentalMoneyCard({
           <>
             <InfoRow label="Huurprijs" value={formatEuro(p.rentalAmount)} />
             <InfoRow
-              label={`Commissie DressLoop (${Math.round(p.commissionRate * 100)}%)`}
+              label={`Commissie Borro (${Math.round(p.commissionRate * 100)}%)`}
               value={`− ${formatEuro(p.commissionAmount)}`}
             />
             <InfoRow

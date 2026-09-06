@@ -177,7 +177,7 @@ export function getNextStep(rental: ProtectedRental, role: RentalRole): NextStep
         ? { status: label, next: "Retourneer de jurk zo snel mogelijk en laat de verhuurder weten wanneer.", actionRequired: true, action: "Start retour" }
         : {
             status: label,
-            next: "Nog niets ontvangen? Na de coulancetermijn kun je dit melden bij DressLoop.",
+            next: "Nog niets ontvangen? Na de coulancetermijn kun je dit melden bij Borro.",
             actionRequired: true,
             action: "Jurk niet geretourneerd melden",
           };
@@ -205,7 +205,7 @@ export function getNextStep(rental: ProtectedRental, role: RentalRole): NextStep
     case "claim_open":
       return {
         status: label,
-        next: "DressLoop bekijkt de melding. We vragen beide partijen om een reactie en bewijs.",
+        next: "Borro bekijkt de melding. We vragen beide partijen om een reactie en bewijs.",
         actionRequired: true,
         action: "Reageer op de melding",
       };

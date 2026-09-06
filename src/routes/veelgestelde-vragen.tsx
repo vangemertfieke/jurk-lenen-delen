@@ -11,13 +11,13 @@ import { SectionHeading } from "@/components/dressloop/primitives";
 export const Route = createFileRoute("/veelgestelde-vragen")({
   head: () => ({
     meta: [
-      { title: "Veelgestelde vragen — DressLoop" },
+      { title: "Veelgestelde vragen — Borro" },
       {
         name: "description",
         content:
-          "Alles over huren en verhuren op DressLoop: betalen, borg, ophalen of verzenden, schade, annuleren en je account.",
+          "Alles over huren en verhuren op Borro: betalen, borg, ophalen of verzenden, schade, annuleren en je account.",
       },
-      { property: "og:title", content: "Veelgestelde vragen — DressLoop" },
+      { property: "og:title", content: "Veelgestelde vragen — Borro" },
       {
         property: "og:description",
         content: "Goed om te weten voor huurders en verhuurders.",
@@ -37,7 +37,7 @@ const groups = [
       },
       {
         q: "Hoe werkt betalen?",
-        a: "Je betaalt de volledige huur in één keer via DressLoop: huurprijs, servicekosten, eventuele verzending en de borg. De verhuurder wordt pas uitbetaald nadat de jurk goed is geretourneerd.",
+        a: "Je betaalt de volledige huur in één keer via Borro: huurprijs, servicekosten, eventuele verzending en de borg. De verhuurder wordt pas uitbetaald nadat de jurk goed is geretourneerd.",
       },
       {
         q: "Wat gebeurt er met de borg?",
@@ -62,15 +62,15 @@ const groups = [
     items: [
       {
         q: "Heb ik een account nodig om te verhuren?",
-        a: "Ja. Je plaatst een jurk alleen met een DressLoop-account, zodat huurders zien met wie ze te maken hebben en jij je uitbetaling kunt ontvangen. Aanmelden is gratis.",
+        a: "Ja. Je plaatst een jurk alleen met een Borro-account, zodat huurders zien met wie ze te maken hebben en jij je uitbetaling kunt ontvangen. Aanmelden is gratis.",
       },
       {
         q: "Wat verdien ik aan een verhuur?",
-        a: "Jij bepaalt de huurprijs. DressLoop houdt 10% commissie in; de rest wordt na een goede retour aan jou uitbetaald. Bij het plaatsen zie je direct wat je overhoudt.",
+        a: "Jij bepaalt de huurprijs. Borro houdt 10% commissie in; de rest wordt na een goede retour aan jou uitbetaald. Bij het plaatsen zie je direct wat je overhoudt.",
       },
       {
         q: "Wat als mijn jurk beschadigd terugkomt?",
-        a: "Meld het binnen 48 uur via de huurdetails. De borg is bedoeld om kleine schade te dekken; komen jullie er samen niet uit, dan bemiddelt DressLoop.",
+        a: "Meld het binnen 48 uur via de huurdetails. De borg is bedoeld om kleine schade te dekken; komen jullie er samen niet uit, dan bemiddelt Borro.",
       },
       {
         q: "Kan ik datums blokkeren?",
@@ -83,7 +83,7 @@ const groups = [
     items: [
       {
         q: "Is aanmelden voor huren of voor verhuren?",
-        a: "Voor allebei. Met één DressLoop-account huur je jurken én verhuur je je eigen kast. Je hoeft niets extra's aan te maken om te wisselen.",
+        a: "Voor allebei. Met één Borro-account huur je jurken én verhuur je je eigen kast. Je hoeft niets extra's aan te maken om te wisselen.",
       },
       {
         q: "Kan ik mijn account verwijderen?",

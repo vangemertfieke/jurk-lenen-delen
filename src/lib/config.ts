@@ -1,9 +1,9 @@
 /**
- * Centrale DressLoop configuratie.
+ * Centrale Borro configuratie.
  * Alle tarieven en percentages staan hier — nooit hardcoden in componenten.
  */
 export const FEES = {
-  /** Commissie die DressLoop inhoudt op de huuropbrengst van de verhuurder. */
+  /** Commissie die Borro inhoudt op de huuropbrengst van de verhuurder. */
   ownerCommissionRate: 0.1,
   /** Vaste servicekosten voor de huurder. */
   renterServiceFee: 1.99,

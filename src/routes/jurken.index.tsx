@@ -30,13 +30,13 @@ export const Route = createFileRoute("/jurken/")({
   }),
   head: () => ({
     meta: [
-      { title: "Jurken huren — DressLoop" },
+      { title: "Jurken huren — Borro" },
       {
         name: "description",
         content:
           "Blader door unieke jurken van vrouwen in heel Nederland. Filter op maat, merk, kleur, gelegenheid, prijs en locatie.",
       },
-      { property: "og:title", content: "Jurken huren — DressLoop" },
+      { property: "og:title", content: "Jurken huren — Borro" },
       {
         property: "og:description",
         content: "Vind jouw jurk voor een bruiloft, gala, festival of diner.",

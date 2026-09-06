@@ -9,9 +9,9 @@ import { useIsAdmin, useRentals } from "@/lib/rental/store";
 export const Route = createFileRoute("/beheer/claims/")({
   head: () => ({
     meta: [
-      { title: "Claim Center — DressLoop beheer" },
+      { title: "Claim Center — Borro beheer" },
       { name: "description", content: "Interne afhandeling van meldingen en claims." },
-      { property: "og:title", content: "Claim Center — DressLoop beheer" },
+      { property: "og:title", content: "Claim Center — Borro beheer" },
       { property: "og:description", content: "Interne afhandeling van meldingen en claims." },
       { name: "robots", content: "noindex" },
     ],
@@ -29,7 +29,7 @@ function ClaimCenter() {
         <p className="eyebrow">Intern</p>
         <h1 className="display mt-4 text-3xl">Claim Center</h1>
         <p className="mt-4 max-w-md text-sm text-muted-foreground">
-          Deze omgeving is alleen voor het DressLoop-team. In productie loopt toegang via
+          Deze omgeving is alleen voor het Borro-team. In productie loopt toegang via
           gebruikersrollen en RLS aan de serverkant.
         </p>
         <Button className="mt-8" onClick={enableAdmin}>

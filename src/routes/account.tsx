@@ -6,9 +6,9 @@ import { useApp } from "@/lib/store";
 export const Route = createFileRoute("/account")({
   head: () => ({
     meta: [
-      { title: "Mijn account — DressLoop" },
+      { title: "Mijn account — Borro" },
       { name: "description", content: "Beheer je huuritems, verhuur, berichten en profiel." },
-      { property: "og:title", content: "Mijn account — DressLoop" },
+      { property: "og:title", content: "Mijn account — Borro" },
       { property: "og:description", content: "Jouw huuritems, verhuur en berichten." },
       { name: "robots", content: "noindex" },
     ],

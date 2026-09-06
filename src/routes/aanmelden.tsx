@@ -10,13 +10,13 @@ import { useApp } from "@/lib/store";
 export const Route = createFileRoute("/aanmelden")({
   head: () => ({
     meta: [
-      { title: "Aanmelden — DressLoop" },
+      { title: "Aanmelden — Borro" },
       {
         name: "description",
         content:
-          "Maak gratis een DressLoop-account aan. Met één account huur je jurken én verhuur je je eigen kast.",
+          "Maak gratis een Borro-account aan. Met één account huur je jurken én verhuur je je eigen kast.",
       },
-      { property: "og:title", content: "Aanmelden — DressLoop" },
+      { property: "og:title", content: "Aanmelden — Borro" },
       { property: "og:description", content: "Eén account om te huren en te verhuren." },
     ],
   }),
@@ -48,7 +48,7 @@ function Aanmelden() {
 
   return (
     <AuthLayout
-      title="Word lid van DressLoop"
+      title="Word lid van Borro"
       intro="Eén account voor allebei: je huurt er jurken mee én je verhuurt er je eigen kast mee. Je hoeft dus niets extra's aan te maken om te gaan verhuren."
       footer={
         <>

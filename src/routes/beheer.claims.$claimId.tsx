@@ -26,9 +26,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/beheer/claims/$claimId")({
   head: () => ({
     meta: [
-      { title: "Claimdossier — DressLoop beheer" },
+      { title: "Claimdossier — Borro beheer" },
       { name: "description", content: "Intern dossier met bewijs, tijdlijn en besluitvorming." },
-      { property: "og:title", content: "Claimdossier — DressLoop beheer" },
+      { property: "og:title", content: "Claimdossier — Borro beheer" },
       { property: "og:description", content: "Intern dossier met bewijs en besluitvorming." },
       { name: "robots", content: "noindex" },
     ],
@@ -63,7 +63,7 @@ function ClaimDetail() {
   if (!isAdmin) {
     return (
       <div className="container-page py-24">
-        <h1 className="display text-3xl">Alleen voor het DressLoop-team</h1>
+        <h1 className="display text-3xl">Alleen voor het Borro-team</h1>
         <Button className="mt-8" onClick={enableAdmin}>
           Demo-toegang inschakelen
         </Button>

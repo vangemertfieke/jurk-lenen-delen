@@ -175,7 +175,7 @@ function Home() {
         <div className="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
           {[
             {
-              t: "Veilig betalen via DressLoop",
+              t: "Veilig betalen via Borro",
               d: "Je betaalt in één keer via het platform, nooit onderling.",
             },
             { t: "Profielen & reviews", d: "Lees ervaringen van eerdere huurders en verhuurders." },
@@ -199,12 +199,12 @@ function Home() {
               Verhuur je professioneel jurken?
             </h2>
             <p className="mt-4 text-sm text-muted-foreground">
-              Ook professionele verhuurbedrijven kunnen hun collectie op DressLoop aanbieden, met
+              Ook professionele verhuurbedrijven kunnen hun collectie op Borro aanbieden, met
               een zakelijk profiel en meerdere jurken tegelijk.
             </p>
           </div>
           <Button variant="outline" size="lg" asChild className="justify-self-start">
-            <Link to="/bedrijven">DressLoop voor bedrijven</Link>
+            <Link to="/bedrijven">Borro voor bedrijven</Link>
           </Button>
         </div>
       </section>
