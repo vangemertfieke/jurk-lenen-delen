@@ -23,7 +23,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm">
-      <div className="container-page grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:h-20 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+      <div className="container-page relative grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:h-20 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
         <nav className="hidden items-center gap-10 lg:flex">
           {nav.slice(0, 2).map((item) => (
             <Link
@@ -39,12 +39,12 @@ export function Header() {
 
         <Link
           to="/"
-          className="font-serif shrink-0 text-2xl uppercase text-primary lg:text-3xl"
+          className="font-serif absolute left-1/2 shrink-0 -translate-x-1/2 text-2xl uppercase text-primary lg:text-3xl"
         >
           Borro
         </Link>
 
-        <div className="hidden items-center justify-end gap-1 lg:flex">
+        <div className="hidden items-center justify-end gap-1 lg:col-start-3 lg:flex">
           {nav.slice(2).map((item) => (
             <Link
               key={item.to}
