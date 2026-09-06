@@ -24,17 +24,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur-sm">
       <div className="container-page grid h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:h-20 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
-        <div className="flex min-w-0 items-center">
-          <Link
-            to="/"
-            className="font-serif shrink-0 text-2xl uppercase text-primary lg:text-3xl"
-          >
-            Borro
-          </Link>
-        </div>
-
-        <nav className="hidden justify-center gap-10 lg:flex">
-          {nav.map((item) => (
+        <nav className="hidden items-center gap-10 lg:flex">
+          {nav.slice(0, 2).map((item) => (
             <Link
               key={item.to}
               to={item.to}
@@ -46,7 +37,24 @@ export function Header() {
           ))}
         </nav>
 
+        <Link
+          to="/"
+          className="font-serif shrink-0 text-2xl uppercase text-primary lg:text-3xl"
+        >
+          Borro
+        </Link>
+
         <div className="hidden items-center justify-end gap-1 lg:flex">
+          {nav.slice(2).map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className="mr-7 text-sm text-foreground transition-colors hover:text-primary"
+              activeProps={{ className: "text-primary" }}
+            >
+              {item.label}
+            </Link>
+          ))}
           {user ? (
             <>
               <IconLink to="/account/favorieten" label="Favorieten">
