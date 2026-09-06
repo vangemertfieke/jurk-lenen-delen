@@ -52,7 +52,7 @@ export function SearchBar({
           >
             <SelectValue placeholder="Categorieën" />
           </SelectTrigger>
-          <SelectContent className="rounded-none border-border">
+          <SelectContent className="rounded-xl border-border">
             <SelectItem value={ALLE}>Categorieën</SelectItem>
             {occasions.map((o) => (
               <SelectItem key={o} value={o}>
@@ -83,18 +83,18 @@ export function SearchBar({
       onSubmit={submit}
       role="search"
       className={cn(
-        "grid gap-3 border border-border bg-card p-2 sm:grid-cols-[13rem_minmax(0,1fr)_auto] sm:items-center sm:gap-0",
+        "grid gap-3 rounded-2xl border border-border bg-card p-2 sm:grid-cols-[13rem_minmax(0,1fr)_auto] sm:items-center sm:gap-0",
         className,
       )}
     >
       <Select value={category} onValueChange={setCategory}>
         <SelectTrigger
           aria-label="Categorie"
-          className="h-12 w-full rounded-none border-0 border-border bg-transparent px-4 text-sm shadow-none focus-visible:ring-0 sm:border-r"
+          className="h-12 w-full rounded-xl border-0 border-border bg-transparent px-4 text-sm shadow-none focus-visible:ring-0 sm:border-r"
         >
           <SelectValue placeholder="Categorieën" />
         </SelectTrigger>
-        <SelectContent className="rounded-none border-border">
+        <SelectContent className="rounded-xl border-border">
           <SelectItem value={ALLE}>Categorieën</SelectItem>
           {occasions.map((o) => (
             <SelectItem key={o} value={o}>
@@ -117,7 +117,7 @@ export function SearchBar({
 
       <button
         type="submit"
-        className="h-12 bg-primary px-8 text-sm font-medium tracking-[0.02em] text-primary-foreground transition-opacity hover:opacity-90"
+        className="h-12 rounded-full bg-primary px-8 text-sm font-medium tracking-[0.02em] text-primary-foreground transition-opacity hover:opacity-90"
       >
         Zoeken
       </button>
