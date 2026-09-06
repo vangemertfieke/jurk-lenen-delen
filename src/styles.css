@@ -65,7 +65,7 @@
 }
 
 :root {
-  --radius: 0.25rem;
+  --radius: 0.875rem;
 
   --cream: oklch(0.965 0.018 91);
   --offwhite: oklch(0.982 0.012 91);
@@ -147,6 +147,14 @@
 
   p {
     line-height: 1.7;
+  }
+
+  main img {
+    border-radius: var(--radius-xl);
+  }
+
+  button {
+    border-radius: 9999px;
   }
 }
 

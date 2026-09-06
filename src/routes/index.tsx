@@ -106,7 +106,7 @@ function Home() {
               key={c.name}
               to="/jurken"
               search={{ gelegenheid: c.name }}
-              className="shrink-0 border border-border px-4 py-2 text-xs sm:text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary active:bg-muted"
+              className="shrink-0 rounded-full border border-border px-4 py-2 text-xs sm:text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary active:bg-muted"
             >
               {c.name}
             </Link>

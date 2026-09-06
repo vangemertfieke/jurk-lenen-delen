@@ -30,7 +30,7 @@ function NotFoundComponent() {
         <div className="mt-8">
           <Link
             to="/"
-            className="inline-flex h-11 items-center justify-center rounded-sm bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Naar de homepage
           </Link>
@@ -60,13 +60,13 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex h-11 items-center justify-center rounded-sm bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            className="inline-flex h-11 items-center justify-center rounded-full bg-primary px-6 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
           >
             Opnieuw proberen
           </button>
           <a
             href="/"
-            className="inline-flex h-11 items-center justify-center rounded-sm border border-border-strong px-6 text-sm font-medium transition-colors hover:bg-muted"
+            className="inline-flex h-11 items-center justify-center rounded-full border border-border-strong px-6 text-sm font-medium transition-colors hover:bg-muted"
           >
             Naar de homepage
           </a>

@@ -11,7 +11,7 @@ export function DressCard({ dress, showCity = true }: { dress: Dress; showCity?:
 
   return (
     <article className="group relative">
-      <div className="relative overflow-hidden bg-muted">
+      <div className="relative overflow-hidden rounded-2xl bg-muted">
         <Link to="/jurken/$id" params={{ id: dress.id }} className="block">
           <img
             src={dress.images[0]}
