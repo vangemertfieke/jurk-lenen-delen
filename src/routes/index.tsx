@@ -47,22 +47,22 @@ function Home() {
     <>
       {/* Hero */}
       <section className="border-b border-border">
-        <div className="container-page grid min-h-[calc(100svh-5rem)] items-center gap-10 py-10 lg:grid-cols-12 lg:gap-16 lg:py-16">
+        <div className="container-page grid min-h-[calc(100svh-4rem)] items-start gap-8 py-6 lg:grid-cols-12 lg:gap-16 lg:py-10">
           <div className="order-2 max-w-xl lg:order-1 lg:col-span-5">
             <p className="eyebrow border-b border-border pb-3">
               VOOR GALA'S • BRUILOFTEN • DINERS • EVENTS
             </p>
-            <h1 className="display mt-8 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] text-foreground">
+            <h1 className="display mt-4 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] text-foreground">
               De kledingkast van Nederland.
             </h1>
-            <p className="mt-8 max-w-sm text-2xl font-medium leading-snug text-primary">
+            <p className="mt-5 max-w-sm text-2xl font-medium leading-snug text-primary">
               Rent your look. Earn from your closet.
             </p>
-            <p className="mt-4 max-w-md text-sm sm:text-base text-muted-foreground">
+            <p className="mt-3 max-w-md text-sm sm:text-base text-muted-foreground">
               Huur een unieke jurk van een andere vrouw in jouw buurt, of verdien geld met de
               jurken die nu ongedragen in jouw kast hangen.
             </p>
-            <div className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+            <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
               <Button size="lg" className="w-full sm:w-auto" asChild>
                 <Link to="/jurken">Huur een jurk</Link>
               </Button>
