@@ -52,7 +52,7 @@ function Home() {
             <p className="eyebrow border-b border-border pb-3">
               VOOR GALA'S • BRUILOFTEN • DINERS • EVENTS
             </p>
-            <h1 className="display mt-8 text-[clamp(3rem,8vw,5.5rem)] leading-[0.95] text-foreground">
+            <h1 className="display mt-8 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] text-foreground">
               De kledingkast van Nederland.
             </h1>
             <p className="mt-8 max-w-sm text-2xl font-medium leading-snug text-primary">
