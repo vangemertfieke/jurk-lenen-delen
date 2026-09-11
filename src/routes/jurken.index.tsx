@@ -61,6 +61,7 @@ function Jurken() {
   const [available, setAvailable] = useState(ALLE);
   const [maxPrice, setMaxPrice] = useState(100);
   const [sort, setSort] = useState("aanbevolen");
+  const listingStates = useListingStates();
 
   const reset = () => {
     setQuery("");
@@ -106,7 +107,7 @@ function Jurken() {
         list = [...list].sort((a, b) => b.rating - a.rating);
     }
     return list;
-  }, [query, size, brand, color, occasion, city, delivery, available, maxPrice, sort]);
+  }, [listingStates, query, size, brand, color, occasion, city, delivery, available, maxPrice, sort]);
 
   const filters = (
     <div className="space-y-8">
