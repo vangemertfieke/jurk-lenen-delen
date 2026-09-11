@@ -1,7 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/hero.jpg";
 import foundersImg from "@/assets/founders.jpg";
-import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/dressloop/primitives";
 
 export const Route = createFileRoute("/over-ons")({
@@ -62,10 +61,11 @@ function OverOns() {
               voor terug, terwijl hun jurk ook gewoon geld waard was.
             </p>
             <p>
-              Toen we bij bestaande verhuurders gingen kijken, viel het aanbod ons tegen: beperkt,
-              duur of ver weg. Daarom bedachten we Borro — één gedeelde kledingkast waar vraag en
-              aanbod samenkomen. Jij huurt een jurk van iemand in de buurt, zij verdient er een
-              leuk bedrag aan en samen zorgen we dat mooie kleding vaker gedragen wordt.
+              Toen we zelf op zoek gingen naar een passende jurk, merkten we hoe lastig het is om
+              iets moois, betaalbaars én dichtbij te vinden. Daarom bedachten we Borro — één
+              gedeelde kledingkast waar vraag en aanbod in Nederland samenkomen. Jij huurt een jurk
+              van iemand in de buurt, zij verdient er een leuk bedrag aan en samen zorgen we dat
+              mooie kleding vaker gedragen wordt.
             </p>
             <p>
               Ons doel is simpel: dat iedereen zich goed voelt in een fijne outfit, zonder steeds
@@ -102,22 +102,6 @@ function OverOns() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="container-page py-20 lg:py-28">
-        <SectionHeading
-          eyebrow="Hulp nodig"
-          title="Goed om te weten"
-          intro="Vragen over betalen, borg, ophalen of verhuren? Die beantwoorden we op één plek."
-        />
-        <div className="mt-12 flex flex-wrap gap-4">
-          <Button asChild>
-            <Link to="/veelgestelde-vragen">Naar de veelgestelde vragen</Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link to="/jurken">Huur een jurk</Link>
-          </Button>
         </div>
       </section>
     </>
