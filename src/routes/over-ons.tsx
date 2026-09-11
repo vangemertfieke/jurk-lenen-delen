@@ -1,6 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import heroImg from "@/assets/hero.jpg";
 import foundersImg from "@/assets/founders.jpg";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/dressloop/primitives";
@@ -24,42 +23,6 @@ export const Route = createFileRoute("/over-ons")({
 function OverOns() {
   return (
     <>
-      {/* Intro — rustig, veel witruimte */}
-      <section className="container-page grid items-center gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-24">
-        <div>
-          <p className="eyebrow">Over ons</p>
-          <h1 className="display mt-6 text-4xl sm:text-5xl lg:text-6xl">
-            Delen wat er al is.
-          </h1>
-          <p className="mt-8 max-w-md text-lg text-muted-foreground">
-            De meeste feestjurken worden één of twee keer gedragen. Borro brengt die jurken
-            terug in omloop: jij draagt iets unieks, iemand anders verdient aan een kast die
-            anders stilstaat.
-          </p>
-          <div className="mt-10 flex flex-wrap gap-8">
-            {[
-              { n: "1", l: "gedeelde kledingkast" },
-              { n: "4", l: "dagen per huur" },
-              { n: "∞", l: "keren opnieuw gedragen" },
-            ].map((s) => (
-              <div key={s.l}>
-                <p className="display text-3xl text-primary">{s.n}</p>
-                <p className="mt-1 text-xs uppercase tracking-wider text-muted-foreground">
-                  {s.l}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-        <img
-          src={heroImg}
-          alt="Vrouw in een bordeauxrode jurk"
-          width={1408}
-          height={1760}
-          className="aspect-[4/5] w-full rounded-2xl object-cover object-[center_20%]"
-        />
-      </section>
-
       {/* Ons verhaal */}
       <section className="container-page grid items-center gap-12 py-16 lg:grid-cols-2 lg:gap-20 lg:py-24">
         <img
@@ -109,8 +72,8 @@ function OverOns() {
         </div>
       </section>
 
-      {/* Uitgangspunten — dusty pink i.p.v. beige */}
-      <section className="bg-blush text-blush-foreground">
+      {/* Uitgangspunten — beige i.p.v. roze */}
+      <section className="bg-cream text-foreground">
         <div className="container-page py-16 lg:py-24">
           <SectionHeading eyebrow="Waar we voor staan" title="Onze uitgangspunten" />
           <div className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
@@ -122,9 +85,9 @@ function OverOns() {
               { t: "Transparant", d: "Je ziet altijd de totaalprijs voordat je betaalt." },
               { t: "Nederlands", d: "Gebouwd voor ophalen om de hoek en verzenden binnen NL." },
             ].map((i) => (
-              <div key={i.t} className="border-t border-blush-foreground/25 pt-6">
+              <div key={i.t} className="border-t border-foreground/15 pt-6">
                 <h3 className="text-[0.9375rem] font-medium">{i.t}</h3>
-                <p className="mt-2 text-sm text-blush-foreground/75">{i.d}</p>
+                <p className="mt-2 text-sm text-muted-foreground">{i.d}</p>
               </div>
             ))}
           </div>
