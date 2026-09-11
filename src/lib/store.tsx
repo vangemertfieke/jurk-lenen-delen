@@ -24,7 +24,7 @@ interface AppState {
   signIn: (user: SessionUser) => void;
   signOut: () => void;
   setAvatar: (dataUrl: string | null) => void;
-  updateProfile: (patch: Partial<Omit<SessionUser, "email">>) => void;
+  updateProfile: (patch: { name?: string; city?: string | undefined; bio?: string | undefined }) => void;
   favorites: string[];
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
@@ -74,10 +74,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
-  const updateProfile = useCallback((patch: Partial<Omit<SessionUser, "email">>) => {
+  const updateProfile = useCallback(
+    (patch: { name?: string; city?: string | undefined; bio?: string | undefined }) => {
     setUser((prev) => {
       if (!prev) return prev;
       const next: SessionUser = { ...prev, ...patch };
+      if (!next.city) delete next.city;
+      if (!next.bio) delete next.bio;
       localStorage.setItem(USER_KEY, JSON.stringify(next));
       return next;
     });
