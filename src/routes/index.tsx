@@ -99,7 +99,7 @@ function Home() {
         <SectionHeading
           eyebrow="Ontdek"
           title="Populaire jurken"
-          intro="De jurken die deze week het vaakst worden bekeken en geboekt."
+          intro="Automatisch bijgewerkt op basis van waarderingen, boekingen en nieuwe plaatsingen."
           action={
             <Link
               to="/jurken"
