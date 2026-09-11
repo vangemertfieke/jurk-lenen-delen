@@ -65,7 +65,9 @@ function Huuritems() {
         ))}
       </div>
 
-      {list.length === 0 ? (
+      {tab === "reserveringen" ? (
+        <ReservationList role="renter" />
+      ) : list.length === 0 ? (
         <EmptyState
           title="Nog geen huuritems in deze status"
           description="Zodra je een jurk boekt, volg je hier de hele huur van boeking tot retour."
