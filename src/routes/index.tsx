@@ -47,7 +47,7 @@ function Home() {
     <>
       {/* Hero */}
       <section className="border-b border-border">
-        <div className="container-page grid items-start gap-8 py-10 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-16">
+        <div className="container-page grid items-start gap-8 py-10 pb-20 md:pb-10 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-16">
           <div className="order-2 max-w-xl lg:order-1 lg:col-span-5">
             <p className="eyebrow border-b border-border pb-3">
               VOOR GALA'S • BRUILOFTEN • DINERS • EVENTS
