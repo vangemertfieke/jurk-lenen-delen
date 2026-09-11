@@ -11,12 +11,15 @@ import {
 export interface SessionUser {
   name: string;
   email: string;
+  /** Data-URL van de geüploade profielfoto. */
+  avatar?: string;
 }
 
 interface AppState {
   user: SessionUser | null;
   signIn: (user: SessionUser) => void;
   signOut: () => void;
+  setAvatar: (dataUrl: string | null) => void;
   favorites: string[];
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
