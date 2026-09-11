@@ -7,11 +7,9 @@ import { DressCard } from "@/components/dressloop/DressCard";
 import { NewsletterSignup } from "@/components/dressloop/NewsletterSignup";
 
 import { SectionHeading } from "@/components/dressloop/primitives";
-import { useState } from "react";
 import { filterVisible, useListingStates } from "@/lib/listing-state";
 import { sortPromoted, usePromotions } from "@/lib/promotions";
-import { getAreas, getDresses } from "@/lib/mock-data";
-import { cn } from "@/lib/utils";
+import { getDresses } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
