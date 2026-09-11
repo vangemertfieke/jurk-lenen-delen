@@ -58,6 +58,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(USER_KEY);
   }, []);
 
+  const setAvatar = useCallback((dataUrl: string | null) => {
+    setUser((prev) => {
+      if (!prev) return prev;
+      const next: SessionUser = { ...prev };
+      if (dataUrl) next.avatar = dataUrl;
+      else delete next.avatar;
+      localStorage.setItem(USER_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const toggleFavorite = useCallback((id: string) => {
     setFavorites((prev) => {
       const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
