@@ -104,22 +104,6 @@ function OverOns() {
           </div>
         </div>
       </section>
-
-      <section className="container-page py-20 lg:py-28">
-        <SectionHeading
-          eyebrow="Hulp nodig"
-          title="Goed om te weten"
-          intro="Vragen over betalen, borg, ophalen of verhuren? Die beantwoorden we op één plek."
-        />
-        <div className="mt-12 flex flex-wrap gap-4">
-          <Button asChild>
-            <Link to="/veelgestelde-vragen">Naar de veelgestelde vragen</Link>
-          </Button>
-          <Button variant="outline" asChild>
-            <Link to="/jurken">Huur een jurk</Link>
-          </Button>
-        </div>
-      </section>
     </>
   );
 }
