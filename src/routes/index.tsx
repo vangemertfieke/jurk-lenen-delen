@@ -4,6 +4,7 @@ import heroImg from "@/assets/hero.jpg";
 import closetImg from "@/assets/closet.jpg";
 import { Button } from "@/components/ui/button";
 import { DressCard } from "@/components/dressloop/DressCard";
+import { NewsletterSignup } from "@/components/dressloop/NewsletterSignup";
 
 import { SectionHeading } from "@/components/dressloop/primitives";
 import { getDresses } from "@/lib/mock-data";
