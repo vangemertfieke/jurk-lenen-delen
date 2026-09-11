@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { PriceBreakdown } from "@/components/dressloop/PriceBreakdown";
+import { AuthRequired } from "@/components/dressloop/AuthRequired";
 import { StatusBadge } from "@/components/dressloop/primitives";
 import {
   FEES,
@@ -48,6 +49,17 @@ export const Route = createFileRoute("/reserveren/$id")({
 });
 
 function Reserveren() {
+  return (
+    <AuthRequired
+      title="Reserveren kan met een account"
+      description="Maak gratis een Borro-account aan of log in. Zo weten verhuurders wie er reserveert en houd jij je huuritems bij."
+    >
+      <ReserverenInhoud />
+    </AuthRequired>
+  );
+}
+
+function ReserverenInhoud() {
   const { dress } = Route.useLoaderData();
   const { van, tot, levering } = Route.useSearch();
   const owner = getProfile(dress.ownerId);

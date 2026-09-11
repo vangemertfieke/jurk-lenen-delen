@@ -27,6 +27,7 @@ import { Route as AccountMeldingenRouteImport } from './routes/account.meldingen
 import { Route as AccountProfielRouteImport } from './routes/account.profiel'
 import { Route as AccountVerhuurRouteImport } from './routes/account.verhuur'
 import { Route as AfrekenenIdRouteImport } from './routes/afrekenen.$id'
+import { Route as BeheerJurkenRouteImport } from './routes/beheer.jurken'
 import { Route as HuurIdRouteImport } from './routes/huur.$id'
 import { Route as JurkenIndexRouteImport } from './routes/jurken.index'
 import { Route as JurkenIdRouteImport } from './routes/jurken.$id'
@@ -124,6 +125,11 @@ const AfrekenenIdRoute = AfrekenenIdRouteImport.update({
   path: '/afrekenen/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BeheerJurkenRoute = BeheerJurkenRouteImport.update({
+  id: '/beheer/jurken',
+  path: '/beheer/jurken',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HuurIdRoute = HuurIdRouteImport.update({
   id: '/huur/$id',
   path: '/huur/$id',
@@ -173,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/account/profiel': typeof AccountProfielRoute
   '/account/verhuur': typeof AccountVerhuurRoute
   '/afrekenen/$id': typeof AfrekenenIdRoute
+  '/beheer/jurken': typeof BeheerJurkenRoute
   '/huur/$id': typeof HuurIdRoute
   '/jurken/$id': typeof JurkenIdRoute
   '/reserveren/$id': typeof ReserverenIdRoute
@@ -198,6 +205,7 @@ export interface FileRoutesByTo {
   '/account/profiel': typeof AccountProfielRoute
   '/account/verhuur': typeof AccountVerhuurRoute
   '/afrekenen/$id': typeof AfrekenenIdRoute
+  '/beheer/jurken': typeof BeheerJurkenRoute
   '/huur/$id': typeof HuurIdRoute
   '/jurken/$id': typeof JurkenIdRoute
   '/reserveren/$id': typeof ReserverenIdRoute
@@ -225,6 +233,7 @@ export interface FileRoutesById {
   '/account/profiel': typeof AccountProfielRoute
   '/account/verhuur': typeof AccountVerhuurRoute
   '/afrekenen/$id': typeof AfrekenenIdRoute
+  '/beheer/jurken': typeof BeheerJurkenRoute
   '/huur/$id': typeof HuurIdRoute
   '/jurken/$id': typeof JurkenIdRoute
   '/reserveren/$id': typeof ReserverenIdRoute
@@ -253,6 +262,7 @@ export interface FileRouteTypes {
     | '/account/profiel'
     | '/account/verhuur'
     | '/afrekenen/$id'
+    | '/beheer/jurken'
     | '/huur/$id'
     | '/jurken/$id'
     | '/reserveren/$id'
@@ -278,6 +288,7 @@ export interface FileRouteTypes {
     | '/account/profiel'
     | '/account/verhuur'
     | '/afrekenen/$id'
+    | '/beheer/jurken'
     | '/huur/$id'
     | '/jurken/$id'
     | '/reserveren/$id'
@@ -304,6 +315,7 @@ export interface FileRouteTypes {
     | '/account/profiel'
     | '/account/verhuur'
     | '/afrekenen/$id'
+    | '/beheer/jurken'
     | '/huur/$id'
     | '/jurken/$id'
     | '/reserveren/$id'
@@ -324,6 +336,7 @@ export interface RootRouteChildren {
   VerhurenRoute: typeof VerhurenRoute
   WachtwoordVergetenRoute: typeof WachtwoordVergetenRoute
   AfrekenenIdRoute: typeof AfrekenenIdRoute
+  BeheerJurkenRoute: typeof BeheerJurkenRoute
   HuurIdRoute: typeof HuurIdRoute
   JurkenIdRoute: typeof JurkenIdRoute
   ReserverenIdRoute: typeof ReserverenIdRoute
@@ -460,6 +473,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AfrekenenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/beheer/jurken': {
+      id: '/beheer/jurken'
+      path: '/beheer/jurken'
+      fullPath: '/beheer/jurken'
+      preLoaderRoute: typeof BeheerJurkenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/huur/$id': {
       id: '/huur/$id'
       path: '/huur/$id'
@@ -541,6 +561,7 @@ const rootRouteChildren: RootRouteChildren = {
   VerhurenRoute: VerhurenRoute,
   WachtwoordVergetenRoute: WachtwoordVergetenRoute,
   AfrekenenIdRoute: AfrekenenIdRoute,
+  BeheerJurkenRoute: BeheerJurkenRoute,
   HuurIdRoute: HuurIdRoute,
   JurkenIdRoute: JurkenIdRoute,
   ReserverenIdRoute: ReserverenIdRoute,

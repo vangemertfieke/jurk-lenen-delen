@@ -18,12 +18,8 @@ import {
   type DeliveryMethod,
 } from "@/lib/config";
 import { useListingStates, visibilityOf } from "@/lib/listing-state";
-import {
-  addListingPhoto,
-  photosFor,
-  removeListingPhoto,
-  useListingPhotos,
-} from "@/lib/listing-photos";
+import { PhotoAlbum } from "@/components/dressloop/PhotoAlbum";
+import { photosFor, useListingPhotos } from "@/lib/listing-photos";
 import { getDress, getMyListings, getProfile, getReviewsForDress } from "@/lib/mock-data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -70,25 +66,6 @@ function DressDetail() {
   const images = [...dress.images, ...ownPhotos];
   const isOwner = Boolean(user) && getMyListings().some((l) => l.id === dress.id);
 
-  const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    if (!file) return;
-    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-      toast.error("Kies een JPG-, PNG- of WEBP-bestand.");
-      return;
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error("De foto mag maximaal 5 MB zijn.");
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      addListingPhoto(dress.id, String(reader.result));
-      toast.success("Foto toegevoegd aan je jurk.");
-    };
-    reader.readAsDataURL(file);
-  };
 
   const [active, setActive] = useState(0);
   const [range, setRange] = useState<DateRange | undefined>();
@@ -104,6 +81,13 @@ function DressDetail() {
       : "Nog geen datums gekozen";
 
   const book = () => {
+    if (!user) {
+      toast.error("Maak eerst een account aan", {
+        description: "Huren kan alleen met een Borro-account.",
+      });
+      void navigate({ to: "/aanmelden" });
+      return;
+    }
     if (!range?.from || !range?.to) {
       toast.error("Kies eerst je huurperiode.");
       return;
@@ -182,41 +166,11 @@ function DressDetail() {
           </div>
 
           {isOwner ? (
-            <div className="mt-6 rounded-2xl border border-border p-5">
-              <p className="text-sm font-medium">Eigen foto's van jouw jurk</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Voeg hier zelf foto's toe. Ze verschijnen direct in de fotogalerij van deze jurk.
-              </p>
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <label className="cursor-pointer">
-                  <input type="file" accept="image/*" className="sr-only" onChange={onUpload} />
-                  <span className="inline-flex h-9 items-center rounded-full border border-border px-4 text-sm transition-colors hover:border-primary hover:text-primary">
-                    Foto uploaden
-                  </span>
-                </label>
-                {ownPhotos.map((src, i) => (
-                  <span key={i} className="relative">
-                    <img
-                      src={src}
-                      alt={`Eigen foto ${i + 1}`}
-                      className="size-16 rounded-2xl object-cover"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => {
-                        removeListingPhoto(dress.id, i);
-                        toast.success("Foto verwijderd.");
-                      }}
-                      aria-label={`Verwijder eigen foto ${i + 1}`}
-                      className="absolute -right-2 -top-2 grid size-6 place-items-center rounded-full border border-border bg-background text-xs"
-                    >
-                      x
-                    </button>
-                  </span>
-                ))}
-              </div>
+            <div className="mt-6">
+              <PhotoAlbum dressId={dress.id} />
             </div>
           ) : null}
+
         </div>
 
         {/* Booking */}

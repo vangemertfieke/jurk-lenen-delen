@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { PriceBreakdown } from "@/components/dressloop/PriceBreakdown";
+import { AuthRequired } from "@/components/dressloop/AuthRequired";
 import { StatusBadge } from "@/components/dressloop/primitives";
 import { daysBetween, formatDateNL, formatEuro, type DeliveryMethod } from "@/lib/config";
 import { getDress, getProfile } from "@/lib/mock-data";
@@ -38,6 +39,17 @@ export const Route = createFileRoute("/afrekenen/$id")({
 });
 
 function Checkout() {
+  return (
+    <AuthRequired
+      title="Afrekenen kan met een account"
+      description="Log in of maak een account aan. Zo kun je veilig betalen en je boeking terugvinden."
+    >
+      <CheckoutInhoud />
+    </AuthRequired>
+  );
+}
+
+function CheckoutInhoud() {
   const { dress } = Route.useLoaderData();
   const { van, tot, levering } = Route.useSearch();
   const owner = getProfile(dress.ownerId);
