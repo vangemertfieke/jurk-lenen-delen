@@ -43,45 +43,46 @@ export function NewsletterSignup() {
   };
 
   return (
-    <section className="bg-primary text-primary-foreground">
-      <div className="container-page py-16 lg:py-24">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-medium uppercase tracking-wider text-primary-foreground/70">
-            Nieuwsbrief
-          </p>
-          <h2 className="display mt-4 text-2xl sm:text-3xl lg:text-4xl">
-            Blijf op de hoogte
-          </h2>
-          <p className="mt-4 text-primary-foreground/80">
-            Ontvang tips, nieuwe jurken en inspiratie voor je volgende feest in je mailbox.
-          </p>
+    <section className="container-page py-14 lg:py-20">
+      <div className="mx-auto max-w-5xl rounded-3xl border border-border bg-card p-8 md:p-12 lg:p-16">
+        <div className="flex flex-col items-start justify-between gap-10 md:flex-row md:items-center md:gap-16">
+          <div className="max-w-md">
+            <h2 className="display text-2xl text-foreground md:text-3xl">
+              Blijf in de loop
+            </h2>
+            <p className="mt-4 text-muted-foreground">
+              Ontvang wekelijks de nieuwste fashion drops en exclusieve styling tips van de Borro
+              community.
+            </p>
+          </div>
+
           <form
             onSubmit={handleSubmit}
-            className="mt-8 flex flex-col items-stretch gap-3 sm:flex-row sm:justify-center"
+            className="w-full max-w-sm flex flex-col gap-3"
           >
             <Input
               type="email"
-              placeholder="Jouw e-mailadres"
+              placeholder="Je e-mailadres"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="h-12 w-full rounded-full border-0 bg-primary-foreground px-5 text-foreground placeholder:text-muted-foreground sm:w-80"
+              className="h-12 w-full rounded-full border-input bg-background px-5 text-foreground placeholder:text-muted-foreground focus-visible:ring-ring"
             />
-            <Button type="submit" size="lg" variant="secondary" className="rounded-full">
-              Aanmelden
+            <Button type="submit" size="lg" className="h-12 w-full rounded-full">
+              Schrijf je in
             </Button>
-          </form>
-          {message && (
-            <p
-              className={`mt-4 text-sm ${
-                status === "error" ? "text-rose" : "text-primary-foreground/90"
-              }`}
-            >
-              {message}
+            {message && (
+              <p
+                className={`text-sm ${
+                  status === "error" ? "text-rose" : "text-success"
+                }`}
+              >
+                {message}
+              </p>
+            )}
+            <p className="text-xs text-muted-foreground">
+              Door je in te schrijven ga je akkoord met onze privacyvoorwaarden.
             </p>
-          )}
-          <p className="mt-4 text-xs text-primary-foreground/60">
-            We sturen alleen mail die echt relevant is. Je kunt je altijd afmelden.
-          </p>
+          </form>
         </div>
       </div>
     </section>
