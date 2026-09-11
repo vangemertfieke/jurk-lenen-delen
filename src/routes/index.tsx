@@ -30,10 +30,6 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const categories = ["Bruiloft", "Gala", "Festival", "Diner", "Feest", "Vakantie"].map((name) => ({
-  name,
-}));
-
 const steps = [
   { n: "01", title: "Vind jouw jurk", text: "Zoek op maat, merk, gelegenheid of locatie." },
   { n: "02", title: "Kies je huurperiode", text: "Bekijk de beschikbare datums en de totaalprijs." },
