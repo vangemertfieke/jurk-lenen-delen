@@ -156,12 +156,12 @@ function Home() {
           />
           <div className="max-w-md">
             <h2 className="display text-3xl sm:text-4xl lg:text-[2.75rem]">
-              Laat je jurk niet in de kast hangen.
+              Laat je jurk geld opleveren.
             </h2>
             <p className="mt-6 text-[0.9375rem] text-blush-foreground/80">
-              De gemiddelde feestjurk wordt één of twee keer gedragen. Verhuur hem aan iemand
-              die er blij van wordt en verdien aan een jurk die je al hebt. Jij bepaalt de prijs,
-              de datums en of iemand hem ophaalt of dat je hem verstuurt.
+              Waarom zou je favoriete jurk alleen maar in de kast hangen? Verhuur hem via Borro
+              en verdien eraan wanneer je hem zelf niet draagt. Jij bepaalt de huurprijs, wanneer
+              je jurk beschikbaar is en of je kiest voor ophalen of verzenden.
             </p>
             <div className="mt-10">
               <Button size="lg" asChild>
