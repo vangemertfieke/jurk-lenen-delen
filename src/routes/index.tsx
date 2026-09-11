@@ -201,9 +201,6 @@ function Home() {
         </div>
       </section>
 
-      {/* Newsletter */}
-      <NewsletterSignup />
-
       {/* Business */}
       <section className="border-t border-border bg-blush">
         <div className="container-page grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:py-20">
@@ -222,6 +219,9 @@ function Home() {
           </Button>
         </div>
       </section>
+
+      {/* Newsletter */}
+      <NewsletterSignup />
     </>
   );
 }
