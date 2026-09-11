@@ -55,7 +55,7 @@ function Home() {
             <h1 className="display mt-3 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] text-foreground sm:mt-4">
               De kledingkast van Nederland.
             </h1>
-            <p className="mt-4 max-w-sm text-2xl font-medium leading-snug text-primary sm:mt-5">
+            <p className="mt-4 max-w-sm text-xl font-medium leading-snug text-primary sm:text-2xl sm:mt-5">
               Rent your look. Earn from your closet.
             </p>
             <p className="mt-2 max-w-md text-sm sm:text-base text-muted-foreground sm:mt-3">
