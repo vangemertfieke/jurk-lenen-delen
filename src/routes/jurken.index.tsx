@@ -14,6 +14,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Slider } from "@/components/ui/slider";
 import { DressCard } from "@/components/dressloop/DressCard";
 import { EmptyState, Field } from "@/components/dressloop/primitives";
+import { filterVisible, useListingStates } from "@/lib/listing-state";
 import { brands, cities, colors, getDresses, occasions, sizes } from "@/lib/mock-data";
 import { formatEuro } from "@/lib/config";
 
@@ -74,7 +75,7 @@ function Jurken() {
   };
 
   const results = useMemo(() => {
-    let list = getDresses().filter((d) => {
+    let list = filterVisible(listingStates, getDresses()).filter((d) => {
       const q = query.trim().toLowerCase();
       if (q && !`${d.brand} ${d.title} ${d.color} ${d.occasion}`.toLowerCase().includes(q))
         return false;
