@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Share2, Link2, Facebook, Instagram, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Share2, Link2, Facebook, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,11 +20,25 @@ interface ShareButtonProps {
   className?: string;
 }
 
+function useCanonicalUrl(url: string) {
+  const [canonical, setCanonical] = useState(url);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (url.startsWith("http://") || url.startsWith("https://")) {
+      setCanonical(url);
+    } else {
+      setCanonical(`${window.location.origin}${url.startsWith("/") ? "" : "/"}${url}`);
+    }
+  }, [url]);
+  return canonical;
+}
+
 export function ShareButton({ title, description, url, image, className }: ShareButtonProps) {
   const [open, setOpen] = useState(false);
+  const canonicalUrl = useCanonicalUrl(url);
 
   const shareText = `Borro: ${title}`;
-  const encodedUrl = encodeURIComponent(url);
+  const encodedUrl = encodeURIComponent(canonicalUrl);
   const encodedText = encodeURIComponent(shareText);
   const encodedDesc = encodeURIComponent(description ?? "");
 
