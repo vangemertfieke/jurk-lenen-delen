@@ -187,17 +187,25 @@ function DressDetail() {
                 <Rating value={dress.rating} count={dress.reviewCount} />
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => toggleFavorite(dress.id)}
-              aria-label="Bewaar als favoriet"
-              aria-pressed={isFavorite(dress.id)}
-              className="grid size-10 shrink-0 place-items-center border border-border transition-colors hover:bg-muted"
-            >
-              <Heart
-                className={cn("size-4", isFavorite(dress.id) && "fill-primary text-primary")}
+            <div className="flex items-center gap-2">
+              <ShareButton
+                title={dress.title}
+                description={`Huur ${dress.title} van ${dress.brand}, maat ${dress.size}, in ${dress.city}.`}
+                url={`/jurken/${dress.id}`}
+                image={images[0]}
               />
-            </button>
+              <button
+                type="button"
+                onClick={() => toggleFavorite(dress.id)}
+                aria-label="Bewaar als favoriet"
+                aria-pressed={isFavorite(dress.id)}
+                className="grid size-10 shrink-0 place-items-center border border-border transition-colors hover:bg-muted"
+              >
+                <Heart
+                  className={cn("size-4", isFavorite(dress.id) && "fill-primary text-primary")}
+                />
+              </button>
+            </div>
           </div>
 
           <p className="price mt-8 text-2xl">
