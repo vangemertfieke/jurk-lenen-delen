@@ -97,12 +97,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       signIn,
       signOut,
       setAvatar,
+      updateProfile,
       favorites,
       toggleFavorite,
       isFavorite: (id: string) => favorites.includes(id),
       hydrated,
     }),
-    [user, favorites, hydrated, signIn, signOut, setAvatar, toggleFavorite],
+    [user, favorites, hydrated, signIn, signOut, setAvatar, updateProfile, toggleFavorite],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
