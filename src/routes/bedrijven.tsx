@@ -79,6 +79,46 @@ function Bedrijven() {
         </div>
       </section>
 
+      <section className="border-t border-border">
+        <div className="container-page py-20 lg:py-28">
+          <SectionHeading
+            eyebrow="Extra zichtbaar"
+            title="Promoot je collectie"
+            intro="Naast je vaste plek in het aanbod kun je je jurken extra onder de aandacht brengen."
+          />
+          <div className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                t: "Uitgelicht op de homepage",
+                d: "Sta met je mooiste jurken in de spotlight op de eerste pagina die bezoekers zien.",
+                p: "vanaf € 29 per week",
+              },
+              {
+                t: "Bovenaan in de zoekresultaten",
+                d: "Jouw collectie verschijnt als eerste wanneer huurders zoeken in jouw categorie of plaats.",
+                p: "vanaf € 19 per week",
+              },
+              {
+                t: "Feature in nieuwsbrief & social",
+                d: "Een plekje in onze e-mail en op onze kanalen, voor duizenden volgers van Borro.",
+                p: "op aanvraag",
+              },
+            ].map((i) => (
+              <div key={i.t} className="hairline flex flex-col pt-6">
+                <h3 className="text-[0.9375rem] font-medium">{i.t}</h3>
+                <p className="mt-2 flex-1 text-sm text-muted-foreground">{i.d}</p>
+                <p className="mt-4 text-sm font-medium">{i.p}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12">
+            <Button asChild>
+              <Link to="/aanmelden">Vraag de mogelijkheden aan</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-blush">
         <div className="container-page grid gap-8 py-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center lg:py-20">
           <div className="max-w-xl">

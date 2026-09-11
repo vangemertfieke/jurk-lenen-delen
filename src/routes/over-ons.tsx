@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import heroImg from "@/assets/hero.jpg";
+import foundersImg from "@/assets/founders.jpg";
 import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/dressloop/primitives";
 
@@ -41,6 +42,45 @@ function OverOns() {
           width={1408}
           height={1760}
           className="mt-14 aspect-[16/9] w-full object-cover object-[center_25%]"
+        />
+      </section>
+
+      <section className="container-page grid items-center gap-12 py-20 lg:grid-cols-2 lg:gap-20 lg:py-28">
+        <div className="max-w-xl">
+          <SectionHeading eyebrow="Ons verhaal" title="Van Senne & Fieke" />
+          <div className="mt-8 space-y-5 text-[0.9375rem] leading-relaxed text-muted-foreground">
+            <p>
+              Wij zijn Senne en Fieke, clubgenoten en inmiddels goede vriendinnen. Door onze
+              vereniging staan we regelmatig op gala's, diners en evenementen — en voor elke
+              gelegenheid wilden we iets nieuws. Tel daar al die jurken bij op die je maar één
+              keer draagt, en je snapt dat onze kasten vol hingen met kleding die stilstond.
+            </p>
+            <p>
+              Nieuwe jurken kopen voelde steeds minder goed. Veel fast fashion is niet duurzaam
+              en vaak ook niet echt betaalbaar. Dus leenden we steeds vaker jurken van vriendinnen.
+              Leuk, maar het voelde opgelaten: zij deden ons een enorme gunst en kregen er niets
+              voor terug, terwijl hun jurk ook gewoon geld waard was.
+            </p>
+            <p>
+              Toen we bij bestaande verhuurders gingen kijken, viel het aanbod ons tegen: beperkt,
+              duur of ver weg. Daarom bedachten we Borro — één gedeelde kledingkast waar vraag en
+              aanbod samenkomen. Jij huurt een jurk van iemand in de buurt, zij verdient er een
+              leuk bedrag aan en samen zorgen we dat mooie kleding vaker gedragen wordt.
+            </p>
+            <p>
+              Ons doel is simpel: dat iedereen zich goed voelt in een fijne outfit, zonder steeds
+              iets nieuws te hoeven kopen. Beter voor je portemonnee én voor de wereld.
+            </p>
+            <p className="font-medium text-foreground">— Senne & Fieke, oprichters van Borro</p>
+          </div>
+        </div>
+        <img
+          src={foundersImg}
+          alt="Senne en Fieke, oprichters van Borro, lachend aan tafel tijdens een gala"
+          loading="lazy"
+          width={1536}
+          height={1024}
+          className="aspect-[3/2] w-full rounded-2xl object-cover"
         />
       </section>
 
