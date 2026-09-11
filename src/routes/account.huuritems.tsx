@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/dressloop/primitives";
 import { RentalListItem } from "@/components/dressloop/RentalListItem";
+import { ReservationList } from "@/components/dressloop/ReservationList";
 import { CURRENT_USER_ID, useRentals } from "@/lib/rental/store";
 import type { RentalFlowStatus } from "@/lib/rental/types";
 import { cn } from "@/lib/utils";
@@ -12,6 +13,7 @@ export const Route = createFileRoute("/account/huuritems")({
 });
 
 const groups: { key: string; label: string; statuses: RentalFlowStatus[] | null }[] = [
+  { key: "reserveringen", label: "Reserveringen", statuses: [] },
   { key: "alle", label: "Alles", statuses: null },
   {
     key: "aankomend",
@@ -30,7 +32,7 @@ const groups: { key: string; label: string; statuses: RentalFlowStatus[] | null 
 ];
 
 function Huuritems() {
-  const [tab, setTab] = useState("alle");
+  const [tab, setTab] = useState("reserveringen");
   const { rentals } = useRentals();
   const mine = rentals.filter((r) => r.renterId === CURRENT_USER_ID);
   const group = groups.find((g) => g.key === tab);
@@ -63,7 +65,9 @@ function Huuritems() {
         ))}
       </div>
 
-      {list.length === 0 ? (
+      {tab === "reserveringen" ? (
+        <ReservationList role="renter" />
+      ) : list.length === 0 ? (
         <EmptyState
           title="Nog geen huuritems in deze status"
           description="Zodra je een jurk boekt, volg je hier de hele huur van boeking tot retour."

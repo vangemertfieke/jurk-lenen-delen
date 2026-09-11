@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { EmptyState, StatusBadge } from "@/components/dressloop/primitives";
 import { RentalListItem } from "@/components/dressloop/RentalListItem";
+import { ReservationList } from "@/components/dressloop/ReservationList";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -64,6 +65,7 @@ const tabs: { key: string; label: string; statuses: RentalFlowStatus[] | null }[
     label: "Afgerond",
     statuses: ["completed", "claim_resolved", "payout_pending", "paid_out"],
   },
+  { key: "reserveringen", label: "Reserveringen", statuses: [] },
   { key: "alle", label: "Alle verhuur", statuses: null },
   { key: "jurken", label: "Mijn jurken", statuses: [] },
   { key: "concepten", label: "Concepten", statuses: [] },
@@ -111,7 +113,9 @@ function Verhuur() {
         ))}
       </div>
 
-      {tab === "jurken" ? (
+      {tab === "reserveringen" ? (
+        <ReservationList role="owner" />
+      ) : tab === "jurken" ? (
         (() => {
           const visible = listings.filter(
             (d) => visibilityOf(listingStates, d.id) !== "verwijderd",

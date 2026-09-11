@@ -18,7 +18,13 @@ import {
   type DeliveryMethod,
 } from "@/lib/config";
 import { useListingStates, visibilityOf } from "@/lib/listing-state";
-import { getDress, getProfile, getReviewsForDress } from "@/lib/mock-data";
+import {
+  addListingPhoto,
+  photosFor,
+  removeListingPhoto,
+  useListingPhotos,
+} from "@/lib/listing-photos";
+import { getDress, getMyListings, getProfile, getReviewsForDress } from "@/lib/mock-data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -58,6 +64,31 @@ function DressDetail() {
   const listingStates = useListingStates();
   const visibility = visibilityOf(listingStates, dress.id);
   const unavailable = visibility !== "actief";
+  const { user } = useApp();
+  const photoMap = useListingPhotos();
+  const ownPhotos = photosFor(photoMap, dress.id);
+  const images = [...dress.images, ...ownPhotos];
+  const isOwner = Boolean(user) && getMyListings().some((l) => l.id === dress.id);
+
+  const onUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      toast.error("Kies een JPG-, PNG- of WEBP-bestand.");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("De foto mag maximaal 5 MB zijn.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      addListingPhoto(dress.id, String(reader.result));
+      toast.success("Foto toegevoegd aan je jurk.");
+    };
+    reader.readAsDataURL(file);
+  };
 
   const [active, setActive] = useState(0);
   const [range, setRange] = useState<DateRange | undefined>();
@@ -78,7 +109,7 @@ function DressDetail() {
       return;
     }
     void navigate({
-      to: "/afrekenen/$id",
+      to: "/reserveren/$id",
       params: { id: dress.id },
       search: {
         van: range.from.toISOString().slice(0, 10),
@@ -103,7 +134,7 @@ function DressDetail() {
         <div className="min-w-0">
           <div className="lg:hidden">
             <div className="-mx-6 flex snap-x snap-mandatory gap-2 overflow-x-auto px-6 pb-2">
-              {dress.images.map((src, i) => (
+              {images.map((src, i) => (
                 <img
                   key={i}
                   src={src}
@@ -119,15 +150,15 @@ function DressDetail() {
 
           <div className="hidden lg:block">
             <img
-              src={dress.images[active]}
+              src={images[Math.min(active, images.length - 1)]}
               alt={`${dress.title} foto ${active + 1}`}
               width={900}
               height={1200}
               className="aspect-[3/4] w-full object-cover"
             />
-            {dress.images.length > 1 ? (
+            {images.length > 1 ? (
               <div className="mt-3 flex gap-3">
-                {dress.images.map((src, i) => (
+                {images.map((src, i) => (
                   <button
                     key={i}
                     type="button"
@@ -149,6 +180,43 @@ function DressDetail() {
               </div>
             ) : null}
           </div>
+
+          {isOwner ? (
+            <div className="mt-6 rounded-2xl border border-border p-5">
+              <p className="text-sm font-medium">Eigen foto's van jouw jurk</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Voeg hier zelf foto's toe. Ze verschijnen direct in de fotogalerij van deze jurk.
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <label className="cursor-pointer">
+                  <input type="file" accept="image/*" className="sr-only" onChange={onUpload} />
+                  <span className="inline-flex h-9 items-center rounded-full border border-border px-4 text-sm transition-colors hover:border-primary hover:text-primary">
+                    Foto uploaden
+                  </span>
+                </label>
+                {ownPhotos.map((src, i) => (
+                  <span key={i} className="relative">
+                    <img
+                      src={src}
+                      alt={`Eigen foto ${i + 1}`}
+                      className="size-16 rounded-2xl object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        removeListingPhoto(dress.id, i);
+                        toast.success("Foto verwijderd.");
+                      }}
+                      aria-label={`Verwijder eigen foto ${i + 1}`}
+                      className="absolute -right-2 -top-2 grid size-6 place-items-center rounded-full border border-border bg-background text-xs"
+                    >
+                      x
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
 
         {/* Booking */}
@@ -251,8 +319,11 @@ function DressDetail() {
               </p>
             ) : null}
             <Button size="lg" className="w-full" onClick={book} disabled={unavailable}>
-              Huur deze jurk
+              Reserveer deze jurk
             </Button>
+            <p className="mt-3 text-xs text-muted-foreground">
+              Je stuurt eerst een reserveringsverzoek. De verhuurder bevestigt, daarna reken je af.
+            </p>
             <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3">
               {dress.allowsOffers ? (
                 <OfferDialog
@@ -380,7 +451,7 @@ function DressDetail() {
             <p className="truncate text-xs text-muted-foreground">{period}</p>
           </div>
           <Button onClick={book} className="shrink-0" disabled={unavailable}>
-            {unavailable ? "Niet beschikbaar" : "Huur deze jurk"}
+            {unavailable ? "Niet beschikbaar" : "Reserveer"}
           </Button>
         </div>
       </div>
