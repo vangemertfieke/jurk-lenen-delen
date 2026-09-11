@@ -14,9 +14,9 @@ export interface SessionUser {
   /** Data-URL van de geüploade profielfoto. */
   avatar?: string;
   /** Woonplaats, bijv. "Amsterdam". */
-  city?: string;
+  city?: string | undefined;
   /** Korte introductie op het profiel. */
-  bio?: string;
+  bio?: string | undefined;
 }
 
 interface AppState {
