@@ -74,29 +74,37 @@ function OverOns() {
           <SectionHeading eyebrow="Ons verhaal" title="Van Senne & Fieke" />
           <div className="mt-8 space-y-5 text-[0.9375rem] leading-relaxed text-muted-foreground">
             <p>
-              Wij zijn Senne en Fieke, clubgenoten en inmiddels goede vriendinnen. Door onze
-              vereniging staan we regelmatig op gala's, diners en evenementen — en voor elke
-              gelegenheid wilden we iets nieuws. Tel daar al die jurken bij op die je maar één
-              keer draagt, en je snapt dat onze kasten vol hingen met kleding die stilstond.
+              Wij zijn Senne en Fieke, goede vriendinnen met één herkenbaar probleem: voor gala’s,
+              diners, bruiloften en andere gelegenheden wilden we steeds weer iets leuks aan. Het
+              gevolg? Kasten vol jurken die we soms maar één of twee keer droegen.
             </p>
             <p>
-              Nieuwe jurken kopen voelde steeds minder goed. Veel fast fashion is niet duurzaam
-              en vaak ook niet echt betaalbaar. Dus leenden we steeds vaker jurken van vriendinnen.
-              Leuk, maar het voelde opgelaten: zij deden ons een enorme gunst en kregen er niets
-              voor terug, terwijl hun jurk ook gewoon geld waard was.
+              Steeds opnieuw iets nieuws kopen vonden we zonde — van ons geld én van alle mooie
+              jurken die daarna in de kast bleven hangen. Daarom begonnen we steeds vaker jurken
+              van vriendinnen te lenen. Ideaal, maar ook een beetje ongemakkelijk: je leent een
+              mooie, soms dure jurk, terwijl degene van wie hij is daar niets voor terugkrijgt.
             </p>
             <p>
-              Toen we zelf op zoek gingen naar een passende jurk, merkten we hoe lastig het is om
-              iets moois, betaalbaars én dichtbij te vinden. Daarom bedachten we Borro — één
-              gedeelde kledingkast waar vraag en aanbod in Nederland samenkomen. Jij huurt een jurk
-              van iemand in de buurt, zij verdient er een leuk bedrag aan en samen zorgen we dat
-              mooie kleding vaker gedragen wordt.
+              Toen we zelf op zoek gingen naar andere mogelijkheden, merkten we hoe lastig het
+              eigenlijk is om een mooie en betaalbare jurk in de buurt te vinden die precies op
+              jouw datum beschikbaar is. Tegelijkertijd hangen er bij zoveel anderen jurken in de
+              kast waar nauwelijks iets mee gebeurt.
             </p>
             <p>
-              Ons doel is simpel: dat iedereen zich goed voelt in een fijne outfit, zonder steeds
-              iets nieuws te hoeven kopen. Beter voor je portemonnee én voor de wereld.
+              Dat moest makkelijker kunnen. En zo ontstond Borro.
             </p>
-            <p className="font-medium text-foreground">— Senne & Fieke, oprichters van Borro</p>
+            <p>
+              Een gedeelde kledingkast voor Nederland, waar je een jurk kunt huren van iemand
+              anders én geld kunt verdienen met de jurken die bij jou in de kast hangen. De één
+              vindt voor een betaalbare prijs een outfit voor een bijzondere gelegenheid, de ander
+              verdient aan een jurk die anders blijft hangen.
+            </p>
+            <p>
+              Ons idee is simpel: iets nieuws dragen, zonder dat het nieuw hoeft te zijn. Meer
+              keuze voor je volgende gelegenheid, extra inkomsten uit je eigen kast en samen zorgen
+              we ervoor dat mooie kleding vaker wordt gedragen.
+            </p>
+            <p className="font-medium text-foreground">— Senne & Fieke<br />Oprichters van Borro</p>
           </div>
         </div>
       </section>
