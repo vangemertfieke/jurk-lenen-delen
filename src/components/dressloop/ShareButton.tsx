@@ -14,10 +14,10 @@ import { cn } from "@/lib/utils";
 
 interface ShareButtonProps {
   title: string;
-  description?: string;
+  description?: string | undefined;
   url: string;
-  image?: string;
-  className?: string;
+  image?: string | undefined;
+  className?: string | undefined;
 }
 
 function useCanonicalUrl(url: string) {
