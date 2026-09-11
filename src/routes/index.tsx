@@ -9,6 +9,7 @@ import { NewsletterSignup } from "@/components/dressloop/NewsletterSignup";
 import { SectionHeading } from "@/components/dressloop/primitives";
 import { useState } from "react";
 import { filterVisible, useListingStates } from "@/lib/listing-state";
+import { sortPromoted, usePromotions } from "@/lib/promotions";
 import { getAreas, getDresses } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
@@ -51,13 +52,17 @@ function popularityScore(d: { rating: number; reviewCount: number; createdAt: st
 
 function Home() {
   const listingStates = useListingStates();
+  const promos = usePromotions();
   const [area, setArea] = useState<string | null>(null);
   const areas = getAreas();
-  const featured = filterVisible(listingStates, [...getDresses()])
-    .filter((d) => d.status !== "draft")
-    .filter((d) => area === null || d.area === area)
-    .sort((a, b) => popularityScore(b) - popularityScore(a))
-    .slice(0, 8);
+  const featured = sortPromoted(
+    promos,
+    filterVisible(listingStates, [...getDresses()])
+      .filter((d) => d.status !== "draft")
+      .filter((d) => area === null || d.area === area)
+      .sort((a, b) => popularityScore(b) - popularityScore(a)),
+    "uitgelicht",
+  ).slice(0, 8);
 
   return (
     <>

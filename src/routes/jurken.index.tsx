@@ -15,6 +15,7 @@ import { Slider } from "@/components/ui/slider";
 import { DressCard } from "@/components/dressloop/DressCard";
 import { EmptyState, Field } from "@/components/dressloop/primitives";
 import { filterVisible, useListingStates } from "@/lib/listing-state";
+import { sortPromoted, usePromotions } from "@/lib/promotions";
 import { brands, cities, colors, getAreas, getDresses, occasions, sizes } from "@/lib/mock-data";
 import { formatEuro } from "@/lib/config";
 
@@ -63,6 +64,7 @@ function Jurken() {
   const [sort, setSort] = useState("aanbevolen");
   const [area, setArea] = useState(ALLE);
   const listingStates = useListingStates();
+  const promos = usePromotions();
 
   const reset = () => {
     setQuery("");
@@ -109,8 +111,8 @@ function Jurken() {
       default:
         list = [...list].sort((a, b) => b.rating - a.rating);
     }
-    return list;
-  }, [listingStates, query, size, brand, color, occasion, city, area, delivery, available, maxPrice, sort]);
+    return sortPromoted(promos, list, "topZoekresultaat");
+  }, [promos, listingStates, query, size, brand, color, occasion, city, area, delivery, available, maxPrice, sort]);
 
   const filters = (
     <div className="space-y-8">
