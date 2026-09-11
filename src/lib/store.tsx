@@ -79,8 +79,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setUser((prev) => {
       if (!prev) return prev;
       const next: SessionUser = { ...prev, ...patch };
-      if (!next.city) delete next.city;
-      if (!next.bio) delete next.bio;
+      if (next.city === undefined) delete next.city;
+      if (next.bio === undefined) delete next.bio;
       localStorage.setItem(USER_KEY, JSON.stringify(next));
       return next;
     });
