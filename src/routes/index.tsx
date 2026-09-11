@@ -10,6 +10,7 @@ import { SectionHeading } from "@/components/dressloop/primitives";
 import { useState } from "react";
 import { filterVisible, useListingStates } from "@/lib/listing-state";
 import { getAreas, getDresses } from "@/lib/mock-data";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   head: () => ({
