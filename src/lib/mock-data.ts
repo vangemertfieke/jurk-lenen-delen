@@ -558,6 +558,10 @@ export const conditions = [
 
 /* ---- data access ---- */
 
+/** Unieke buurten uit het huidige aanbod, alfabetisch. */
+export function getAreas() {
+  return [...new Set(dresses.map((d) => d.area))].sort((a, b) => a.localeCompare(b, "nl"));
+}
 export function getDresses() {
   return dresses;
 }

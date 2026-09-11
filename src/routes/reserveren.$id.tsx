@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { PriceBreakdown } from "@/components/dressloop/PriceBreakdown";
 import { StatusBadge } from "@/components/dressloop/primitives";
-import { daysBetween, formatDateNL, formatEuro, type DeliveryMethod } from "@/lib/config";
+import {
+  FEES,
+  daysBetween,
+  formatDateNL,
+  formatEuro,
+  type DeliveryMethod,
+} from "@/lib/config";
 import { getDress, getProfile } from "@/lib/mock-data";
 import { createReservation } from "@/lib/reservations";
 
@@ -116,7 +122,7 @@ function Reserveren() {
             <p className="mt-2 text-sm text-muted-foreground">
               {delivery === "pickup"
                 ? `Ophalen in ${dress.area}`
-                : `Verzenden voor ${formatEuro(dress.deposit > 0 ? 6.95 : 6.95)}`}
+                : `Verzenden voor ${formatEuro(FEES.shippingFee)}`}
             </p>
           </section>
 
