@@ -1,7 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import heroImg from "@/assets/hero.jpg";
 import foundersImg from "@/assets/founders.jpg";
-import { Button } from "@/components/ui/button";
 import { SectionHeading } from "@/components/dressloop/primitives";
 
 export const Route = createFileRoute("/over-ons")({
