@@ -292,18 +292,16 @@ function DressDetail() {
           <section>
             <h2 className="text-lg font-medium">Ophalen &amp; verzenden</h2>
             <div className="mt-4 max-w-2xl space-y-3 text-[0.9375rem] text-muted-foreground">
-              {dress.delivery !== "shipping" ? (
-                <p>
-                  Ophalen mogelijk in {dress.area}. Het exacte adres ontvang je zodra de boeking
-                  bevestigd is.
-                </p>
-              ) : null}
-              {dress.delivery !== "pickup" ? (
-                <p>
-                  Verzenden mogelijk vanaf {formatEuro(FEES.shippingFee)}. De jurk wordt gestoomd en
-                  in een kledinghoes verstuurd.
-                </p>
-              ) : null}
+              <p>
+                {dress.delivery !== "shipping"
+                  ? `Ophalen mogelijk in ${dress.area}. Het exacte adres ontvang je zodra de boeking bevestigd is.`
+                  : "Ophalen wordt voor deze jurk niet aangeboden."}
+              </p>
+              <p>
+                {dress.delivery !== "pickup"
+                  ? `Verzenden mogelijk vanaf ${formatEuro(FEES.shippingFee)}. De jurk wordt gestoomd en in een kledinghoes verstuurd.`
+                  : "Verzenden wordt voor deze jurk niet aangeboden."}
+              </p>
             </div>
           </section>
 
