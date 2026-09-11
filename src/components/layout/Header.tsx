@@ -3,6 +3,7 @@ import { Bell, Heart, Menu, MessageSquare, User, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useApp } from "@/lib/store";
+import { useIsTeamAdmin } from "@/lib/admin";
 import { cn } from "@/lib/utils";
 
 const nav = [
@@ -14,6 +15,7 @@ const nav = [
 
 export function Header() {
   const { user } = useApp();
+  const { isAdmin } = useIsTeamAdmin();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -66,6 +68,11 @@ export function Header() {
               <IconLink to="/account/meldingen" label="Meldingen">
                 <Bell />
               </IconLink>
+              {isAdmin ? (
+                <Button variant="quiet" size="sm" asChild className="ml-2">
+                  <Link to="/beheer/jurken">Beheer</Link>
+                </Button>
+              ) : null}
               <Button variant="ghost" size="sm" asChild className="ml-2">
                 <Link to="/account">
                   <User />
