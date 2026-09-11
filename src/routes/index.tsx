@@ -77,7 +77,7 @@ function Home() {
               alt="Vrouw in een bordeauxrode zijden maxi-jurk"
               width={1408}
               height={1760}
-              className="aspect-[4/5] max-h-[45svh] w-full object-cover sm:max-h-[55svh] lg:max-h-none lg:w-5/6"
+              className="aspect-[4/5] max-h-[40svh] w-full object-cover sm:max-h-[55svh] lg:max-h-none lg:w-5/6"
             />
             <p className="absolute bottom-5 right-5 bg-primary px-4 py-2 text-xs font-semibold uppercase text-primary-foreground">
               Geleend staat je goed
