@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { DateRangeField } from "@/components/dressloop/DateRangeField";
 import { OfferDialog } from "@/components/dressloop/OfferDialog";
 import { InfoRow, Rating, SectionHeading } from "@/components/dressloop/primitives";
+import { ShareButton } from "@/components/dressloop/ShareButton";
 import {
   FEES,
   daysBetween,
