@@ -15,7 +15,7 @@ import { Slider } from "@/components/ui/slider";
 import { DressCard } from "@/components/dressloop/DressCard";
 import { EmptyState, Field } from "@/components/dressloop/primitives";
 import { filterVisible, useListingStates } from "@/lib/listing-state";
-import { brands, cities, colors, getDresses, occasions, sizes } from "@/lib/mock-data";
+import { brands, cities, colors, getAreas, getDresses, occasions, sizes } from "@/lib/mock-data";
 import { formatEuro } from "@/lib/config";
 
 interface JurkenSearch {
@@ -61,6 +61,7 @@ function Jurken() {
   const [available, setAvailable] = useState(ALLE);
   const [maxPrice, setMaxPrice] = useState(100);
   const [sort, setSort] = useState("aanbevolen");
+  const [area, setArea] = useState(ALLE);
   const listingStates = useListingStates();
 
   const reset = () => {
@@ -70,6 +71,7 @@ function Jurken() {
     setColor(ALLE);
     setOccasion(ALLE);
     setCity(ALLE);
+    setArea(ALLE);
     setDelivery(ALLE);
     setAvailable(ALLE);
     setMaxPrice(100);
@@ -85,6 +87,7 @@ function Jurken() {
       if (color !== ALLE && d.color !== color) return false;
       if (occasion !== ALLE && d.occasion !== occasion) return false;
       if (city !== ALLE && d.city !== city) return false;
+      if (area !== ALLE && d.area !== area) return false;
       if (delivery === "pickup" && d.delivery === "shipping") return false;
       if (delivery === "shipping" && d.delivery === "pickup") return false;
       if (d.basePrice > maxPrice) return false;
@@ -107,7 +110,7 @@ function Jurken() {
         list = [...list].sort((a, b) => b.rating - a.rating);
     }
     return list;
-  }, [listingStates, query, size, brand, color, occasion, city, delivery, available, maxPrice, sort]);
+  }, [listingStates, query, size, brand, color, occasion, city, area, delivery, available, maxPrice, sort]);
 
   const filters = (
     <div className="space-y-8">
@@ -149,6 +152,14 @@ function Jurken() {
       </Field>
       <Field label="Locatie">
         <Choice value={city} onChange={setCity} options={[...cities]} placeholder="Heel Nederland" />
+      </Field>
+      <Field label="Buurt">
+        <Choice
+          value={area}
+          onChange={setArea}
+          options={getAreas().filter((a) => city === ALLE || a.startsWith(city))}
+          placeholder="Alle buurten"
+        />
       </Field>
       <Field label="Ophalen / verzenden">
         <Choice
