@@ -14,6 +14,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Slider } from "@/components/ui/slider";
 import { DressCard } from "@/components/dressloop/DressCard";
 import { EmptyState, Field } from "@/components/dressloop/primitives";
+import { filterVisible, useListingStates } from "@/lib/listing-state";
 import { brands, cities, colors, getDresses, occasions, sizes } from "@/lib/mock-data";
 import { formatEuro } from "@/lib/config";
 
@@ -60,6 +61,7 @@ function Jurken() {
   const [available, setAvailable] = useState(ALLE);
   const [maxPrice, setMaxPrice] = useState(100);
   const [sort, setSort] = useState("aanbevolen");
+  const listingStates = useListingStates();
 
   const reset = () => {
     setQuery("");
@@ -74,7 +76,7 @@ function Jurken() {
   };
 
   const results = useMemo(() => {
-    let list = getDresses().filter((d) => {
+    let list = filterVisible(listingStates, getDresses()).filter((d) => {
       const q = query.trim().toLowerCase();
       if (q && !`${d.brand} ${d.title} ${d.color} ${d.occasion}`.toLowerCase().includes(q))
         return false;
@@ -105,7 +107,7 @@ function Jurken() {
         list = [...list].sort((a, b) => b.rating - a.rating);
     }
     return list;
-  }, [query, size, brand, color, occasion, city, delivery, available, maxPrice, sort]);
+  }, [listingStates, query, size, brand, color, occasion, city, delivery, available, maxPrice, sort]);
 
   const filters = (
     <div className="space-y-8">

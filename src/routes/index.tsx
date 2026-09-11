@@ -7,6 +7,7 @@ import { DressCard } from "@/components/dressloop/DressCard";
 import { NewsletterSignup } from "@/components/dressloop/NewsletterSignup";
 
 import { SectionHeading } from "@/components/dressloop/primitives";
+import { filterVisible, useListingStates } from "@/lib/listing-state";
 import { getDresses } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/")({
@@ -47,7 +48,8 @@ function popularityScore(d: { rating: number; reviewCount: number; createdAt: st
 }
 
 function Home() {
-  const featured = [...getDresses()]
+  const listingStates = useListingStates();
+  const featured = filterVisible(listingStates, [...getDresses()])
     .filter((d) => d.status !== "draft")
     .sort((a, b) => popularityScore(b) - popularityScore(a))
     .slice(0, 8);

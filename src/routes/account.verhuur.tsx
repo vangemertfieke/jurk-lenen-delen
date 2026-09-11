@@ -3,7 +3,25 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { EmptyState, StatusBadge } from "@/components/dressloop/primitives";
 import { RentalListItem } from "@/components/dressloop/RentalListItem";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { calculateOwnerPayout, formatEuro } from "@/lib/config";
+import {
+  setListingVisibility,
+  useListingStates,
+  visibilityOf,
+  type ListingVisibility,
+} from "@/lib/listing-state";
 import { getMyListings, myDrafts } from "@/lib/mock-data";
 import { CURRENT_USER_ID, useRentals } from "@/lib/rental/store";
 import type { RentalFlowStatus } from "@/lib/rental/types";
@@ -54,6 +72,7 @@ const tabs: { key: string; label: string; statuses: RentalFlowStatus[] | null }[
 function Verhuur() {
   const [tab, setTab] = useState("actie");
   const listings = getMyListings();
+  const listingStates = useListingStates();
   const { rentals } = useRentals();
   const mine = rentals.filter((r) => r.ownerId === CURRENT_USER_ID);
   const active = tabs.find((t) => t.key === tab);
@@ -93,25 +112,95 @@ function Verhuur() {
       </div>
 
       {tab === "jurken" ? (
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3">
-          {listings.map((d) => (
-            <article key={d.id}>
-              <Link to="/jurken/$id" params={{ id: d.id }}>
-                <img
-                  src={d.images[0]}
-                  alt={d.title}
-                  loading="lazy"
-                  className="aspect-[3/4] w-full object-cover"
-                />
-              </Link>
-              <p className="mt-3 text-sm">{d.title}</p>
-              <p className="price text-sm text-muted-foreground">{formatEuro(d.basePrice)}</p>
-              <p className="mt-1 text-xs text-muted-foreground">
-                Jij ontvangt {formatEuro(calculateOwnerPayout(d.basePrice).payout)}
-              </p>
-            </article>
-          ))}
-        </div>
+        (() => {
+          const visible = listings.filter(
+            (d) => visibilityOf(listingStates, d.id) !== "verwijderd",
+          );
+          return visible.length === 0 ? (
+            <EmptyState
+              title="Geen jurken in je aanbod"
+              description="Je hebt al je jurken uit het aanbod gehaald. Plaats een nieuwe jurk om weer te verhuren."
+              action={
+                <Button asChild>
+                  <Link to="/verhuren">Plaats een jurk</Link>
+                </Button>
+              }
+            />
+          ) : (
+            <div className="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-3">
+              {visible.map((d) => {
+                const state: ListingVisibility = visibilityOf(listingStates, d.id);
+                const paused = state === "gepauzeerd";
+                return (
+                  <article key={d.id}>
+                    <Link to="/jurken/$id" params={{ id: d.id }}>
+                      <img
+                        src={d.images[0]}
+                        alt={d.title}
+                        loading="lazy"
+                        className={cn(
+                          "aspect-[3/4] w-full rounded-2xl object-cover",
+                          paused && "opacity-50",
+                        )}
+                      />
+                    </Link>
+                    <div className="mt-3 flex items-center gap-2">
+                      <StatusBadge>{paused ? "Op pauze" : "Zichtbaar"}</StatusBadge>
+                    </div>
+                    <p className="mt-2 text-sm">{d.title}</p>
+                    <p className="price text-sm text-muted-foreground">{formatEuro(d.basePrice)}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Jij ontvangt {formatEuro(calculateOwnerPayout(d.basePrice).payout)}
+                    </p>
+                    <div className="mt-3 flex flex-wrap items-center gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setListingVisibility(d.id, paused ? "actief" : "gepauzeerd");
+                          toast.success(
+                            paused
+                              ? "Jurk staat weer in het aanbod."
+                              : "Jurk is op pauze en niet meer zichtbaar.",
+                          );
+                        }}
+                      >
+                        {paused ? "Weer zichtbaar maken" : "Tijdelijk pauzeren"}
+                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="quiet" size="sm">
+                            Verwijderen
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Jurk uit je aanbod halen?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              {d.title} is daarna niet meer zichtbaar voor huurders. Lopende
+                              verhuur blijft gewoon staan.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Annuleren</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => {
+                                setListingVisibility(d.id, "verwijderd");
+                                toast.success("Jurk verwijderd uit je aanbod.");
+                              }}
+                            >
+                              Verwijderen
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          );
+        })()
       ) : tab === "concepten" ? (
         myDrafts.length === 0 ? (
           <EmptyState

@@ -17,6 +17,7 @@ import {
   rentalPriceForDays,
   type DeliveryMethod,
 } from "@/lib/config";
+import { useListingStates, visibilityOf } from "@/lib/listing-state";
 import { getDress, getProfile, getReviewsForDress } from "@/lib/mock-data";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -54,6 +55,9 @@ function DressDetail() {
   const reviews = getReviewsForDress(dress.id);
   const navigate = useNavigate();
   const { isFavorite, toggleFavorite } = useApp();
+  const listingStates = useListingStates();
+  const visibility = visibilityOf(listingStates, dress.id);
+  const unavailable = visibility !== "actief";
 
   const [active, setActive] = useState(0);
   const [range, setRange] = useState<DateRange | undefined>();
@@ -239,7 +243,14 @@ function DressDetail() {
           </div>
 
           <div className="mt-10">
-            <Button size="lg" className="w-full" onClick={book}>
+            {unavailable ? (
+              <p className="mb-5 rounded-2xl border border-border bg-muted/50 p-4 text-sm text-muted-foreground">
+                {visibility === "verwijderd"
+                  ? "De verhuurder heeft deze jurk uit het aanbod gehaald."
+                  : "De verhuurder heeft deze jurk tijdelijk op pauze gezet."}
+              </p>
+            ) : null}
+            <Button size="lg" className="w-full" onClick={book} disabled={unavailable}>
               Huur deze jurk
             </Button>
             <div className="mt-5 flex flex-wrap items-center gap-x-8 gap-y-3">
@@ -368,8 +379,8 @@ function DressDetail() {
             <p className="price text-sm">{formatEuro(rental)}</p>
             <p className="truncate text-xs text-muted-foreground">{period}</p>
           </div>
-          <Button onClick={book} className="shrink-0">
-            Huur deze jurk
+          <Button onClick={book} className="shrink-0" disabled={unavailable}>
+            {unavailable ? "Niet beschikbaar" : "Huur deze jurk"}
           </Button>
         </div>
       </div>
