@@ -117,7 +117,7 @@ function Home() {
 
         {featured.length === 0 ? (
           <p className="mt-10 text-sm text-muted-foreground">
-            Nog geen jurken in deze buurt. Bekijk een andere buurt of alle jurken.
+            Nog geen jurken beschikbaar. Bekijk binnenkort opnieuw of plaats zelf een jurk.
           </p>
         ) : (
           <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-4">
