@@ -13,6 +13,10 @@ export interface SessionUser {
   email: string;
   /** Data-URL van de geüploade profielfoto. */
   avatar?: string;
+  /** Woonplaats, bijv. "Amsterdam". */
+  city?: string | undefined;
+  /** Korte introductie op het profiel. */
+  bio?: string | undefined;
 }
 
 interface AppState {
@@ -20,6 +24,7 @@ interface AppState {
   signIn: (user: SessionUser) => void;
   signOut: () => void;
   setAvatar: (dataUrl: string | null) => void;
+  updateProfile: (patch: { name?: string; city?: string | undefined; bio?: string | undefined }) => void;
   favorites: string[];
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
@@ -69,6 +74,18 @@ export function AppProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const updateProfile = useCallback(
+    (patch: { name?: string; city?: string | undefined; bio?: string | undefined }) => {
+    setUser((prev) => {
+      if (!prev) return prev;
+      const next: SessionUser = { ...prev, ...patch };
+      if (next.city === undefined) delete next.city;
+      if (next.bio === undefined) delete next.bio;
+      localStorage.setItem(USER_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const toggleFavorite = useCallback((id: string) => {
     setFavorites((prev) => {
       const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
@@ -83,12 +100,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       signIn,
       signOut,
       setAvatar,
+      updateProfile,
       favorites,
       toggleFavorite,
       isFavorite: (id: string) => favorites.includes(id),
       hydrated,
     }),
-    [user, favorites, hydrated, signIn, signOut, setAvatar, toggleFavorite],
+    [user, favorites, hydrated, signIn, signOut, setAvatar, updateProfile, toggleFavorite],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
