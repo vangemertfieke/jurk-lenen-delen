@@ -97,7 +97,7 @@ export function ShareButton({ title, description, url, image, className }: Share
         </DialogHeader>
 
         <div className="mt-2 grid gap-3">
-          {navigator.share ? (
+          {typeof navigator.share === "function" ? (
             <Button variant="outline" onClick={handleNativeShare} className="justify-start gap-3 rounded-full">
               <Share2 className="size-4" />
               Delen via je telefoon
