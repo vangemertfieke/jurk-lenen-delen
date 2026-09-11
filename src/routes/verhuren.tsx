@@ -373,19 +373,32 @@ function Verhuren() {
 
           {step === 4 ? (
             <section className="space-y-8">
-              <h2 className="text-lg font-medium">Levering</h2>
+              <div>
+                <h2 className="text-lg font-medium">Levering</h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Jij bepaalt hoe huurders de jurk krijgen. Beide opties aanbieden levert de meeste
+                  boekingen op.
+                </p>
+              </div>
               <RadioGroup value={delivery} onValueChange={setDelivery} className="space-y-3">
                 {[
-                  { v: "pickup", l: "Alleen ophalen" },
-                  { v: "shipping", l: "Alleen verzenden" },
-                  { v: "both", l: "Ophalen en verzenden" },
+                  {
+                    v: "both",
+                    l: "Ophalen en verzenden",
+                    d: "Aanbevolen — de huurder kiest zelf.",
+                  },
+                  { v: "pickup", l: "Alleen ophalen", d: "De huurder komt langs bij jou." },
+                  { v: "shipping", l: "Alleen verzenden", d: "Je verstuurt de jurk met PostNL." },
                 ].map((o) => (
                   <label
                     key={o.v}
-                    className="flex cursor-pointer items-center gap-3 border border-border px-4 py-4 text-sm has-[:checked]:border-primary"
+                    className="flex cursor-pointer items-start gap-3 rounded-2xl border border-border px-4 py-4 text-sm has-[:checked]:border-primary"
                   >
-                    <RadioGroupItem value={o.v} />
-                    {o.l}
+                    <RadioGroupItem value={o.v} className="mt-0.5" />
+                    <span>
+                      <span className="block">{o.l}</span>
+                      <span className="block text-xs text-muted-foreground">{o.d}</span>
+                    </span>
                   </label>
                 ))}
               </RadioGroup>
