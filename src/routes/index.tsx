@@ -52,17 +52,17 @@ function Home() {
             <p className="eyebrow border-b border-border pb-3">
               VOOR GALA'S • BRUILOFTEN • DINERS • EVENTS
             </p>
-            <h1 className="display mt-4 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] text-foreground">
+            <h1 className="display mt-3 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] text-foreground sm:mt-4">
               De kledingkast van Nederland.
             </h1>
-            <p className="mt-5 max-w-sm text-2xl font-medium leading-snug text-primary">
+            <p className="mt-4 max-w-sm text-2xl font-medium leading-snug text-primary sm:mt-5">
               Rent your look. Earn from your closet.
             </p>
-            <p className="mt-3 max-w-md text-sm sm:text-base text-muted-foreground">
+            <p className="mt-2 max-w-md text-sm sm:text-base text-muted-foreground sm:mt-3">
               Huur een unieke jurk van een andere vrouw in jouw buurt, of verdien geld met de
               jurken die nu ongedragen in jouw kast hangen.
             </p>
-            <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+            <div className="mt-5 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:mt-6">
               <Button size="lg" className="w-full sm:w-auto" asChild>
                 <Link to="/jurken">Huur een jurk</Link>
               </Button>
