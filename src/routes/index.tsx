@@ -47,22 +47,22 @@ function Home() {
     <>
       {/* Hero */}
       <section className="border-b border-border">
-        <div className="container-page grid min-h-[calc(100svh-4rem)] items-start gap-8 py-10 lg:grid-cols-12 lg:gap-16 lg:py-14">
+        <div className="container-page grid items-start gap-8 py-10 pb-20 md:pb-10 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-12 lg:items-center lg:gap-16 lg:py-16">
           <div className="order-2 max-w-xl lg:order-1 lg:col-span-5">
             <p className="eyebrow border-b border-border pb-3">
               VOOR GALA'S • BRUILOFTEN • DINERS • EVENTS
             </p>
-            <h1 className="display mt-4 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] text-foreground">
+            <h1 className="display mt-3 text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] text-foreground sm:mt-4">
               De kledingkast van Nederland.
             </h1>
-            <p className="mt-5 max-w-sm text-2xl font-medium leading-snug text-primary">
+            <p className="mt-4 max-w-sm text-xl font-medium leading-snug text-primary sm:text-2xl sm:mt-5">
               Rent your look. Earn from your closet.
             </p>
-            <p className="mt-3 max-w-md text-sm sm:text-base text-muted-foreground">
+            <p className="mt-2 max-w-md text-sm sm:text-base text-muted-foreground sm:mt-3">
               Huur een unieke jurk van een andere vrouw in jouw buurt, of verdien geld met de
               jurken die nu ongedragen in jouw kast hangen.
             </p>
-            <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center">
+            <div className="mt-5 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:mt-6">
               <Button size="lg" className="w-full sm:w-auto" asChild>
                 <Link to="/jurken">Huur een jurk</Link>
               </Button>
@@ -77,7 +77,7 @@ function Home() {
               alt="Vrouw in een bordeauxrode zijden maxi-jurk"
               width={1408}
               height={1760}
-              className="aspect-[4/5] w-full object-cover lg:w-5/6"
+              className="aspect-[4/5] max-h-[40svh] w-full object-cover sm:max-h-[55svh] lg:max-h-none lg:w-5/6"
             />
             <p className="absolute bottom-5 right-5 bg-primary px-4 py-2 text-xs font-semibold uppercase text-primary-foreground">
               Geleend staat je goed
