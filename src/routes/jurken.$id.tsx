@@ -194,19 +194,48 @@ function DressDetail() {
               onValueChange={(v) => setDelivery(v as DeliveryMethod)}
               className="mt-4 space-y-3"
             >
-              {dress.delivery !== "shipping" ? (
-                <label className="flex cursor-pointer items-center gap-3 border border-border px-4 py-3 text-sm has-[:checked]:border-primary">
-                  <RadioGroupItem value="pickup" />
-                  Ophalen in {dress.area}
-                </label>
-              ) : null}
-              {dress.delivery !== "pickup" ? (
-                <label className="flex cursor-pointer items-center gap-3 border border-border px-4 py-3 text-sm has-[:checked]:border-primary">
-                  <RadioGroupItem value="shipping" />
-                  Verzenden vanaf {formatEuro(FEES.shippingFee)}
-                </label>
-              ) : null}
+              <label
+                className={
+                  dress.delivery === "shipping"
+                    ? "flex items-center justify-between gap-3 rounded-2xl border border-dashed border-border px-4 py-3 text-sm text-muted-foreground"
+                    : "flex cursor-pointer items-center gap-3 rounded-2xl border border-border px-4 py-3 text-sm has-[:checked]:border-primary"
+                }
+              >
+                {dress.delivery === "shipping" ? (
+                  <>
+                    <span>Ophalen</span>
+                    <span className="text-xs">Niet aangeboden door de verhuurder</span>
+                  </>
+                ) : (
+                  <>
+                    <RadioGroupItem value="pickup" />
+                    Ophalen in {dress.area}
+                  </>
+                )}
+              </label>
+              <label
+                className={
+                  dress.delivery === "pickup"
+                    ? "flex items-center justify-between gap-3 rounded-2xl border border-dashed border-border px-4 py-3 text-sm text-muted-foreground"
+                    : "flex cursor-pointer items-center gap-3 rounded-2xl border border-border px-4 py-3 text-sm has-[:checked]:border-primary"
+                }
+              >
+                {dress.delivery === "pickup" ? (
+                  <>
+                    <span>Verzenden</span>
+                    <span className="text-xs">Niet aangeboden door de verhuurder</span>
+                  </>
+                ) : (
+                  <>
+                    <RadioGroupItem value="shipping" />
+                    Verzenden vanaf {formatEuro(FEES.shippingFee)}
+                  </>
+                )}
+              </label>
             </RadioGroup>
+            <p className="mt-3 text-xs text-muted-foreground">
+              De verhuurder bepaalt zelf welke opties beschikbaar zijn voor deze jurk.
+            </p>
           </div>
 
           <div className="mt-10">
@@ -263,18 +292,16 @@ function DressDetail() {
           <section>
             <h2 className="text-lg font-medium">Ophalen &amp; verzenden</h2>
             <div className="mt-4 max-w-2xl space-y-3 text-[0.9375rem] text-muted-foreground">
-              {dress.delivery !== "shipping" ? (
-                <p>
-                  Ophalen mogelijk in {dress.area}. Het exacte adres ontvang je zodra de boeking
-                  bevestigd is.
-                </p>
-              ) : null}
-              {dress.delivery !== "pickup" ? (
-                <p>
-                  Verzenden mogelijk vanaf {formatEuro(FEES.shippingFee)}. De jurk wordt gestoomd en
-                  in een kledinghoes verstuurd.
-                </p>
-              ) : null}
+              <p>
+                {dress.delivery !== "shipping"
+                  ? `Ophalen mogelijk in ${dress.area}. Het exacte adres ontvang je zodra de boeking bevestigd is.`
+                  : "Ophalen wordt voor deze jurk niet aangeboden."}
+              </p>
+              <p>
+                {dress.delivery !== "pickup"
+                  ? `Verzenden mogelijk vanaf ${formatEuro(FEES.shippingFee)}. De jurk wordt gestoomd en in een kledinghoes verstuurd.`
+                  : "Verzenden wordt voor deze jurk niet aangeboden."}
+              </p>
             </div>
           </section>
 

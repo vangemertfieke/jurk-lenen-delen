@@ -11,12 +11,15 @@ import {
 export interface SessionUser {
   name: string;
   email: string;
+  /** Data-URL van de geüploade profielfoto. */
+  avatar?: string;
 }
 
 interface AppState {
   user: SessionUser | null;
   signIn: (user: SessionUser) => void;
   signOut: () => void;
+  setAvatar: (dataUrl: string | null) => void;
   favorites: string[];
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
@@ -55,6 +58,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     localStorage.removeItem(USER_KEY);
   }, []);
 
+  const setAvatar = useCallback((dataUrl: string | null) => {
+    setUser((prev) => {
+      if (!prev) return prev;
+      const next: SessionUser = { ...prev };
+      if (dataUrl) next.avatar = dataUrl;
+      else delete next.avatar;
+      localStorage.setItem(USER_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const toggleFavorite = useCallback((id: string) => {
     setFavorites((prev) => {
       const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
@@ -68,12 +82,13 @@ export function AppProvider({ children }: { children: ReactNode }) {
       user,
       signIn,
       signOut,
+      setAvatar,
       favorites,
       toggleFavorite,
       isFavorite: (id: string) => favorites.includes(id),
       hydrated,
     }),
-    [user, favorites, hydrated, signIn, signOut, toggleFavorite],
+    [user, favorites, hydrated, signIn, signOut, setAvatar, toggleFavorite],
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

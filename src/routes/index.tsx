@@ -38,9 +38,17 @@ const steps = [
   { n: "04", title: "Draag, straal & retourneer", text: "Stuur de jurk terug en laat een review achter." },
 ];
 
+/** Populariteit = waardering x aantal reviews, met een bonus voor nieuwe plaatsingen. */
+function popularityScore(d: { rating: number; reviewCount: number; createdAt: string }) {
+  const days = Math.max(0, (Date.now() - new Date(d.createdAt).getTime()) / 86_400_000);
+  const freshness = Math.max(0, 30 - days) / 2;
+  return d.rating * d.reviewCount + freshness;
+}
+
 function Home() {
   const featured = [...getDresses()]
-    .sort((a, b) => b.rating * b.reviewCount - a.rating * a.reviewCount)
+    .filter((d) => d.status !== "draft")
+    .sort((a, b) => popularityScore(b) - popularityScore(a))
     .slice(0, 8);
 
   return (
@@ -91,7 +99,7 @@ function Home() {
         <SectionHeading
           eyebrow="Ontdek"
           title="Populaire jurken"
-          intro="De jurken die deze week het vaakst worden bekeken en geboekt."
+          intro="Automatisch bijgewerkt op basis van waarderingen, boekingen en nieuwe plaatsingen."
           action={
             <Link
               to="/jurken"
