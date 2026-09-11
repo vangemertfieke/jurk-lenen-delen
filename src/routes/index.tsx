@@ -47,13 +47,10 @@ function popularityScore(d: { rating: number; reviewCount: number; createdAt: st
 function Home() {
   const listingStates = useListingStates();
   const promos = usePromotions();
-  const [area, setArea] = useState<string | null>(null);
-  const areas = getAreas();
   const featured = sortPromoted(
     promos,
     filterVisible(listingStates, [...getDresses()])
       .filter((d) => d.status !== "draft")
-      .filter((d) => area === null || d.area === area)
       .sort((a, b) => popularityScore(b) - popularityScore(a)),
     "uitgelicht",
   ).slice(0, 8);
