@@ -13,6 +13,10 @@ export interface SessionUser {
   email: string;
   /** Data-URL van de geüploade profielfoto. */
   avatar?: string;
+  /** Woonplaats, bijv. "Amsterdam". */
+  city?: string;
+  /** Korte introductie op het profiel. */
+  bio?: string;
 }
 
 interface AppState {
@@ -20,6 +24,7 @@ interface AppState {
   signIn: (user: SessionUser) => void;
   signOut: () => void;
   setAvatar: (dataUrl: string | null) => void;
+  updateProfile: (patch: Partial<Omit<SessionUser, "email">>) => void;
   favorites: string[];
   toggleFavorite: (id: string) => void;
   isFavorite: (id: string) => boolean;
@@ -64,6 +69,15 @@ export function AppProvider({ children }: { children: ReactNode }) {
       const next: SessionUser = { ...prev };
       if (dataUrl) next.avatar = dataUrl;
       else delete next.avatar;
+      localStorage.setItem(USER_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  const updateProfile = useCallback((patch: Partial<Omit<SessionUser, "email">>) => {
+    setUser((prev) => {
+      if (!prev) return prev;
+      const next: SessionUser = { ...prev, ...patch };
       localStorage.setItem(USER_KEY, JSON.stringify(next));
       return next;
     });
