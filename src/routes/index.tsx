@@ -114,49 +114,6 @@ function Home() {
           }
         />
 
-        <div className="-mx-6 px-6 mt-8 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 sm:mx-0 sm:px-0 sm:flex-wrap">
-          {categories.map((c) => (
-            <Link
-              key={c.name}
-              to="/jurken"
-              search={{ gelegenheid: c.name }}
-              className="shrink-0 rounded-full border border-border px-4 py-2 text-xs sm:text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary active:bg-muted"
-            >
-              {c.name}
-            </Link>
-          ))}
-        </div>
-
-        <div className="-mx-6 px-6 mt-3 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 sm:mx-0 sm:px-0 sm:flex-wrap">
-          <span className="shrink-0 pr-1 text-xs text-muted-foreground">Buurt</span>
-          <button
-            type="button"
-            onClick={() => setArea(null)}
-            className={cn(
-              "shrink-0 rounded-full border px-4 py-2 text-xs sm:text-sm transition-colors",
-              area === null
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border text-muted-foreground hover:border-primary hover:text-primary",
-            )}
-          >
-            Alle buurten
-          </button>
-          {areas.map((a) => (
-            <button
-              key={a}
-              type="button"
-              onClick={() => setArea(a)}
-              className={cn(
-                "shrink-0 rounded-full border px-4 py-2 text-xs sm:text-sm transition-colors",
-                area === a
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border text-muted-foreground hover:border-primary hover:text-primary",
-              )}
-            >
-              {a}
-            </button>
-          ))}
-        </div>
 
         {featured.length === 0 ? (
           <p className="mt-10 text-sm text-muted-foreground">
