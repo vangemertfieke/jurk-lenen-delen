@@ -48,7 +48,7 @@ export function ShareButton({ title, description, url, image, className }: Share
         await navigator.share({
           title: shareText,
           text: description ?? shareText,
-          url,
+          url: canonicalUrl,
         });
         setOpen(false);
         return;
@@ -61,7 +61,7 @@ export function ShareButton({ title, description, url, image, className }: Share
 
   const copyLink = async () => {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(canonicalUrl);
       toast.success("Link gekopieerd", {
         description: "Plak ‘m in je Instagram-story, bio of bericht.",
       });
