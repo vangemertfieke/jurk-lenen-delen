@@ -7,11 +7,9 @@ import { DressCard } from "@/components/dressloop/DressCard";
 import { NewsletterSignup } from "@/components/dressloop/NewsletterSignup";
 
 import { SectionHeading } from "@/components/dressloop/primitives";
-import { useState } from "react";
 import { filterVisible, useListingStates } from "@/lib/listing-state";
 import { sortPromoted, usePromotions } from "@/lib/promotions";
-import { getAreas, getDresses } from "@/lib/mock-data";
-import { cn } from "@/lib/utils";
+import { getDresses } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -32,10 +30,6 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const categories = ["Bruiloft", "Gala", "Festival", "Diner", "Feest", "Vakantie"].map((name) => ({
-  name,
-}));
-
 const steps = [
   { n: "01", title: "Vind jouw jurk", text: "Zoek op maat, merk, gelegenheid of locatie." },
   { n: "02", title: "Kies je huurperiode", text: "Bekijk de beschikbare datums en de totaalprijs." },
@@ -53,13 +47,10 @@ function popularityScore(d: { rating: number; reviewCount: number; createdAt: st
 function Home() {
   const listingStates = useListingStates();
   const promos = usePromotions();
-  const [area, setArea] = useState<string | null>(null);
-  const areas = getAreas();
   const featured = sortPromoted(
     promos,
     filterVisible(listingStates, [...getDresses()])
       .filter((d) => d.status !== "draft")
-      .filter((d) => area === null || d.area === area)
       .sort((a, b) => popularityScore(b) - popularityScore(a)),
     "uitgelicht",
   ).slice(0, 8);
@@ -123,53 +114,10 @@ function Home() {
           }
         />
 
-        <div className="-mx-6 px-6 mt-8 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 sm:mx-0 sm:px-0 sm:flex-wrap">
-          {categories.map((c) => (
-            <Link
-              key={c.name}
-              to="/jurken"
-              search={{ gelegenheid: c.name }}
-              className="shrink-0 rounded-full border border-border px-4 py-2 text-xs sm:text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary active:bg-muted"
-            >
-              {c.name}
-            </Link>
-          ))}
-        </div>
-
-        <div className="-mx-6 px-6 mt-3 flex items-center gap-2 overflow-x-auto no-scrollbar py-1 sm:mx-0 sm:px-0 sm:flex-wrap">
-          <span className="shrink-0 pr-1 text-xs text-muted-foreground">Buurt</span>
-          <button
-            type="button"
-            onClick={() => setArea(null)}
-            className={cn(
-              "shrink-0 rounded-full border px-4 py-2 text-xs sm:text-sm transition-colors",
-              area === null
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border text-muted-foreground hover:border-primary hover:text-primary",
-            )}
-          >
-            Alle buurten
-          </button>
-          {areas.map((a) => (
-            <button
-              key={a}
-              type="button"
-              onClick={() => setArea(a)}
-              className={cn(
-                "shrink-0 rounded-full border px-4 py-2 text-xs sm:text-sm transition-colors",
-                area === a
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border text-muted-foreground hover:border-primary hover:text-primary",
-              )}
-            >
-              {a}
-            </button>
-          ))}
-        </div>
 
         {featured.length === 0 ? (
           <p className="mt-10 text-sm text-muted-foreground">
-            Nog geen jurken in deze buurt. Bekijk een andere buurt of alle jurken.
+            Nog geen jurken beschikbaar. Bekijk binnenkort opnieuw of plaats zelf een jurk.
           </p>
         ) : (
           <div className="mt-10 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 sm:gap-y-12 lg:grid-cols-4">
