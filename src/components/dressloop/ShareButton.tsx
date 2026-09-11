@@ -29,11 +29,11 @@ export function ShareButton({ title, description, url, image, className }: Share
   const encodedDesc = encodeURIComponent(description ?? "");
 
   const handleNativeShare = async () => {
-    if (navigator.share) {
+    if (typeof navigator.share === "function") {
       try {
         await navigator.share({
           title: shareText,
-          text: description,
+          text: description ?? shareText,
           url,
         });
         setOpen(false);
