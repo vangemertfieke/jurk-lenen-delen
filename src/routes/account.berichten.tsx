@@ -19,6 +19,15 @@ export function Berichten() {
   const [activeId, setActiveId] = useState(conversations[0]?.id ?? "");
   const [draft, setDraft] = useState("");
   const [convs, setConvs] = useState(conversations);
+  const [tab, setTab] = useState<"alles" | "huur" | "verhuur">("alles");
+
+  const roleOf = (c: (typeof convs)[number]) => c.role ?? "huur";
+  const visibleConvs = convs.filter((c) => tab === "alles" || roleOf(c) === tab);
+  const counts = {
+    alles: convs.length,
+    huur: convs.filter((c) => roleOf(c) === "huur").length,
+    verhuur: convs.filter((c) => roleOf(c) === "verhuur").length,
+  };
 
   const active = convs.find((c) => c.id === activeId);
   const dress = active ? getDress(active.dressId) : undefined;
@@ -74,14 +83,44 @@ export function Berichten() {
     <div className="space-y-8">
       <header>
         <h1 className="display text-3xl sm:text-4xl">Berichten</h1>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {(
+            [
+              { key: "alles", label: "Alles" },
+              { key: "huur", label: "Ik huur" },
+              { key: "verhuur", label: "Ik verhuur" },
+            ] as const
+          ).map((t) => (
+            <button
+              key={t.key}
+              type="button"
+              onClick={() => {
+                setTab(t.key);
+                const first = convs.find(
+                  (c) => t.key === "alles" || (c.role ?? "huur") === t.key,
+                );
+                if (first) setActiveId(first.id);
+              }}
+              className={cn(
+                "rounded-full border px-4 py-1.5 text-sm transition-colors",
+                tab === t.key
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {t.label} ({counts[t.key]})
+            </button>
+          ))}
+        </div>
       </header>
 
       <div className="grid gap-8 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-12">
         <aside className="min-w-0">
           <ul className="border-t border-border">
-            {convs.map((c) => {
+            {visibleConvs.map((c) => {
               const d = getDress(c.dressId);
               const p = getProfile(c.withProfileId);
+              const isVerhuur = roleOf(c) === "verhuur";
               return (
                 <li key={c.id}>
                   <button
@@ -96,16 +135,31 @@ export function Berichten() {
                       src={d?.images[0]}
                       alt=""
                       loading="lazy"
-                      className="aspect-[3/4] w-10 shrink-0 object-cover"
+                      className="aspect-[3/4] w-10 shrink-0 rounded-lg object-cover"
                     />
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">{p.firstName}</p>
+                      <span
+                        className={cn(
+                          "inline-block rounded-full px-2 py-0.5 text-[0.625rem] font-semibold uppercase tracking-wide",
+                          isVerhuur
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-blush text-blush-foreground",
+                        )}
+                      >
+                        {isVerhuur ? "Ik verhuur" : "Ik huur"}
+                      </span>
+                      <p className="mt-1 truncate text-sm font-medium">{p.firstName}</p>
                       <p className="truncate text-xs text-muted-foreground">{d?.title}</p>
                     </div>
                   </button>
                 </li>
               );
             })}
+            {visibleConvs.length === 0 ? (
+              <li className="border-b border-border py-6 text-sm text-muted-foreground">
+                Nog geen gesprekken hier.
+              </li>
+            ) : null}
           </ul>
         </aside>
 

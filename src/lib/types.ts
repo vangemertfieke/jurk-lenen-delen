@@ -91,6 +91,8 @@ export interface Conversation {
   from: string;
   to: string;
   price: number;
+  /** "huur" = ik huur deze jurk, "verhuur" = ik verhuur deze jurk */
+  role?: "huur" | "verhuur";
   messages: Message[];
 }
 
