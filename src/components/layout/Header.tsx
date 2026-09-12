@@ -70,7 +70,7 @@ export function Header() {
               </IconLink>
               {isAdmin ? (
                 <Button variant="quiet" size="sm" asChild className="ml-2">
-                  <Link to="/beheer/jurken">Beheer</Link>
+                  <Link to="/beheer">Beheer</Link>
                 </Button>
               ) : null}
               <Button variant="ghost" size="sm" asChild className="ml-2">
