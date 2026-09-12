@@ -61,6 +61,11 @@ export function ReservationList({ role }: { role: "owner" | "renter" }) {
                 {formatDateNL(new Date(r.from))} — {formatDateNL(new Date(r.to))} ·{" "}
                 {r.delivery === "pickup" ? "Ophalen" : "Verzenden"}
               </p>
+              {r.slot ? (
+                <p className="mt-1 text-sm text-muted-foreground">
+                  {r.delivery === "pickup" ? "Afhaalmoment" : "Bezorgmoment"}: {r.slot}
+                </p>
+              ) : null}
               {r.message ? (
                 <p className="mt-2 text-sm text-muted-foreground">“{r.message}”</p>
               ) : null}

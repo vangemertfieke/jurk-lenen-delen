@@ -15,6 +15,7 @@ import { Slider } from "@/components/ui/slider";
 import { DressCard } from "@/components/dressloop/DressCard";
 import { EmptyState, Field } from "@/components/dressloop/primitives";
 import { filterVisible, useListingStates } from "@/lib/listing-state";
+import { distanceKm, formatDistance } from "@/lib/geo";
 import { sortPromoted, usePromotions } from "@/lib/promotions";
 import { brands, cities, colors, getAreas, getDresses, occasions, sizes } from "@/lib/mock-data";
 import { formatEuro } from "@/lib/config";
@@ -79,6 +80,11 @@ function Jurken() {
     setMaxPrice(100);
   };
 
+  const reference = useMemo(
+    () => (area !== ALLE ? { area } : city !== ALLE ? { area: "", city } : null),
+    [area, city],
+  );
+
   const results = useMemo(() => {
     let list = filterVisible(listingStates, getDresses()).filter((d) => {
       const q = query.trim().toLowerCase();
@@ -89,7 +95,7 @@ function Jurken() {
       if (color !== ALLE && d.color !== color) return false;
       if (occasion !== ALLE && d.occasion !== occasion) return false;
       if (city !== ALLE && d.city !== city) return false;
-      if (area !== ALLE && d.area !== area) return false;
+      
       if (delivery === "pickup" && d.delivery === "shipping") return false;
       if (delivery === "shipping" && d.delivery === "pickup") return false;
       if (d.basePrice > maxPrice) return false;
@@ -97,6 +103,13 @@ function Jurken() {
     });
 
     if (available === "deze-maand") list = list.filter((d) => d.condition !== "Gedragen");
+
+    const byDistance = (a: (typeof list)[number], b: (typeof list)[number]) => {
+      if (!reference) return 0;
+      const da = distanceKm(reference, a) ?? Number.POSITIVE_INFINITY;
+      const db = distanceKm(reference, b) ?? Number.POSITIVE_INFINITY;
+      return da - db;
+    };
 
     switch (sort) {
       case "nieuwste":
@@ -108,11 +121,16 @@ function Jurken() {
       case "prijs-af":
         list = [...list].sort((a, b) => b.basePrice - a.basePrice);
         break;
+      case "dichtbij":
+        list = [...list].sort(byDistance);
+        break;
       default:
         list = [...list].sort((a, b) => b.rating - a.rating);
+        // Een gekozen buurt of stad zet de dichtstbijzijnde jurken vooraan.
+        if (reference) list = [...list].sort(byDistance);
     }
     return sortPromoted(promos, list, "topZoekresultaat");
-  }, [promos, listingStates, query, size, brand, color, occasion, city, area, delivery, available, maxPrice, sort]);
+  }, [promos, listingStates, query, size, brand, color, occasion, city, area, delivery, available, maxPrice, sort, reference]);
 
   const filters = (
     <div className="space-y-8">
@@ -155,7 +173,7 @@ function Jurken() {
       <Field label="Locatie">
         <Choice value={city} onChange={setCity} options={[...cities]} placeholder="Heel Nederland" />
       </Field>
-      <Field label="Buurt">
+      <Field label="Buurt" hint="Jurken dichtbij deze buurt staan bovenaan.">
         <Choice
           value={area}
           onChange={setArea}
@@ -231,6 +249,7 @@ function Jurken() {
                   <SelectItem value="nieuwste">Nieuwste</SelectItem>
                   <SelectItem value="prijs-op">Prijs laag-hoog</SelectItem>
                   <SelectItem value="prijs-af">Prijs hoog-laag</SelectItem>
+                  <SelectItem value="dichtbij">Dichtstbijzijnd</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -250,9 +269,20 @@ function Jurken() {
             </div>
           ) : (
             <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-3">
-              {results.map((d) => (
-                <DressCard key={d.id} dress={d} />
-              ))}
+              {results.map((d) => {
+                const km = reference ? distanceKm(reference, d) : null;
+                return (
+                  <div key={d.id}>
+                    <DressCard dress={d} />
+                    {km !== null ? (
+                      <p className="mt-2 text-xs text-muted-foreground">
+                        {km < 0.2 ? "In deze buurt" : `${formatDistance(km)} van je keuze`} ·{" "}
+                        {d.area}
+                      </p>
+                    ) : null}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

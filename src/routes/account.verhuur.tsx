@@ -25,6 +25,7 @@ import {
 } from "@/lib/listing-state";
 import { getMyListings, myDrafts } from "@/lib/mock-data";
 import { CURRENT_USER_ID, useRentals } from "@/lib/rental/store";
+import { useReservations } from "@/lib/reservations";
 import type { RentalFlowStatus } from "@/lib/rental/types";
 import { cn } from "@/lib/utils";
 
@@ -73,6 +74,8 @@ const tabs: { key: string; label: string; statuses: RentalFlowStatus[] | null }[
 
 function Verhuur() {
   const [tab, setTab] = useState("actie");
+  const reservations = useReservations();
+  const pending = reservations.filter((r) => r.status === "wacht_op_verhuurder").length;
   const listings = getMyListings();
   const listingStates = useListingStates();
   const { rentals } = useRentals();
@@ -109,6 +112,11 @@ function Verhuur() {
             )}
           >
             {t.label}
+            {t.key === "reserveringen" && pending > 0 ? (
+              <span className="ml-2 rounded-full bg-primary px-2 py-0.5 text-xs text-primary-foreground">
+                {pending}
+              </span>
+            ) : null}
           </button>
         ))}
       </div>
