@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { AdminTabs } from "@/components/dressloop/AdminTabs";
 import { EmptyState, StatusBadge } from "@/components/dressloop/primitives";
 import { formatEuro } from "@/lib/config";
 import { useIsTeamAdmin } from "@/lib/admin";
