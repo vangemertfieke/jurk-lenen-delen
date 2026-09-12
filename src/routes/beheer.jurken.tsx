@@ -81,6 +81,7 @@ function Jurkenbeheer() {
     <div className="container-page py-10 lg:py-16">
       <p className="eyebrow">Intern</p>
       <h1 className="display mt-4 text-3xl sm:text-4xl">Jurkenbeheer</h1>
+      <AdminTabs />
       <p className="mt-3 max-w-2xl text-muted-foreground">
         Overzicht van alle jurken op Borro. Je kunt een jurk pauzeren of uit het aanbod halen en
         per jurk promoot-opties instellen.
