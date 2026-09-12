@@ -72,7 +72,9 @@ function AccountLayout() {
           <nav className="mt-2 flex gap-6 overflow-x-auto pb-2 lg:flex-col lg:gap-0 lg:overflow-visible lg:pb-0">
             {navGroups.map((group) => (
               <div key={group.label} className="shrink-0 lg:mt-8 lg:first:mt-0">
-                <p className="eyebrow mb-1 px-3 text-xs lg:mb-2 lg:px-0">{group.label}</p>
+                <p className="eyebrow mb-1 px-3 text-xs font-semibold text-primary lg:mb-2 lg:px-0">
+                  {group.label}
+                </p>
                 <div className="flex gap-1 lg:flex-col lg:gap-0">
                   {group.items.map((item) => (
                     <Link
