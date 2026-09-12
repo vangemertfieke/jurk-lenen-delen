@@ -15,6 +15,14 @@ import {
 } from "@/lib/config";
 import { getDress, getProfile } from "@/lib/mock-data";
 import { createReservation } from "@/lib/reservations";
+import { handoverSlots } from "@/lib/handover";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface ReserveSearch {
   van?: string | undefined;
@@ -71,6 +79,8 @@ function ReserverenInhoud() {
   const to = tot ? new Date(tot) : new Date(Date.now() + 3 * 86_400_000);
   const days = daysBetween(from, to);
   const delivery: DeliveryMethod = levering ?? "pickup";
+  const slots = handoverSlots(dress, delivery);
+  const [slot, setSlot] = useState(slots[0] ?? "");
 
   const send = () => {
     setLoading(true);
@@ -79,6 +89,7 @@ function ReserverenInhoud() {
       from: from.toISOString().slice(0, 10),
       to: to.toISOString().slice(0, 10),
       delivery,
+      slot,
       message: message.trim(),
     });
     setTimeout(() => {
@@ -136,6 +147,31 @@ function ReserverenInhoud() {
                 ? `Ophalen in ${dress.area}`
                 : `Verzenden voor ${formatEuro(FEES.shippingFee)}`}
             </p>
+          </section>
+
+          <section>
+            <h2 className="text-sm font-medium">
+              {delivery === "pickup" ? "Kies een afhaalmoment" : "Kies een bezorgmoment"}
+            </h2>
+            <div className="mt-4 max-w-md border-t border-border pt-5">
+              <Select value={slot} onValueChange={setSlot}>
+                <SelectTrigger aria-label="Afhaal- of bezorgmoment">
+                  <SelectValue placeholder="Kies een moment" />
+                </SelectTrigger>
+                <SelectContent>
+                  {slots.map((s) => (
+                    <SelectItem key={s} value={s}>
+                      {s}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="mt-3 text-xs text-muted-foreground">
+                {delivery === "pickup"
+                  ? `Dit zijn de tijden die ${owner.firstName} aanbiedt in ${dress.area}. Het exacte adres krijg je na bevestiging.`
+                  : `Dit zijn de bezorg- en verzendtijden die ${owner.firstName} aanbiedt.`}
+              </p>
+            </div>
           </section>
 
           <section>

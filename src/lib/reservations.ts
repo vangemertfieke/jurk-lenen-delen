@@ -13,6 +13,8 @@ export interface Reservation {
   from: string;
   to: string;
   delivery: DeliveryMethod;
+  /** Gekozen afhaal- of bezorgmoment, bijv. "Ma – vr · 17:00 – 21:00". */
+  slot?: string;
   message: string;
   status: ReservationStatus;
   createdAt: string;
@@ -57,6 +59,7 @@ export function createReservation(input: {
   from: string;
   to: string;
   delivery: DeliveryMethod;
+  slot?: string;
   message: string;
 }): Reservation {
   const reservation: Reservation = {

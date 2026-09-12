@@ -22,6 +22,7 @@ import { useListingStates, visibilityOf } from "@/lib/listing-state";
 import { PhotoAlbum } from "@/components/dressloop/PhotoAlbum";
 import { photosFor, useListingPhotos } from "@/lib/listing-photos";
 import { getDress, getMyListings, getProfile, getReviewsForDress } from "@/lib/mock-data";
+import { handoverHoursFor } from "@/lib/handover";
 import { useApp } from "@/lib/store";
 import { cn } from "@/lib/utils";
 
@@ -55,6 +56,7 @@ export const Route = createFileRoute("/jurken/$id")({
 function DressDetail() {
   const { dress } = Route.useLoaderData();
   const owner = getProfile(dress.ownerId);
+  const hours = handoverHoursFor(dress);
   const reviews = getReviewsForDress(dress.id);
   const navigate = useNavigate();
   const { isFavorite, toggleFavorite } = useApp();
@@ -336,18 +338,59 @@ function DressDetail() {
 
           <section>
             <h2 className="text-lg font-medium">Ophalen &amp; verzenden</h2>
-            <div className="mt-4 max-w-2xl space-y-3 text-[0.9375rem] text-muted-foreground">
-              <p>
-                {dress.delivery !== "shipping"
-                  ? `Ophalen mogelijk in ${dress.area}. Het exacte adres ontvang je zodra de boeking bevestigd is.`
-                  : "Ophalen wordt voor deze jurk niet aangeboden."}
-              </p>
-              <p>
-                {dress.delivery !== "pickup"
-                  ? `Verzenden mogelijk vanaf ${formatEuro(FEES.shippingFee)}. De jurk wordt gestoomd en in een kledinghoes verstuurd.`
-                  : "Verzenden wordt voor deze jurk niet aangeboden."}
-              </p>
+            <div className="mt-6 grid max-w-2xl gap-6 sm:grid-cols-2">
+              <div className="rounded-2xl border border-border p-5">
+                <p className="text-sm font-medium">Afhaaluren</p>
+                {dress.delivery !== "shipping" ? (
+                  <>
+                    <p className="mt-1 text-sm text-muted-foreground">{dress.area}</p>
+                    <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
+                      {hours.pickup.map((w) => (
+                        <li key={w.days} className="flex justify-between gap-4">
+                          <span>{w.days}</span>
+                          <span className="text-right text-foreground">{w.hours}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      Het exacte adres ontvang je zodra de boeking bevestigd is.
+                    </p>
+                  </>
+                ) : (
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    Ophalen wordt voor deze jurk niet aangeboden.
+                  </p>
+                )}
+              </div>
+              <div className="rounded-2xl border border-border p-5">
+                <p className="text-sm font-medium">Bezorguren</p>
+                {dress.delivery !== "pickup" ? (
+                  <>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Vanaf {formatEuro(FEES.shippingFee)}
+                    </p>
+                    <ul className="mt-3 space-y-1.5 text-sm text-muted-foreground">
+                      {hours.delivery.map((w) => (
+                        <li key={w.days} className="flex justify-between gap-4">
+                          <span>{w.days}</span>
+                          <span className="text-right text-foreground">{w.hours}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      De jurk wordt gestoomd en in een kledinghoes verstuurd.
+                    </p>
+                  </>
+                ) : (
+                  <p className="mt-3 text-sm text-muted-foreground">
+                    Bezorgen wordt voor deze jurk niet aangeboden.
+                  </p>
+                )}
+              </div>
             </div>
+            {hours.note ? (
+              <p className="mt-4 max-w-2xl text-sm text-muted-foreground">{hours.note}</p>
+            ) : null}
           </section>
 
           <section>
