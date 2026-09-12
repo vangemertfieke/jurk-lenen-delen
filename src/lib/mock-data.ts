@@ -402,6 +402,7 @@ export const conversations: Conversation[] = [
     from: "2026-09-12",
     to: "2026-09-15",
     price: 55,
+    role: "huur",
     messages: [
       {
         id: "m1",
