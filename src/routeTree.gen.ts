@@ -27,6 +27,7 @@ import { Route as AccountMeldingenRouteImport } from './routes/account.meldingen
 import { Route as AccountProfielRouteImport } from './routes/account.profiel'
 import { Route as AccountVerhuurRouteImport } from './routes/account.verhuur'
 import { Route as AfrekenenIdRouteImport } from './routes/afrekenen.$id'
+import { Route as BeheerIndexRouteImport } from './routes/beheer.index'
 import { Route as BeheerBoekingenRouteImport } from './routes/beheer.boekingen'
 import { Route as BeheerJurkenRouteImport } from './routes/beheer.jurken'
 import { Route as HuurIdRouteImport } from './routes/huur.$id'
@@ -126,6 +127,11 @@ const AfrekenenIdRoute = AfrekenenIdRouteImport.update({
   path: '/afrekenen/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BeheerIndexRoute = BeheerIndexRouteImport.update({
+  id: '/beheer/',
+  path: '/beheer/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BeheerBoekingenRoute = BeheerBoekingenRouteImport.update({
   id: '/beheer/boekingen',
   path: '/beheer/boekingen',
@@ -191,6 +197,7 @@ export interface FileRoutesByFullPath {
   '/jurken/$id': typeof JurkenIdRoute
   '/reserveren/$id': typeof ReserverenIdRoute
   '/account/': typeof AccountIndexRoute
+  '/beheer/': typeof BeheerIndexRoute
   '/jurken/': typeof JurkenIndexRoute
   '/beheer/claims/$claimId': typeof BeheerClaimsClaimIdRoute
   '/beheer/claims/': typeof BeheerClaimsIndexRoute
@@ -218,6 +225,7 @@ export interface FileRoutesByTo {
   '/jurken/$id': typeof JurkenIdRoute
   '/reserveren/$id': typeof ReserverenIdRoute
   '/account': typeof AccountIndexRoute
+  '/beheer': typeof BeheerIndexRoute
   '/jurken': typeof JurkenIndexRoute
   '/beheer/claims/$claimId': typeof BeheerClaimsClaimIdRoute
   '/beheer/claims': typeof BeheerClaimsIndexRoute
@@ -247,6 +255,7 @@ export interface FileRoutesById {
   '/jurken/$id': typeof JurkenIdRoute
   '/reserveren/$id': typeof ReserverenIdRoute
   '/account/': typeof AccountIndexRoute
+  '/beheer/': typeof BeheerIndexRoute
   '/jurken/': typeof JurkenIndexRoute
   '/beheer/claims/$claimId': typeof BeheerClaimsClaimIdRoute
   '/beheer/claims/': typeof BeheerClaimsIndexRoute
@@ -277,6 +286,7 @@ export interface FileRouteTypes {
     | '/jurken/$id'
     | '/reserveren/$id'
     | '/account/'
+    | '/beheer/'
     | '/jurken/'
     | '/beheer/claims/$claimId'
     | '/beheer/claims/'
@@ -304,6 +314,7 @@ export interface FileRouteTypes {
     | '/jurken/$id'
     | '/reserveren/$id'
     | '/account'
+    | '/beheer'
     | '/jurken'
     | '/beheer/claims/$claimId'
     | '/beheer/claims'
@@ -332,6 +343,7 @@ export interface FileRouteTypes {
     | '/jurken/$id'
     | '/reserveren/$id'
     | '/account/'
+    | '/beheer/'
     | '/jurken/'
     | '/beheer/claims/$claimId'
     | '/beheer/claims/'
@@ -353,6 +365,7 @@ export interface RootRouteChildren {
   HuurIdRoute: typeof HuurIdRoute
   JurkenIdRoute: typeof JurkenIdRoute
   ReserverenIdRoute: typeof ReserverenIdRoute
+  BeheerIndexRoute: typeof BeheerIndexRoute
   JurkenIndexRoute: typeof JurkenIndexRoute
   BeheerClaimsClaimIdRoute: typeof BeheerClaimsClaimIdRoute
   BeheerClaimsIndexRoute: typeof BeheerClaimsIndexRoute
@@ -486,6 +499,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AfrekenenIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/beheer/': {
+      id: '/beheer/'
+      path: '/beheer'
+      fullPath: '/beheer/'
+      preLoaderRoute: typeof BeheerIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/beheer/boekingen': {
       id: '/beheer/boekingen'
       path: '/beheer/boekingen'
@@ -586,6 +606,7 @@ const rootRouteChildren: RootRouteChildren = {
   HuurIdRoute: HuurIdRoute,
   JurkenIdRoute: JurkenIdRoute,
   ReserverenIdRoute: ReserverenIdRoute,
+  BeheerIndexRoute: BeheerIndexRoute,
   JurkenIndexRoute: JurkenIndexRoute,
   BeheerClaimsClaimIdRoute: BeheerClaimsClaimIdRoute,
   BeheerClaimsIndexRoute: BeheerClaimsIndexRoute,
