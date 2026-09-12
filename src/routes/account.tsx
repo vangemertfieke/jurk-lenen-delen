@@ -69,18 +69,24 @@ function AccountLayout() {
     <div className="container-page py-10 lg:py-16">
       <div className="grid gap-10 lg:grid-cols-[14rem_minmax(0,1fr)] lg:gap-20">
         <aside className="min-w-0">
-          <p className="eyebrow">Account</p>
-          <nav className="-mx-1 mt-5 flex gap-1 overflow-x-auto pb-2 lg:mx-0 lg:flex-col lg:gap-0 lg:overflow-visible lg:pb-0">
-            {nav.map((item) => (
-              <Link
-                key={item.to}
-                to={item.to}
-                activeOptions={{ exact: item.exact ?? false }}
-                className="shrink-0 whitespace-nowrap px-3 py-2.5 text-sm text-muted-foreground transition-colors hover:text-foreground lg:border-b lg:border-border lg:px-0"
-                activeProps={{ className: "text-primary" }}
-              >
-                {item.label}
-              </Link>
+          <nav className="mt-2 flex gap-6 overflow-x-auto pb-2 lg:flex-col lg:gap-0 lg:overflow-visible lg:pb-0">
+            {navGroups.map((group) => (
+              <div key={group.label} className="shrink-0 lg:mt-8 lg:first:mt-0">
+                <p className="eyebrow mb-1 px-3 text-xs lg:mb-2 lg:px-0">{group.label}</p>
+                <div className="flex gap-1 lg:flex-col lg:gap-0">
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.to}
+                      to={item.to}
+                      activeOptions={{ exact: item.exact ?? false }}
+                      className="shrink-0 whitespace-nowrap rounded-full px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground lg:rounded-none lg:border-b lg:border-border lg:px-0 lg:py-2.5"
+                      activeProps={{ className: "text-primary" }}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
           </nav>
         </aside>
