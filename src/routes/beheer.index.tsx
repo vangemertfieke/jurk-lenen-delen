@@ -50,7 +50,7 @@ function Beheeroverzicht() {
       (r) => r.status !== "completed" && r.status !== "cancelled" && r.status !== "paid_out",
     ).length;
     const omzet = rentals.reduce((sum, r) => sum + r.payment.commissionAmount, 0);
-    const openClaims = claims.filter((c) => c.status !== "resolved" && c.status !== "closed").length;
+    const openClaims = claims.filter((c) => !c.status.startsWith("resolved_") && c.status !== "closed").length;
     return {
       dressCount: dresses.length,
       zichtbaar,
