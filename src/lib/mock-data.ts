@@ -431,6 +431,7 @@ export const conversations: Conversation[] = [
     from: "2026-08-26",
     to: "2026-08-29",
     price: 60,
+    role: "huur",
     messages: [
       {
         id: "m4",
@@ -443,6 +444,35 @@ export const conversations: Conversation[] = [
         authorId: "system",
         text: "De jurk is onderweg. Volg je huur in Mijn huuritems.",
         at: "25 aug 09:12",
+      },
+    ],
+  },
+  {
+    id: "c3",
+    dressId: "d2",
+    withProfileId: "u2",
+    from: "2026-10-02",
+    to: "2026-10-05",
+    price: 45,
+    role: "verhuur",
+    messages: [
+      {
+        id: "m6",
+        authorId: "u2",
+        text: "Hoi! Ik zou je jurk graag huren voor een bruiloft op 3 oktober. Kan ik hem ophalen?",
+        at: "20 sep 18:44",
+      },
+      {
+        id: "m7",
+        authorId: "me",
+        text: "Wat leuk! Ophalen kan, ik ben die donderdagavond thuis.",
+        at: "20 sep 19:05",
+      },
+      {
+        id: "m8",
+        authorId: "system",
+        text: "De reservering wacht op jouw bevestiging in Mijn verhuur.",
+        at: "20 sep 19:06",
       },
     ],
   },
