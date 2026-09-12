@@ -16,15 +16,28 @@ export const Route = createFileRoute("/account")({
   component: AccountLayout,
 });
 
-const nav: { to: string; label: string; exact?: boolean }[] = [
-  { to: "/account", label: "Overzicht", exact: true },
-  { to: "/account/huuritems", label: "Mijn huuritems" },
-  { to: "/account/verhuur", label: "Mijn verhuur" },
-  { to: "/account/favorieten", label: "Favorieten" },
-  { to: "/account/berichten", label: "Berichten" },
-  { to: "/account/meldingen", label: "Meldingen" },
-  { to: "/account/profiel", label: "Profiel" },
-  { to: "/account/instellingen", label: "Instellingen" },
+const navGroups: { label: string; items: { to: string; label: string; exact?: boolean }[] }[] = [
+  {
+    label: "Ik huur",
+    items: [
+      { to: "/account/huuritems", label: "Mijn huuritems" },
+      { to: "/account/favorieten", label: "Favorieten" },
+    ],
+  },
+  {
+    label: "Ik verhuur",
+    items: [{ to: "/account/verhuur", label: "Mijn verhuur" }],
+  },
+  {
+    label: "Account",
+    items: [
+      { to: "/account", label: "Overzicht", exact: true },
+      { to: "/account/berichten", label: "Berichten" },
+      { to: "/account/meldingen", label: "Meldingen" },
+      { to: "/account/profiel", label: "Profiel" },
+      { to: "/account/instellingen", label: "Instellingen" },
+    ],
+  },
 ];
 
 function AccountLayout() {
