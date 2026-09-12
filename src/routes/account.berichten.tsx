@@ -19,6 +19,15 @@ export function Berichten() {
   const [activeId, setActiveId] = useState(conversations[0]?.id ?? "");
   const [draft, setDraft] = useState("");
   const [convs, setConvs] = useState(conversations);
+  const [tab, setTab] = useState<"alles" | "huur" | "verhuur">("alles");
+
+  const roleOf = (c: (typeof convs)[number]) => c.role ?? "huur";
+  const visibleConvs = convs.filter((c) => tab === "alles" || roleOf(c) === tab);
+  const counts = {
+    alles: convs.length,
+    huur: convs.filter((c) => roleOf(c) === "huur").length,
+    verhuur: convs.filter((c) => roleOf(c) === "verhuur").length,
+  };
 
   const active = convs.find((c) => c.id === activeId);
   const dress = active ? getDress(active.dressId) : undefined;
